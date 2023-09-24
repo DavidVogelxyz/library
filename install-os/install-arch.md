@@ -4,9 +4,40 @@
 
 This guide will work for both Arch and Artix Linux. Any differences between the two will be specified.
 
+One difference worth noting is how to enable wireless internet.
+- The Artix ISO uses the connection manager `connmanctl`. The commands are as follows:
+
+```
+connmanctl technologies
+connmanctl enable wifi
+connmanctl services
+connmanctl
+connmanctl> agent on
+connmanctl> connect wifi_*  # connect to the correct wireless network; enter passphrase
+connmanctl> quit
+```
+
+## Table of Contents
+- [Introduction](#introduction)
+- [Partitioning the storage drive](#partitioning-the-storage-drive)
+- [Encrypting the root partition](#encrypting-the-root-partition)
+- [Creating file systems](#creating-file-systems)
+- [Mounting file systems](#mounting-file-systems)
+- [Installing the operating system](#installing-the-operating-system)
+- [Setting up the chroot environment](#setting-up-the-chroot-environment)
+- [Making some necessary adjustments](#making-some-necessary-adjustments)
+- [Kernel initialization](#kernel-initialization)
+- [Bootloader](#bootloader)
+
 ## Partitioning the storage drive
 
 Identify whether the computer is UEFI-compatible or not.
+
+```
+mount | grep efivars
+```
+
+or:
 
 ```
 ls /sys/firmware/efi/efivars
@@ -21,6 +52,8 @@ sudo -i
 ```
 
 Use `lsblk` to identify the target drive (ex. sdx):
+
+NB: For newer computers and laptops, the internal drive may look like `/dev/nvme0n1` and not `/dev/sda1`. While the guide uses `$sdxn` as a placeholder, users should substitute the correct drive.
 
 ### Partitioning with `fdisk`
 
@@ -56,37 +89,94 @@ Use `lsblk` to confirm the changes made with `fdisk`.
 
 ## Encrypting the root partition
 
+Also known as full disk encryption (FDE).
+
 Use `cryptsetup` to encrypt a volume within the root partition. Then, unlock the encrypted volume.
 
 ```
 cryptsetup luksFormat /dev/$sdx2
 
-cryptsetup open /dev/$sdx2 $LVM_NAME
+cryptsetup open /dev/$sdx2 <$LVM_NAME>
 ```
 
-Use `lsblk` to confirm the changes made with `cryptsetup`.
-
-## Creating file systems
+Use `lsblk` to confirm the changes made with `cryptsetup`. Also, use `ls /dev/mapper` to see the encrypted volume that was created.
 
 ```
 ls /dev/mapper
+```
 
+## Creating file systems
+
+### Swap partitions
+
+***NB: I only use swap partitions on computers that run with batteries (laptops, etc). Otherwise, skip to [Making File Systems](#making-file-systems).***
+
+Swap partitions are related to suspending computer activity. Most systems support suspending to RAM, but this requires the RAM to have power to save state. On a laptop, this will drain battery life. A better way to suspend activity is to use a swap partition.
+
+Swap partitions work by suspending activity to the disk, rather than RAM. This allows the system to power off 100%, which effectively provides a more durable save state. However, a swap partition needs to be created first.
+
+In general, the swap partition should be as large as the RAM space is. For general purposes, the guide has the value set at 4GB. Change this number to whatever is needed by the system.
+
+First, initialize a physical volume. Users using full disk encryption (FDE) will create using `/dev/mapper/<$LVM_NAME>`. Users without FDE will create using `/dev/$sdx2`.
+
+```
+pvcreate /dev/mapper/<$LVM_NAME>
+```
+
+Next, create a volume group from that physical volume. Users using full disk encryption (FDE) will create using `/dev/mapper/<$LVM_NAME>`. Users without FDE will create using `/dev/$sdx2`.
+
+`vgartix` can be any name for a volume group.
+
+```
+vgcreate vgartix /dev/mapper/<$LVM_NAME>
+```
+
+Create a logical volume for the swap partition. The command below assumes a RAM capacity of 4GB -- if different, change it!
+
+```
+lvcreate -L 4G -n swap_1 vgartix
+```
+
+Create a logical volume for the root file system, using all available space remaining.
+
+```
+lvcreate -l 100%FREE -n root vgartix
+```
+
+With the swap partition created, continue on.
+
+
+### Making file systems
+
+Create a file system for the boot partition.
+
+```
 mkfs.fat -F32 /dev/$sdx1
-
-mkfs.ext4 /dev/mapper/$LVM_NAME
 ```
 
-## Mount file systems
+Create a file system for the root partition. Users using full disk encryption (FDE) will make the ext4 file system on `/dev/mapper/<$LVM_NAME>`. Users without FDE will make the file system on `/dev/$sdx2`. Users using a swap partition will make on `/dev/mapper/vgartix-root`.
 
 ```
-mount /dev/mapper/$LVM_NAME /mnt
+mkfs.ext4 /dev/mapper/<$LVM_NAME>
+```
+
+If a swap partition was created, create a file system for it using the following command:
+
+```
+mkswap /dev/mapper/vgartix-swap_1
+```
+
+## Mounting file systems
+
+```
+mount /dev/mapper/<$LVM_NAME> /mnt
 
 mkdir /mnt/boot
 
 mount /dev/$sdx1 /mnt/boot
 ```
 
-## Installing the Operating System
+## Installing the operating system
 
 Edit the `pacman` mirror list with `vim` so a closer mirror is at the top of the list.
 
@@ -117,13 +207,13 @@ basestrap -i /mnt base base-devel linux linux-firmware runit elogind-runit crypt
 
 ### For UEFI
 
-Add the `efibootmgr` package at the end of the command:
+Add the `efibootmgr` package at the end of the command. The following is the command for Arch:
 
 ```
 pacstrap -K -i /mnt base base-devel linux linux-firmware cryptsetup lvm2 grub networkmanager dhcpcd openssh neovim vim efibootmgr
 ```
 
-**OR**
+**OR**, for Artix:
 
 ```
 basestrap -i /mnt base base-devel linux linux-firmware runit elogind-runit cryptsetup lvm2 lvm2-runit grub networkmanager networkmanager-runit neovim vim efibootmgr
@@ -171,10 +261,10 @@ artix-chroot /mnt bash
 
 #### Time zone
 
-`America/New_York` is the same as `US/Eastern`
+`America/New_York` is the same as `US/Eastern`.
 
 ```
-ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+ln -s /usr/share/zoneinfo/US/Eastern /etc/localtime
 
 ls -l /etc/localtime
 ```
@@ -200,6 +290,22 @@ Uncomment lines in `/etc/locale.gen`, then run `locale-gen`:
 locale-gen
 ```
 
+### Fix the `fstab` file
+
+*NB: Because Arch and Artix Linux make use of genfstab/fstabgen (respectively), the only "fixing" that would necessary would be for a **swap partition**.*
+
+Add a line for the swap partition. It should look like the following:
+
+```
+UUID=<UUID_swap> none swap defaults 0 0
+```
+
+After editing the file, run `cat` on the file to confirm the changes.
+
+```
+cat /etc/fstab
+```
+
 ### Host names
 
 New hostname:
@@ -214,8 +320,8 @@ Add three lines to `nvim /etc/hosts`:
 
 ```
 127.0.0.1	localhost
-::1		localhost
-127.0.1.1	$HOST.localdomain $HOST
+::1	    	localhost
+127.0.1.1	$HOST.$localdomain $HOST
 ```
 
 ### Enable networking
@@ -260,9 +366,11 @@ On `runit`, you would add:
 --autologin $USER
 ```
 
-## Kernel init
+## Kernel initialization
 
-Add one section to `/etc/mkinitcpio.conf`:
+Open `/etc/mkinitcpio.conf` using `neovim`.
+
+In the "hooks" section, add the following two modules (encrypt and lvm2) between the block and filesystems modules, like so:
 
 ```
 block encrypt lvm2 filesystems
@@ -276,12 +384,26 @@ mkinitcpio -p linux
 
 ## Bootloader
 
-Adjust `/etc/default/grub`
+Edit `/etc/default/grub` using `neovim`.
 
-Add the following to a very specific spot:
+Go to the bottom of the document and clean up the appended lines by commenting them out, removing the superfluous ones, and moving the useful lines up near the top of the file.
+
+Edit the `GRUB_CMDLINE_LINUX_DEFAULT` line to include the following:
 
 ```
-cryptdevice=UUID=[UUID_$sdx2]:cryptvolume root=UUID=[UUID_/dev/mapper/$LVM_NAME]
+cryptdevice=UUID=<UUID_$sdx2>:<$LVM_NAME> root=UUID=<UUID_/dev/mapper/root>
+```
+
+In addition, while here, add to `GRUB_CMDLINE_LINUX_DEFAULT` the following items if the computer will be use to virtualize machines. For `amd_iommu` and `intel_iommu`, only add the one that corresponds to the CPU of the machine.
+
+```
+iommu=pt amd_iommu=on intel_iommu=on
+```
+
+If PCI IDs are known (in relation to GPU passthrough), those can be added to `GRUB_CMDLINE_LINUX_DEFAULT` as well.
+
+```
+vfio-pci.ids=abcd:wxyz,...
 ```
 
 ### If BIOS (legacy boot)

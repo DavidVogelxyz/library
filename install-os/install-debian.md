@@ -43,7 +43,7 @@ sudo -i
 
 Use `lsblk` to identify the target drive (ex. sdx).
 
-NB: For newer computers and laptops, the internal drive may look like `/dev/nvme0n1` and not `/dev/sda1`. While the guide uses `$sdxy` as a placeholder, users should substitute the correct drive.
+NB: For newer computers and laptops, the internal drive may look like `/dev/nvme0n1` and not `/dev/sda1`. While the guide uses `$sdxn` as a placeholder, users should substitute the correct drive.
 
 ### Partitioning with `fdisk`
 
@@ -86,7 +86,7 @@ Use `cryptsetup` to encrypt a volume within the root partition. Then, unlock the
 ```
 cryptsetup luksFormat /dev/$sdx2
 
-cryptsetup open /dev/$sdx2 $LVM_NAME
+cryptsetup open /dev/$sdx2 <$LVM_NAME>
 ```
 
 Use `lsblk` to confirm the changes made with `cryptsetup`. Also, use `ls /dev/mapper` to see the encrypted volume that was created.
@@ -107,18 +107,18 @@ Swap partitions work by suspending activity to the disk, rather than RAM. This a
 
 In general, the swap partition should be as large as the RAM space is. For general purposes, the guide has the value set at 4GB. Change this number to whatever is needed by the system.
 
-First, initialize a physical volume. Users using full disk encryption (FDE) will create using `/dev/mapper/$LVM_NAME`. Users without FDE will create using `/dev/$sdx2`.
+First, initialize a physical volume. Users using full disk encryption (FDE) will create using `/dev/mapper/<$LVM_NAME>`. Users without FDE will create using `/dev/$sdx2`.
 
 ```
-pvcreate /dev/mapper/$LVM_NAME
+pvcreate /dev/mapper/<$LVM_NAME>
 ```
 
-Next, create a volume group from that physical volume. Users using full disk encryption (FDE) will create using `/dev/mapper/$LVM_NAME`. Users without FDE will create using `/dev/$sdx2`.
+Next, create a volume group from that physical volume. Users using full disk encryption (FDE) will create using `/dev/mapper/<$LVM_NAME>`. Users without FDE will create using `/dev/$sdx2`.
 
 `vgdebian` can be any name for a volume group.
 
 ```
-vgcreate vgdebian /dev/mapper/$LVM_NAME
+vgcreate vgdebian /dev/mapper/<$LVM_NAME>
 ```
 
 Create a logical volume for the swap partition. The command below assumes a RAM capacity of 4GB -- if different, change it!
@@ -144,10 +144,10 @@ Create a file system for the boot partition.
 mkfs.fat -F32 /dev/$sdx1
 ```
 
-Create a file system for the root partition. Users using full disk encryption (FDE) will make the ext4 file system on `/dev/mapper/$LVM_NAME`. Users without FDE will make the file system on `/dev/$sdx1`. Users using a swap partition will make on `/dev/mapper/vgdebian-root`.
+Create a file system for the root partition. Users using full disk encryption (FDE) will make the ext4 file system on `/dev/mapper/<$LVM_NAME>`. Users without FDE will make the file system on `/dev/$sdx2`. Users using a swap partition will make on `/dev/mapper/vgdebian-root`.
 
 ```
-mkfs.ext4 /dev/mapper/$LVM_NAME
+mkfs.ext4 /dev/mapper/<$LVM_NAME>
 ```
 
 If a swap partition was created, create a file system for it using the following command:
@@ -159,7 +159,7 @@ mkswap /dev/mapper/vgdebian-swap_1
 ## Mounting file systems
 
 ```
-mount /dev/mapper/$LVM_NAME /mnt
+mount /dev/mapper/<$LVM_NAME> /mnt
 
 mkdir /mnt/boot
 
@@ -256,7 +256,7 @@ nala upgrade && nala install vim neovim locales
 
 #### Time zone
 
-`America/New_York` is the same as `US/Eastern`
+`America/New_York` is the same as `US/Eastern`.
 
 ```
 dpkg-reconfigure tzdata
@@ -351,6 +351,16 @@ To fix the file:
 - Remove the quotation marks surrounding the UUIDs.
 - Then delete the lines below `tmpfs`.
 
+Only for installs that include a swap partition:
+
+- Add a line for the swap partition. It should look like the following:
+
+```
+UUID=<UUID_swap> none swap defaults 0 0
+```
+
+After editing the file, run `cat` on the file to confirm the changes.
+
 ```
 cat /etc/fstab
 ```
@@ -368,18 +378,9 @@ cat /etc/hostname
 Add three lines to `nvim /etc/hosts`:
 
 ```
-127.0.0.1  localhost
-::1        localhost
-127.0.1.1  $HOST.localdomain $HOST
-```
-
-OR
-
-```
-127.0.0.1  localhost $HOST
-::1        localhost ip6-localhost $HOST ip6-$HOST ip6-loopback
-ff02::1    ip6-allnodes
-ff02::2    ip6-allrouters
+127.0.0.1   localhost
+::1         localhost
+127.0.1.1	$HOST.$localdomain $HOST
 ```
 
 ### Enable networking
@@ -423,7 +424,7 @@ nvim /etc/sudoers
 Instead of editing `/etc/default/grub` as is done on Arch Linux, update the `/etc/crypttab`:
 
 ```
-<$LVM_NAME>  <UUID=$UUID_of_$sdx2>  none luks
+<$LVM_NAME>  <UUID_$sdx2>  none luks
 ```
 
 Update RAM fs:
@@ -452,7 +453,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 
 ### After `grub-install`:
 
-Unlike on Arch Linux and similar distribution, this shouldn't be necessary, because no changes were put into effect. In those distributions, the decryption of the root partition is handled by `mkinitcpio`, which is why adjustments are made to `/etc/default/grub`. On Ubuntu, the kernel does not handle the decryption, which is why directions are given through `/etc/crypttab` on how to proceed.
+Unlike on Arch Linux and similar distribution, this shouldn't be necessary, because no changes were put into effect. In those distributions, the decryption of the root partition is handled by `mkinitcpio`, which is why adjustments are made to `/etc/default/grub`. On Debian and Ubuntu, the kernel does not handle the decryption, and `/etc/crypttab` will instead guide the decryption process.
 
 But, just to be sure, run it anyways.
 
