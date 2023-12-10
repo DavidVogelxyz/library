@@ -346,4 +346,10 @@ Go down to `Allow forward *to* destination zones` and check the WAN zone. Save. 
 
 ### Troubleshooting
 
-When using the travel router with the kill-switch VPN setup, any time the router connects to a new WAN, the OpenVPN server needs to be restarted. 
+When using the travel router with the kill-switch VPN setup, any time the router connects to a new WAN, the OpenVPN server needs to be restarted.
+
+In addition, when configuring the travel router to work as a VPN client to a VPN server with user credentials, the `auth-user-pass` should be included. It should also include the path to the file with the credentials, as is shown.
+
+```
+auth-user-pass /etc/openvpn/client.auth
+```
