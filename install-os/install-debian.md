@@ -424,7 +424,7 @@ nvim /etc/sudoers
 Instead of editing `/etc/default/grub` as is done on Arch Linux, update the `/etc/crypttab`:
 
 ```
-<$LVM_NAME>  <UUID_$sdx2>  none luks
+<$LVM_NAME>  UUID=<UUID_$sdx2>  none luks
 ```
 
 Update RAM fs:
