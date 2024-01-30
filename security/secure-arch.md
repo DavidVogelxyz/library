@@ -7,9 +7,9 @@ Pull a shell rc file from GitHub, etc. Example: [bashrc](https://github.com/Davi
 
 Create the following directories:
 ```
-mkdir -p .config/shell
+mkdir -pv ~/.config/shell
 
-mkdir -p .cache/shell
+mkdir -pv ~/.cache/shell
 ```
 
 ## Packages for all computers

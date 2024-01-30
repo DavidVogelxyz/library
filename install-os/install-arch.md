@@ -171,7 +171,7 @@ mkswap /dev/mapper/vgartix-swap_1
 ```
 mount /dev/mapper/<$LVM_NAME> /mnt
 
-mkdir /mnt/boot
+mkdir -pv /mnt/boot
 
 mount /dev/$sdx1 /mnt/boot
 ```
