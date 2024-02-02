@@ -114,3 +114,11 @@ openssl x509 -req -sha256 \
 ```
 
 Add the key and certificate to the server.
+
+An additional note on wildcard certificates: when a wildcard certificate is created, the wildcard appears to work for only those subdomains that are one level below the last FQDN.
+
+- As an example, if the FDQN of `example.com` is specified, then the wildcard of `*.example.com` would work for any subdomain that is the third level down.
+    - This would mean that FQDNs such as `subdomain.example.com` and `somehost.example.com` would both be covered by the wildcard certificate issued for `*.example.com`.
+    - However, a FQDN such as `additional.subdomain.example.com` would not be covered by a wildcard certificate for `*.example.com`.
+
+In order to get a wildcard certificate working for `additional.subdomain.example.com`, as well as another FDQN (like `another.subdomain.example.com`), the wildcard certificate would need to be issued for `*.subdomain.example.com`.
