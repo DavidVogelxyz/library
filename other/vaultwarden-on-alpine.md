@@ -50,7 +50,7 @@ passwd
 First, create some directories that will store some of the configuration files:
 
 ```
-mkdir -pv ~/.local/src && mkdir -pv ~/.config/shell
+mkdir -pv ~/.local/src ~/.config/shell
 ```
 
 Change directory into the newly created "~/.local/src" directory.
