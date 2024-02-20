@@ -9,6 +9,7 @@ NB: Use the Ubuntu Desktop image over the Ubuntu Server image to use `debootstra
 - Can paste in commands from the guide.
 
 ## Table of Contents
+
 - [Introduction](#introduction)
 - [Partitioning the storage drive](#partitioning-the-storage-drive)
 - [Encrypting the root partition](#encrypting-the-root-partition)
@@ -169,7 +170,7 @@ mount /dev/$sdx1 /mnt/boot
 ## Installing the operating system
 
 ```
-apt update && apt install debootstrap vim
+apt update && apt install -y debootstrap vim
 ```
 
 As of writing, the current Debian release (12) is `bookworm`, and the previous release (11) was `bullseye`. The current Ubuntu release is `jammy`.
@@ -243,13 +244,13 @@ blkid | grep UUID >> /etc/fstab
 Install `nala`, a wrapper for `apt`, to get a better view of the package manager.
 
 ```
-apt update && apt install nala
+apt update && apt install -y nala
 ```
 
-Then, using `nala`, install vim and neovim. If on Debian, install the `locales` package.
+Then, using `nala`, install `vim`. If on Debian, install the `locales` package.
 
 ```
-nala upgrade && nala install vim neovim locales
+nala upgrade && nala install -y vim locales
 ```
 
 ### Date, time, and locale
@@ -272,14 +273,14 @@ hwclock --systohc
 
 #### Locale
 
-Add two lines to `/etc/locale.conf`:
+Add two lines to "/etc/locale.conf":
 
 ```
 export LANG="en_US.UTF-8"
 export LC_COLLATE="C"
 ```
 
-Uncomment lines in `/etc/locale.gen`, then run `locale-gen`:
+Uncomment lines in "/etc/locale.gen", then run `locale-gen`:
 
 ```
 locale-gen
@@ -290,7 +291,7 @@ locale-gen
 Absolutely necessary to create this file ***BEFORE*** installing `linux-image-generic` on Ubuntu **ONLY**, or the whole install breaks.
 
 ```
-nvim /etc/kernel-img.conf
+vim /etc/kernel-img.conf
 ```
 
 Add these two lines:
@@ -310,28 +311,28 @@ Re-run an upgrade command to confirm all packages are up-to-date.
 nala upgrade
 ```
 
-Install the base Linux kernel along with `Network Manager`. Also, if using an Intel CPU, include the `intel-microcode` package here.
+Install the base Linux kernel along with `network-manager`. Also, if using an Intel CPU, include the `intel-microcode` package here (note that `intel-microcode` requires the `non-free-firmware` repository to be enabled).
 
 ```
-nala install linux-image-generic build-essential network-manager # intel-microcode
+nala install -y linux-image-generic build-essential network-manager # intel-microcode
 ```
 
 Confirm that some basic and essential packages are installed by installing them now. Also, if installing to an encrypted root partition, include the `cryptsetup-initramfs` package here.
 
 ```
-nala install curl gpg htop lvm2 rsync ssh sudo # cryptsetup-initramfs
+nala install -y curl git gpg htop lvm2 rsync ssh sudo # cryptsetup-initramfs
 ```
 
 #### Should already be installed
 
 ```
-nala install grub-pc
+nala install -y grub-pc
 ```
 
 #### Only necessary for UEFI builds
 
 ```
-nala install grub-efi
+nala install -y grub-efi
 ```
 
 ### Fix the `fstab` file
@@ -339,7 +340,7 @@ nala install grub-efi
 Fix the `/etc/fstab` file.
 
 ```
-nvim /etc/fstab
+vim /etc/fstab
 ```
 
 To fix the file:
@@ -375,12 +376,12 @@ echo "$HOST" > /etc/hostname
 cat /etc/hostname
 ```
 
-Add three lines to `nvim /etc/hosts`:
+Add three lines to `vim /etc/hosts`:
 
 ```
 127.0.0.1   localhost
 ::1         localhost
-127.0.1.1	$HOST.$localdomain $HOST
+127.0.1.1   $HOST $HOST.$localdomain
 ```
 
 ### Enable networking
@@ -394,7 +395,7 @@ systemctl enable NetworkManager
 On Ubuntu, a config file must be made:
 
 ```
-nvim /etc/netplan/networkmanager.yaml
+vim /etc/netplan/networkmanager.yaml
 ```
 
 Add the following lines:
@@ -410,13 +411,11 @@ network:
 ```
 passwd
 
-useradd -G sudo -m $USER
+useradd -G sudo -s /bin/bash -m $USER
 
 passwd $USER
 
-chsh -s /bin/bash $USER
-
-nvim /etc/sudoers
+vim /etc/sudoers
 ```
 
 ## Kernel initialization
