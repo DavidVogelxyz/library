@@ -4,13 +4,13 @@
 
 - [Installation](#Installation)
 - [Troubleshooting a local deployment](#Troubleshooting-a-local-deployment)
-- [Step one - tmux](#Step-one-tmux)
-- [Step two - self-signed SSL certificates](#Step-two-self-signed-SSL-certificates)
-- [Step three - locales](#Step-three-locales)
-- [Step four - domains & DNS](#Step-four-domains-&-DNS)
-- [Step five - connect to the dashboard](#Step-five-connect-to-the-dashboard)
-- [Step six - removing the insecure flag](#Step-six-removing-the-insecure-flag)
-- [Step seven - adding SSL certificates signed by a root CA](#Step-seven-adding-SSL-certificates-signed-by-a-root-CA)
+- [Step one - tmux](#Step-one---tmux)
+- [Step two - self-signed SSL certificates](#Step-two---self-signed-SSL-certificates)
+- [Step three - locales](#Step-three---locales)
+- [Step four - domains & DNS](#Step-four---domains-&-DNS)
+- [Step five - connect to the dashboard](#Step-five---connect-to-the-dashboard)
+- [Step six - removing the insecure flag](#Step-six---removing-the-insecure-flag)
+- [Step seven - adding SSL certificates signed by a root CA](#Step-seven---adding-SSL-certificates-signed-by-a-root-CA)
 
 ## Installation
 
