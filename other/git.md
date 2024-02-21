@@ -1,5 +1,10 @@
 # Git
 
+## Table of contents
+
+- [The correct way to do a rollback](#The-correct-way-to-do-a-rollback)
+- [Patch adding and patch committing](#Patch-adding-and-patch-committing)
+
 ## The correct way to do a rollback
 
 There have been times when I've made commits in a less-than-preferred manner.

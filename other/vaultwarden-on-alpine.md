@@ -12,7 +12,7 @@ NB: When using a tty on Alpine Linux, "Ctrl-Alt-Del" reboots the computer.
 - [Configure SSL and HTTPS connections](#Configure-SSL-and-HTTPS-connections)
 - [Configure nginx](#Configure-nginx)
 - [Final steps](#Final-steps)
-- [Additional notes - How to change the admin token password](#Additional-notes-How-to-change-the-admin-token-password)
+- [Additional notes - How to change the admin token password](#Additional-notes---How-to-change-the-admin-token-password)
 
 ## Configure SSH
 
