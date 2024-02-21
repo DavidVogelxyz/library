@@ -2,6 +2,8 @@
 
 NB: This guide has been tested using an Alpine Linux container on Proxmox, using the default Alpine image that Proxmox pulls.
 
+NB: When using a tty on Alpine Linux, "Ctrl-Alt-Del" reboots the computer.
+
 ## Table of contents
 
 - [Configure SSH](#Configure-SSH)
@@ -10,6 +12,7 @@ NB: This guide has been tested using an Alpine Linux container on Proxmox, using
 - [Configure SSL and HTTPS connections](#Configure-SSL-and-HTTPS-connections)
 - [Configure nginx](#Configure-nginx)
 - [Final steps](#Final-steps)
+- [Additional notes - How to change the admin token password](#Additional-notes-How-to-change-the-admin-token-password)
 
 ## Configure SSH
 
@@ -19,19 +22,21 @@ First, update the `apk` package list and install some packages that will be used
 apk update && apk add openssh-server vim git curl tmux nginx openssl
 ```
 
-Next, configure `ssh` by editing the "/etc/ssh/sshd_config" file.
+Next, configure `ssh` by editing the "/etc/ssh/sshd_config" file. Most notably, "PermitRootLogin" needs to be set as "yes", as the Alpine Linux container doesn't have a user created by default.
 
 ```
 vim /etc/ssh/sshd_config
 ```
 
-At least on the Alpine Linux container for Proxmox, when `ssh` is installed, it is not automatically configured to run as a service. This can be a problem on a container restart, if the service is expected to be running on reboot.
+At least on the Alpine Linux container for Proxmox, when `ssh` is installed, `sshd` is not automatically configured to run as a service. This can be a problem on a container restart, if the service is expected to be running on reboot.
 
 To ensure that `ssh` lockouts do not occur, run the following command:
 
 ```
 rc-service sshd start && rc-update add sshd default
 ```
+
+NB: On multiple occasions, this guide makes reference to the `rc-service` command. Know that `service` functions the same way as `rc-service`. In addition, `rc-update add $SERVICE` is a shorter way to write `rc-update add $SERVICE default`; both commands will add the "$SERVICE" to the "default" run level.
 
 In order to test `ssh` login, get the IP address of the VM container.
 
@@ -43,6 +48,24 @@ Also, change the password (if necessary).
 
 ```
 passwd
+```
+
+Especially if using the root user for configuration, it is best practice to use a SSH key for login. A key can be created on the `ssh` client computer by running the following:
+
+```
+ssh-keygen -t rsa -b 4096
+```
+
+Once the key is created, copy it over from the `ssh` client using the following command. Obviously, "$ALPINELINUX" should either be the hostname of the Alpine Linux server, or its IP address.
+
+```
+ssh-copy-id -i /PATH/TO/SSH/KEY root@$ALPINELINUX
+```
+
+At this point, the "PasswordAuthentication" setting in "/etc/ssh/sshd_config" should be explicity set to "no". The service can be started with:
+
+```
+service sshd restart
 ```
 
 ## Add configuration files
@@ -83,12 +106,16 @@ Copy the "aliasrc" file for Alpine Linux into the newly created "~/.config/shell
 cp ~/.local/src/dotfiles/.config/shell/aliasrc-alpine ~/.config/shell/aliasrc && source ~/.config/shell/aliasrc
 ```
 
-Set up the "~/.ashrc" and "/etc/profile".
-
-To the ".ashrc" file, add the line `source ~/.config/shell/aliasrc`. To the "/etc/profile" file, add the line `source ~/.ashrc`.
+To the "~/.ashrc" file, add the line `source ~/.config/shell/aliasrc`. To the "/etc/profile" file, add the line `source ~/.ashrc`.
 
 ```
-vim ~/.ashrc && vim /etc/profile
+echo "source ~/.config/shell/aliasrc" >> ~/.ashrc && echo -e "\nsource ~/.ashrc" >> /etc/profile
+```
+
+Another change that, while minimal, can be helpful, is to change the "/etc/profile" file so that the username shows along with the hostname. This can easily be accomplished with the following `sed` command:
+
+```
+sed "s/PS1='\\\h/PS1='\\\u@\\\h/g" /etc/profile
 ```
 
 ## Install Vaultwarden
@@ -262,3 +289,9 @@ This should display the same output as curling "localhost:8000".
 With all of this configuration in place, accessing the server at https://[$HOSTNAME] should return the Vaultwarden login page. Also, accessing https://[$HOSTNAME]/admin should return the administration panel. Simply enter the password that was used to generate the admin token to explore the admin panel.
 
 Congrats on setting up a Vaultwarden instance using Alpine Linux!
+
+## Additional notes - How to change the admin token password
+
+In order to change the admin token for the Vaultwarden admin panel, settings must be changed in the correct files. If both files exist, both "/etc/conf.d/vaultwarden" ***AND*** "/var/lib/vaultwarden/config.json" must be edited for the changes to occur.
+
+As before, "/etc/conf.d/vaultwarden" needs to have its `export ADMIN_TOKEN='$argon2id'` changed to the new token. However, in addition, be sure to check for a "/var/lib/vaultwarden/config.json" file. It appears that this file is only created after settings are changed via the Vaultwarden admin panel webpage. If it exists, be sure to change the "ADMIN_TOKEN" value here as well.
