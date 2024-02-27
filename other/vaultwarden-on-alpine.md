@@ -13,6 +13,7 @@ NB: When using a tty on Alpine Linux, "Ctrl-Alt-Del" reboots the computer.
 - [Configure nginx](#Configure-nginx)
 - [Final steps](#Final-steps)
 - [Additional notes - How to change the admin token password](#Additional-notes---How-to-change-the-admin-token-password)
+- [Additional notes - Adding SMTP to Vaultwarden](#Additional-notes---Adding-SMTP-to-Vaultwarden)
 
 ## Configure SSH
 
@@ -193,7 +194,7 @@ WEB_VAULT_ENABLED=true
 WEB_VAULT_FOLDER=/usr/share/webapps/vaultwarden-web/
 ```
 
-In either case, the ADMIN_TOKEN variable should reflect the admin token that was created with the `vaultwarden hash` command.
+In either case, the ADMIN_TOKEN variable should reflect the admin token that was created with the `vaultwarden hash` command. Also, a DOMAIN of "https://localhost" will work to get the server running; however, if/when implementing SMTP, "DOMAIN" should reflect the domain on which Vaultwarden is being served (ex. "https://vaultwarden.domain.com").
 
 Once the environment variables are set, the `vaultwarden` service should be restarted using the following command:
 
@@ -295,3 +296,22 @@ Congrats on setting up a Vaultwarden instance using Alpine Linux!
 In order to change the admin token for the Vaultwarden admin panel, settings must be changed in the correct files. If both files exist, both "/etc/conf.d/vaultwarden" ***AND*** "/var/lib/vaultwarden/config.json" must be edited for the changes to occur.
 
 As before, "/etc/conf.d/vaultwarden" needs to have its `export ADMIN_TOKEN='$argon2id'` changed to the new token. However, in addition, be sure to check for a "/var/lib/vaultwarden/config.json" file. It appears that this file is only created after settings are changed via the Vaultwarden admin panel webpage. If it exists, be sure to change the "ADMIN_TOKEN" value here as well.
+
+Note that this is also true for values such as "DOMAIN" -- the setting needs to be changed in "/etc/conf.d/vaultwarden" **AND** in "/var/lib/vaultwarden/config.json" (if the file exists).
+
+## Additional notes - Adding SMTP to Vaultwarden
+
+To add SMTP (Simple Mail Transfer Protocol) functionality to the Vaultwarden server, simply uncomment and adjust the following settings in "/etc/conf.d/vaultwarden":
+
+```
+export SMTP_HOST=smtp.domain.tld
+export SMTP_FROM=vaultwarden@domain.tld
+export SMTP_FROM_NAME=Vaultwarden
+export SMTP_SECURITY=starttls
+export SMTP_PORT=587
+export SMTP_USERNAME=username
+export SMTP_PASSWORD=password
+export SMTP_TIMEOUT=15
+```
+
+This is relatively self-explanatory, so there's no need to go in depth here.
