@@ -297,7 +297,7 @@ In order to change the admin token for the Vaultwarden admin panel, settings mus
 
 As before, "/etc/conf.d/vaultwarden" needs to have its `export ADMIN_TOKEN='$argon2id'` changed to the new token. However, in addition, be sure to check for a "/var/lib/vaultwarden/config.json" file. It appears that this file is only created after settings are changed via the Vaultwarden admin panel webpage. If it exists, be sure to change the "ADMIN_TOKEN" value here as well.
 
-Note that this is also true for values such as "DOMAIN" -- the setting needs to be changed in "/etc/conf.d/vaultwarden" **AND** in "/var/lib/vaultwarden/config.json" (if the file exists).
+Note that this is also true for values such as "DOMAIN" or "SMTP_FROM_NAME" -- the setting needs to be changed in "/etc/conf.d/vaultwarden" **AND** in "/var/lib/vaultwarden/config.json" (if the file exists).
 
 ## Additional notes - Adding SMTP to Vaultwarden
 
@@ -315,3 +315,5 @@ export SMTP_TIMEOUT=15
 ```
 
 This is relatively self-explanatory, so there's no need to go in depth here.
+
+However, as mentioned earlier, if "/var/lib/vaultwarden/config.json" exists, the "SMTP_FROM_NAME" will also need to be updated there.
