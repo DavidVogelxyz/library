@@ -1,14 +1,23 @@
-# Securing SSH connections when using Windows client machines
+# SSH
 
 NB: This guide assumes that the server/VM being set up is a Debian-based machine (Ubuntu included). This is relevant when using the `systemd` command. Other init systems will have slightly different commands.
 
-First, create a new public/private keypair specific to the server that's being working on.
+## Table of contents
 
-In Windows, it *should* be possible to open a PowerShell terminal and use the following command to do that:
+- [Creating SSH keys](#Creating-SSH-keys)
+    - [Linux client machines](#Linux-client-machines)
+    - [Windows client machines](#Windows-client-machines)
+- [Securing SSH connections](#Securing-SSH-connections)
+
+## Creating SSH keys
+
+First, create a new public/private keypair specific to the server that's being working on. On a Linux client machine, creating a new SSH key is as simple as using the following command. In Windows, it *should* be possible to open a PowerShell terminal and use the same command to create a new SSH key.
 
 ```
 ssh-keygen -b 4096 -t rsa
 ```
+
+The two options in this command set the encryption bits (`-b`) and the encryption type (`-t`).
 
 For ease of access (etc), it is not *required* to add a password to the keyfile. That being said, anyone with this keyfile would be able to access the server, so use best judgment to decide how secure the servers need to be. In the future, the private key's password can always be changed with the following:
 
@@ -16,11 +25,25 @@ For ease of access (etc), it is not *required* to add a password to the keyfile.
 ssh-keygen -p -f /PATH/TO/$PRIVATE_KEYFILE
 ```
 
+### Linux client machines
+
+To get the *public* key ("pubkey") onto the server, a Linux user would use the following command:
+
+```
+ssh-copy-id -i $PATH_TO_FILE $USER@$DOMAIN
+```
+
+Even though the command seems to prefer the private key, the public key is what will be copied over to the server. This assumes the public key is found in the same directory with the same name, which should be the case if the keys were previously generated with `ssh-keygen`. For "$DOMAIN", this can either be the hostname of the machine, or the IP address of the machine.
+
+### Windows client machines
+
 To get the *public* key ("pubkey") onto the server, a Windows user would use the following command:
 
 ```
 type $env:USERPROFILE\PATH\TO\$PUBLIC_KEYFILE | ssh $USER@$IP_ADDRESS "cat >> .ssh/authorized_keys"
 ```
+
+## Securing SSH connections
 
 To test that the pubkey copied correctly, attempt to log in using the keyfile:
 
@@ -42,4 +65,4 @@ Now that it is confirmed that the keyfile works, the next step is to remove "acc
 - Test the functionality by logging out of the server, and attempting to SSH into both the root user and the working user (both without a keyfile). These should fail, on the basis of not providing a public key.
 - To SSH in using the public key, using the following command: `ssh -i \PATH\TO\KEYFILE $USER@$IP_ADDRESS`. This should allow access to the server.
 
-From here, a final step would be to configure the PowershellProfile.ps1 file to include an alias for that `ssh -i` command.
+From here, a final step would be to configure the client to have an alias for that `ssh -i` command. For Linux users, this would be an adjustment to the "aliasrc" file; for Windows users, this would mean editing the "PowershellProfile.ps1" file.
