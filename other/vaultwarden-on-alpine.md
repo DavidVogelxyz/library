@@ -12,8 +12,10 @@ NB: When using a tty on Alpine Linux, "Ctrl-Alt-Del" reboots the computer.
 - [Configure SSL and HTTPS connections](#Configure-SSL-and-HTTPS-connections)
 - [Configure nginx](#Configure-nginx)
 - [Final steps](#Final-steps)
-- [Additional notes - How to change the admin token password](#Additional-notes---How-to-change-the-admin-token-password)
-- [Additional notes - Adding SMTP to Vaultwarden](#Additional-notes---Adding-SMTP-to-Vaultwarden)
+- [Additional notes](#Additional-notes)
+    - [How to change the admin token password](#How-to-change-the-admin-token-password)
+    - [Adding SMTP to Vaultwarden](#Adding-SMTP-to-Vaultwarden)
+    - [Fixing icons](#Fixing-icons)
 
 ## Configure SSH
 
@@ -291,7 +293,11 @@ With all of this configuration in place, accessing the server at https://[$HOSTN
 
 Congrats on setting up a Vaultwarden instance using Alpine Linux!
 
-## Additional notes - How to change the admin token password
+## Additional notes
+
+This section contains additional comments and troubleshooting steps that have been useful in administrating a Vaultwarden server.
+
+### How to change the admin token password
 
 In order to change the admin token for the Vaultwarden admin panel, settings must be changed in the correct files. If both files exist, both "/etc/conf.d/vaultwarden" ***AND*** "/var/lib/vaultwarden/config.json" must be edited for the changes to occur.
 
@@ -299,7 +305,7 @@ As before, "/etc/conf.d/vaultwarden" needs to have its `export ADMIN_TOKEN='$arg
 
 Note that this is also true for values such as "DOMAIN" or "SMTP_FROM_NAME" -- the setting needs to be changed in "/etc/conf.d/vaultwarden" **AND** in "/var/lib/vaultwarden/config.json" (if the file exists).
 
-## Additional notes - Adding SMTP to Vaultwarden
+### Adding SMTP to Vaultwarden
 
 To add SMTP (Simple Mail Transfer Protocol) functionality to the Vaultwarden server, simply uncomment and adjust the following settings in "/etc/conf.d/vaultwarden":
 
@@ -317,3 +323,11 @@ export SMTP_TIMEOUT=15
 This is relatively self-explanatory, so there's no need to go in depth here.
 
 However, as mentioned earlier, if "/var/lib/vaultwarden/config.json" exists, the "SMTP_FROM_NAME" will also need to be updated there.
+
+### Fixing icons
+
+Sometimes, icons that previously displayed properly will fail to load. I experienced this when migrating a Vaultwarden Alpine container from one Proxmox instance to another. However, I am unsure whether this was due to the container being redeployed on a different Proxmox, or a different network. It didn't happen for all favicons; but, there were a certain handful that failed to load on the new server.
+
+Regardless, there was a very simple way to resolve this issue.
+
+The trick was to remove all icon files found in "/var/lib/vaultwarden/icon-cache". Once the icon files have been deleted, the user experiencing the issue should disable icons in the user's preferences (within the web vault's UI) and save the change. Then, re-enable icons and save again. This will force the server to query the URLs for icons, and all the icons will be downloaded again.
