@@ -4,13 +4,14 @@
 
 - [Installation](#Installation)
 - [Troubleshooting a local deployment](#Troubleshooting-a-local-deployment)
-- [Step one - tmux](#Step-one---tmux)
-- [Step two - self-signed SSL certificates](#Step-two---self-signed-SSL-certificates)
-- [Step three - locales](#Step-three---locales)
-- [Step four - domains & DNS](#Step-four---domains-&-DNS)
-- [Step five - connect to the dashboard](#Step-five---connect-to-the-dashboard)
-- [Step six - removing the insecure flag](#Step-six---removing-the-insecure-flag)
-- [Step seven - adding SSL certificates signed by a root CA](#Step-seven---adding-SSL-certificates-signed-by-a-root-CA)
+    - [Step one - tmux](#Step-one---tmux)
+    - [Step two - self-signed SSL certificates](#Step-two---self-signed-SSL-certificates)
+    - [Step three - locales](#Step-three---locales)
+    - [Step four - domains & DNS](#Step-four---domains-&-DNS)
+    - [Step five - connect to the dashboard](#Step-five---connect-to-the-dashboard)
+    - [Step six - removing the insecure flag](#Step-six---removing-the-insecure-flag)
+    - [Step seven - adding SSL certificates signed by a root CA](#Step-seven---adding-SSL-certificates-signed-by-a-root-CA)
+    - [Step eight - getting agent installers to work](#Step-eight---getting-agent-installers-to-work)
 
 ## Installation
 
@@ -119,6 +120,30 @@ The one key detail to note is that Tactical RMM will require a wildcard certific
 
 Therefore, a wildcard certificate would need to be created for `*.tactical-rmm.example.com`. Certificates made with this as the listed domain will be approved by the root CA.
 
-Simply replace the "cert.pem" (public key) and "key.pem" (private key) with those found in the "/etc/ssl/tactical" directory. Then, restart the server. So long as the root CA has been added to the machine, either at the browser or the OS level, the certificate will register as valid.
+Simply replace the "cert.pem" (public key) and "key.pem" (private key) with those found in the "/etc/ssl/tactical" directory. Then, restart the server. So long as the root CA has been added to the machine accessing the web UI, either at the browser or the OS level, the certificate will register as valid.
+
+### Step eight - getting agent installers to work
+
+After swapping out the public and private keys in the server's "/etc/ssl/tactical" directory, the server's web UI will now be accessible. However, any attempt to create an agent installer, and install it on a client computer, will fail with the error "unable to download the mesh agent from the RMM." This is simply due to server failing to find a root CA that can verify the SSL certificates in the "/etc/ssl/tactical" directory. Therefore, the solution is to provide the root CA to the RMM software.
+
+Adding the root CA to the server's certificate store can be achieved a few different ways. Either way will work.
+
+- One way to do this is to add the root CA (public key) directly to the file "/etc/ssl/certs/ca-certificates.crt".
+- Another way would be to add the "CA.crt" file to any subdirectory of "/usr/local/share/ca-certificates" -- a suggested "best practice" would be to create a directory within "/usr/local/share/ca-certificates" that specifies the issuer of the CA (ex. "company-CA"), and then moving the "CA.crt" file into that subdirectory.
+    - If the file is added to "/usr/local/share/ca-certificates", then the command `sudo update-ca-certificates` must be run, in order to update the certificate store.
+
+However, adding the root CA to the one of those two directories is not enough, as the RMM software does not know to query the server's certificate store for the "CA.crt". In order to enable the RMM to query the server's certificate store, an additional set of steps must be performed. The following is thanks to user MrGoodbody on [this GitHub issue](https://github.com/amidaware/tacticalrmm/discussions/1114).
+
+As the user "tactical", run the following commands:
+
+```
+source /rmm/api/env/bin/activate
+pip install pip-system-certs
+systemctl restart rmm
+```
+
+Performing these commands will install a Python package that will enable the RMM software to query the server (after restarting the RMM) and obtain the "CA.crt" credentials needed to verify the SSL certificates. Once this is done, the agent installers will no longer throw the error message, and Tactical RMM will be fully operational.
+
+---
 
 Congrats on getting the Tactical RMM server deployed!
