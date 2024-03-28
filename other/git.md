@@ -145,6 +145,12 @@ To compare differences for **ONLY THE STAGED FILES** against the most recent com
 git diff --staged
 ```
 
+Another way to compare differences for **ONLY THE STAGED FILES** against the most recent commit, use the following command:
+
+```
+git diff --cached
+```
+
 To compare differences for **a specific file** against the most recent commit, use the following command:
 
 ```
