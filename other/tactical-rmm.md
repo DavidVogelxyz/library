@@ -52,17 +52,17 @@ One may believe that editing the "/etc/locale.gen" file and then running `locale
 At the beginning of the install (after the potential "locales" issue), the script will ask the user to input domains for the different services. Use the following schema:
 
 ```
-api         = api.$DOMAIN
-rmm         = rmm.$DOMAIN
-mesh        = mesh.$DOMAIN
-domain      = $DOMAIN
+api         = api.domain.tld
+rmm         = rmm.domain.tld
+mesh        = mesh.domain.tld
+domain      = domain.tld
 user e-mail = $EMAIL
 ```
 
-"$DOMAIN" may look like the following:
+"domain.tld" may look like the following:
 
 ```
-$HOSTNAME.$FQDN.$TLD
+$HOSTNAME.domain.tld
 ```
 
 An example of this may be the following: `tactical-rmm.example.com`
