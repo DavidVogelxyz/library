@@ -12,6 +12,17 @@ To download a video file using `ffmpeg`, use the following command:
 ffmpeg -i "$URL" -c copy $FILE_NAME.mp4
 ```
 
+The options used are the following:
+
+- `-i` specifies the input; in this case, the URL linking to the raw video content.
+- `-c` specifies the codec to be used; in this case, the codec "copy" tells `ffmpeg` that the input streamed should *not* be re-encoded.
+
 However, the important note is that the "$URL" is not the URL to the page where the video can be found -- it is instead the URL *for* the video.
 
 This can be accessed by going into the browser's "developer tools" ("F12" on most browsers), going to the "network" tab, and grabbing the video's actual URL. This will often be a "fetch", "video", or "media" type object (sometimes, "initiator") with a name starting with "videoplayback" or "videomanifest." Right click this object and copy the link address to that object, and substitute that for $URL in the command (within the quotation marks).
+
+In a situation where the audio and video have been split into separate files, the option `-i` can be used multiple times to specific both the audio file and the video file to be copied into the final output file. This can be seen in the example below:
+
+```
+ffmpeg -i "$video_URL" -i "$audio_URL" -c copy $FILE_NAME.mp4
+```

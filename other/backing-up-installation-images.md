@@ -9,6 +9,7 @@ This guide shares some of those methods.
 ## Table of contents
 
 - [Using dd](#Using-dd)
+    - [Using sparse conversion with dd](#Using-sparse-conversion-with-dd)
 - [Using gzip and zcat](#Using-gzip-and-zcat)
 - [Notes from "old ways"](#Notes-from-"old-ways")
 
@@ -28,6 +29,20 @@ Once the backup image is written, it can be deployed with the following command:
 
 ```
 dd if=file.img of=/dev/$sdx status=progress
+```
+
+### Using sparse conversion with dd
+
+It is also possible to use `dd` in a way that incorporates data compression, just like `gzip`. To do this, add the `conv=sparse` option to the `dd` command, as in the following example:
+
+```
+dd if=/dev/$sdx of=file.img conv=sparse status=progress
+```
+
+In addition, as is described in [this ServerFault post](https://serverfault.com/questions/665335/what-is-fastest-way-to-copy-a-sparse-file-what-method-results-in-the-smallest-f), the following command gives the best overall result in terms of time-to-completion and output quality (based on benchmark testing).
+
+```
+dd if=/dev/$sdx of=file.img iflag=direct oflag=direct bs=256k conv=sparse status=progress
 ```
 
 ## Using gzip and zcat
