@@ -196,7 +196,7 @@ WEB_VAULT_ENABLED=true
 WEB_VAULT_FOLDER=/usr/share/webapps/vaultwarden-web/
 ```
 
-In either case, the ADMIN_TOKEN variable should reflect the admin token that was created with the `vaultwarden hash` command. Also, a DOMAIN of "https://localhost" will work to get the server running; however, if/when implementing SMTP, "DOMAIN" should reflect the domain on which Vaultwarden is being served (ex. "https://vaultwarden.domain.com").
+In either case, the ADMIN_TOKEN variable should reflect the admin token that was created with the `vaultwarden hash` command. Also, a DOMAIN of "https://localhost" will work to get the server running; however, if/when implementing SMTP, "DOMAIN" should reflect the domain on which Vaultwarden is being served (ex. "https://domain.tld").
 
 Once the environment variables are set, the `vaultwarden` service should be restarted using the following command:
 
@@ -331,3 +331,5 @@ Sometimes, icons that previously displayed properly will fail to load. I experie
 Regardless, there was a very simple way to resolve this issue.
 
 The trick was to remove all icon files found in "/var/lib/vaultwarden/icon-cache". Once the icon files have been deleted, the user experiencing the issue should disable icons in the user's preferences (within the web vault's UI) and save the change. Then, re-enable icons and save again. This will force the server to query the URLs for icons, and all the icons will be downloaded again.
+
+NB: One way to confirm whether the icons are loading is to go to "https://vaultwarden-domain.tld/icons/icon-domain.tld/icon.png" and see whether the icon loads correctly or not.
