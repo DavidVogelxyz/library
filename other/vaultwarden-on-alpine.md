@@ -218,7 +218,7 @@ curl localhost:8000/admin
 Now, it's time to set up some self-signed SSL certificates in order to enable HTTPS connections. Create the following directory and change directory into it.
 
 ```
-mkd /etc/nginx/ssl && cd /etc/nginx/ssl
+mkdir -pv /etc/nginx/ssl && cd /etc/nginx/ssl
 ```
 
 Using the following two commands, create the required files.
