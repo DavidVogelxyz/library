@@ -4,10 +4,10 @@ NB: What some people refer to as "private keys", `gpg` refers to as "secret keys
 
 ## Table of contents
 
-- [Creating a GPG key](#Creating-a-GPG-key)
-- [Listing keys](#Listing-keys)
-- [How to encrypt a file](#How-to-encrypt-a-file)
-- [Exporting keys](#Exporting-keys)
+- [Creating a GPG key](#creating-a-gpg-key)
+- [Listing keys](#listing-keys)
+- [How to encrypt a file](#how-to-encrypt-a-file)
+- [Exporting keys](#exporting-keys)
 
 ## Creating a GPG key
 

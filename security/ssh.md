@@ -4,10 +4,10 @@ NB: This guide assumes that the server/VM being set up is a Debian-based machine
 
 ## Table of contents
 
-- [Creating SSH keys](#Creating-SSH-keys)
-    - [Linux client machines](#Linux-client-machines)
-    - [Windows client machines](#Windows-client-machines)
-- [Securing SSH connections](#Securing-SSH-connections)
+- [Creating SSH keys](#creating-ssh-keys)
+    - [Linux client machines](#linux-client-machines)
+    - [Windows client machines](#windows-client-machines)
+- [Securing SSH connections](#securing-ssh-connections)
 
 ## Creating SSH keys
 

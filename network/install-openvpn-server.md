@@ -10,11 +10,11 @@ As is explained in other parts of the guide, these instructions can be deployed 
 
 ## Table of Contents
 
-- [Introduction](#Introduction)
-- [Initial setup](#Initial-setup)
-- [Setting up the virtual environment](#Setting-up-the-virtual-environment)
-- [Setting up SSH](#Setting-up-SSH)
-- [Setting up the OpenVPN server](#Setting-up-the-OpenVPN-server)
+- [Introduction](#introduction)
+- [Initial setup](#initial-setup)
+- [Setting up the virtual environment](#setting-up-the-virtual-environment)
+- [Setting up SSH](#setting-up-ssh)
+- [Setting up the OpenVPN server](#setting-up-the-openvpn-server)
 
 ## Initial setup
 

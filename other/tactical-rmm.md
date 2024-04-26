@@ -2,16 +2,16 @@
 
 ## Table of contents
 
-- [Installation](#Installation)
-- [Troubleshooting a local deployment](#Troubleshooting-a-local-deployment)
-    - [Step one - tmux](#Step-one---tmux)
-    - [Step two - self-signed SSL certificates](#Step-two---self-signed-SSL-certificates)
-    - [Step three - locales](#Step-three---locales)
-    - [Step four - domains & DNS](#Step-four---domains-&-DNS)
-    - [Step five - connect to the dashboard](#Step-five---connect-to-the-dashboard)
-    - [Step six - removing the insecure flag](#Step-six---removing-the-insecure-flag)
-    - [Step seven - adding SSL certificates signed by a root CA](#Step-seven---adding-SSL-certificates-signed-by-a-root-CA)
-    - [Step eight - getting agent installers to work](#Step-eight---getting-agent-installers-to-work)
+- [Installation](#installation)
+- [Troubleshooting a local deployment](#troubleshooting-a-local-deployment)
+    - [Step one - tmux](#step-one---tmux)
+    - [Step two - self-signed SSL certificates](#step-two---self-signed-ssl-certificates)
+    - [Step three - locales](#step-three---locales)
+    - [Step four - domains & DNS](#step-four---domains-&-dns)
+    - [Step five - connect to the dashboard](#step-five---connect-to-the-dashboard)
+    - [Step six - removing the insecure flag](#step-six---removing-the-insecure-flag)
+    - [Step seven - adding SSL certificates signed by a root CA](#step-seven---adding-ssl-certificates-signed-by-a-root-ca)
+    - [Step eight - getting agent installers to work](#step-eight---getting-agent-installers-to-work)
 
 ## Installation
 

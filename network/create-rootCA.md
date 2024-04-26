@@ -2,9 +2,9 @@
 
 ## Table of contents
 
-- [Creating a root CA](#Creating-a-root-CA)
-- [Single server certificate](#Single-server-certificate)
-- [Wildcard server certificate](#Wildcard-server-certificate)
+- [Creating a root CA](#creating-a-root-ca)
+- [Single server certificate](#single-server-certificate)
+- [Wildcard server certificate](#wildcard-server-certificate)
 
 ## Creating a root CA
 

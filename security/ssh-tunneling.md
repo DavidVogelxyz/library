@@ -2,9 +2,9 @@
 
 ## Table of contents
 
-- [Local SSH tunnel](#Local-SSH-tunnel)
-- [Remote SSH tunnel](#Remote-SSH-tunnel)
-- [SSH proxy tunnel](#SSH-proxy-tunnel)
+- [Local SSH tunnel](#local-ssh-tunnel)
+- [Remote SSH tunnel](#remote-ssh-tunnel)
+- [SSH proxy tunnel](#ssh-proxy-tunnel)
 
 ## Local SSH tunnel
 

@@ -14,11 +14,11 @@ This is where this guide comes in.
 
 There are multiple steps to resizing all volumes correctly. They are as follows:
 
-- [Resize the partition (volume group)](#Resize-the-volume-group)
-- [Resize the physical volume](#Resize-the-physical-volume)
-- [Resize the logical volume](#Resize-the-logical-volume)
-- [Perform a 'file system check'](#Perform-a-'file-system-check')
-- [Resize the file system](#Resize-the-file-system)
+- [Resize the partition (volume group)](#resize-the-volume-group)
+- [Resize the physical volume](#resize-the-physical-volume)
+- [Resize the logical volume](#resize-the-logical-volume)
+- [Perform a 'file system check'](#perform-a-'file-system-check')
+- [Resize the file system](#resize-the-file-system)
 
 ## Resize the volume group
 
