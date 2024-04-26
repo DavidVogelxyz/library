@@ -8,10 +8,10 @@ This guide shares some of those methods.
 
 ## Table of contents
 
-- [Using dd](#Using-dd)
-    - [Using sparse conversion with dd](#Using-sparse-conversion-with-dd)
-- [Using gzip and zcat](#Using-gzip-and-zcat)
-- [Notes from "old ways"](#Notes-from-"old-ways")
+- [Using dd](#using-dd)
+    - [Using sparse conversion with dd](#using-sparse-conversion-with-dd)
+- [Using gzip and zcat](#using-gzip-and-zcat)
+- [Notes from "old ways"](#notes-from-"old-ways")
 
 ## Using dd
 

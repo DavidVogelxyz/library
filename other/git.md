@@ -4,12 +4,12 @@ NB: For any `git config` command, omitting the "--global" or "--local" option wi
 
 ## Table of contents
 
-- [Setting up a new Git repository](#Setting-up-a-new-Git-repository)
-- [How to set up a Git repo with GPG signing](#How-to-set-up-a-Git-repo-with-GPG-signing)
-- [The correct way to do a rollback](#The-correct-way-to-do-a-rollback)
-- [Patch adding and patch committing](#Patch-adding-and-patch-committing)
-- [Using diff](#Using-diff)
-- [Using restore](#Using-restore)
+- [Setting up a new Git repository](#setting-up-a-new-git-repository)
+- [How to set up a Git repo with GPG signing](#how-to-set-up-a-git-repo-with-gpg-signing)
+- [The correct way to do a rollback](#the-correct-way-to-do-a-rollback)
+- [Patch adding and patch committing](#patch-adding-and-patch-committing)
+- [Using diff](#using-diff)
+- [Using restore](#using-restore)
 
 ## Setting up a new Git repository
 

@@ -6,16 +6,16 @@ NB: When using a tty on Alpine Linux, "Ctrl-Alt-Del" reboots the computer.
 
 ## Table of contents
 
-- [Configure SSH](#Configure-SSH)
-- [Add configuration files](#Add-configuration-files)
-- [Install Vaultwarden](#Install-Vaultwarden)
-- [Configure SSL and HTTPS connections](#Configure-SSL-and-HTTPS-connections)
-- [Configure nginx](#Configure-nginx)
-- [Final steps](#Final-steps)
-- [Additional notes](#Additional-notes)
-    - [How to change the admin token password](#How-to-change-the-admin-token-password)
-    - [Adding SMTP to Vaultwarden](#Adding-SMTP-to-Vaultwarden)
-    - [Fixing icons](#Fixing-icons)
+- [Configure SSH](#configure-ssh)
+- [Add configuration files](#add-configuration-files)
+- [Install Vaultwarden](#install-vaultwarden)
+- [Configure SSL and HTTPS connections](#configure-ssl-and-https-connections)
+- [Configure nginx](#configure-nginx)
+- [Final steps](#final-steps)
+- [Additional notes](#additional-notes)
+    - [How to change the admin token password](#how-to-change-the-admin-token-password)
+    - [Adding SMTP to Vaultwarden](#adding-smtp-to-vaultwarden)
+    - [Fixing icons](#fixing-icons)
 
 ## Configure SSH
 
