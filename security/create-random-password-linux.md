@@ -1,4 +1,4 @@
-# Create random passwords on Linux
+# Creating random passwords on Linux
 
 ## tr
 

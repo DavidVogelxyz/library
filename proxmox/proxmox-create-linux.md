@@ -1,4 +1,4 @@
-# Configs for VMs
+# Tips for setting up a Linux VM in Proxmox
 
 ## Base Linux VM
 

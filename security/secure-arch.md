@@ -1,4 +1,4 @@
-# Security Hardening on Arch Linux
+# Security hardening on Arch Linux
 
 ## Getting Started
 
