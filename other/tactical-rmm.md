@@ -4,14 +4,15 @@
 
 - [Installation](#installation)
 - [Troubleshooting a local deployment](#troubleshooting-a-local-deployment)
-    - [Step one - tmux](#step-one---tmux)
-    - [Step two - self-signed SSL certificates](#step-two---self-signed-ssl-certificates)
-    - [Step three - locales](#step-three---locales)
-    - [Step four - domains & DNS](#step-four---domains-&-dns)
-    - [Step five - connect to the dashboard](#step-five---connect-to-the-dashboard)
-    - [Step six - removing the insecure flag](#step-six---removing-the-insecure-flag)
-    - [Step seven - adding SSL certificates signed by a root CA](#step-seven---adding-ssl-certificates-signed-by-a-root-ca)
-    - [Step eight - getting agent installers to work](#step-eight---getting-agent-installers-to-work)
+    - [tmux](#tmux)
+    - [Self-signed SSL certificates](#self-signed-ssl-certificates)
+    - [locales](#locales)
+    - [Domains and DNS](#domains-and-dns)
+    - [Connect to the dashboard](#connect-to-the-dashboard)
+    - [Removing the insecure flag](#removing-the-insecure-flag)
+    - [Adding SSL certificates signed by a root CA](#adding-ssl-certificates-signed-by-a-root-ca)
+    - [Getting agent installers to work](#getting-agent-installers-to-work)
+    - [Updating Tactical RMM breaks agent installers](#updating-tactical-rmm-breaks-agent-installers)
 
 ## Installation
 
@@ -21,11 +22,11 @@ Use [the guide](https://docs.tacticalrmm.com/install_server/) provided by the Ta
 
 There are handful of things that should be done in order to have everything work correctly in a local deployment.
 
-### Step one - tmux
+### tmux
 
 Install `tmux` and run the "tactical" user's command in the `tmux` shell. That way, if there are any issues with connection via `ssh`, the connection isn't dropped. If `tmux` is used, it will be possible to reattach to the install script and continue. Without `tmux`, it's possible to drop out of the install with no way back in. The only solution at this point is to reinitialize the VM and start over.
 
-### Step two - self-signed SSL certificates
+### Self-signed SSL certificates
 
 When doing a local deployment that is ***not*** a production deployment, make sure to run the install script with the "--insecure" flag.
 
@@ -35,7 +36,7 @@ When doing a local deployment that is ***not*** a production deployment, make su
 
 This will generate self-signed SSL certificates. Without this, the installation will fail. The only solution at this point is to reinitialize the VM and start over.
 
-### Step three - locales
+### locales
 
 At the beginning of the install, the script may shout about `locales` not being set up properly. This is an irritating issue. The install script *specifically* wants the user to run the following:
 
@@ -47,7 +48,7 @@ Then, confirm that *only* "en_US.UTF-8" is selected. On the next screen, generat
 
 One may believe that editing the "/etc/locale.gen" file and then running `locale-gen` would result in the same outcome. For whatever reason, it does not.
 
-### Step four - domains & DNS
+### Domains and DNS
 
 At the beginning of the install (after the potential "locales" issue), the script will ask the user to input domains for the different services. Use the following schema:
 
@@ -82,7 +83,7 @@ Windows users would add the same entry into their "hosts" file.
 
 At this point, the install should run correctly and without error. Create a user and password for the admin when requested, and collect the TOTP information as well as the Mesh Central information. Save this information.
 
-### Step five - connect to the dashboard
+### Connect to the dashboard
 
 To use the example from before, https://tactical-rmm.example.com will bring up the dashboard login. However, using this link *will* result in a "backend is offline" error message.
 
@@ -90,7 +91,7 @@ Therefore, be sure to access the dashboard from https://rmm.tactical-rmm.example
 
 This should work, and will direct the user to input a TOTP code.
 
-### Step six - removing the insecure flag
+### Removing the insecure flag
 
 Because of the "--insecure" flag that was set during install, there are many functions that Tactical RMM will not allow the user to perform. This includes creating executables to allow clients (known as "agents") to be added to the dashboard for remote management.
 
@@ -110,7 +111,7 @@ TRMM_INSECURE = True
 
 Restart the server. Tactical RMM will no longer throw errors about attempting to do tasks while using "insecure" self-signed SSL certificates.
 
-### Step seven - adding SSL certificates signed by a root CA
+### Adding SSL certificates signed by a root CA
 
 In conjunction with step six, an additional measure can be taken to secure the server with SSL certificates that have been signed by a root CA (certificate authority).
 
@@ -122,7 +123,7 @@ Therefore, a wildcard certificate would need to be created for `*.tactical-rmm.e
 
 Simply replace the "cert.pem" (public key) and "key.pem" (private key) with those found in the "/etc/ssl/tactical" directory. Then, restart the server. So long as the root CA has been added to the machine accessing the web UI, either at the browser or the OS level, the certificate will register as valid.
 
-### Step eight - getting agent installers to work
+### Getting agent installers to work
 
 After swapping out the public and private keys in the server's "/etc/ssl/tactical" directory, the server's web UI will now be accessible. However, any attempt to create an agent installer, and install it on a client computer, will fail with the error "unable to download the mesh agent from the RMM." This is simply due to server failing to find a root CA that can verify the SSL certificates in the "/etc/ssl/tactical" directory. Therefore, the solution is to provide the root CA to the RMM software.
 
@@ -143,6 +144,22 @@ systemctl restart rmm
 ```
 
 Performing these commands will install a Python package that will enable the RMM software to query the server (after restarting the RMM) and obtain the "CA.crt" credentials needed to verify the SSL certificates. Once this is done, the agent installers will no longer throw the error message, and Tactical RMM will be fully operational.
+
+### Updating Tactical RMM breaks agent installers
+
+Sometimes, but not always, running the "update.sh" script will break the agent installer functionality. This is because the update script will reset what certificates are accessed by the server.
+
+If this happens, simply repeat the steps from [Getting agent installers to work](#getting-agent-installers-to-work), specifically:
+
+```
+source /rmm/api/env/bin/activate
+pip install pip-system-certs
+systemctl restart rmm
+```
+
+This will update `pip-system-certs`, if necessary, and will add those certificates back into the server's certificate store.
+
+As of current testing, this has always resolved the problem.
 
 ---
 
