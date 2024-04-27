@@ -1,4 +1,4 @@
-# PCIe (GPU) passthrough
+# Tips for PCIe (GPU) passthrough on Proxmox
 
 Part of a guide on setting up a [Proxmox server]().
 

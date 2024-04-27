@@ -1,4 +1,4 @@
-# PCIe (GPU) Passthrough
+# Tips for PCIe (GPU) passthrough on QEMU
 
 ## How to set up GPU passthrough
 
@@ -115,5 +115,3 @@ sudo mkinitcpio -p linux
 ## The end!
 
 the end
-
-

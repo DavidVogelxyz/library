@@ -1,4 +1,4 @@
-# Creating Optimized Windows VMs on QEMU
+# Tips for creating optimized Windows VMs on QEMU
 
 ## General rules
 

@@ -1,4 +1,4 @@
-# Security Hardening on Debian/Ubuntu
+# Security hardening on Debian/Ubuntu
 
 ## Getting Started
 

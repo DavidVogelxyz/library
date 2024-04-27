@@ -1,4 +1,4 @@
-# Install Docker on Arch Linux
+# Installing Docker on Arch Linux
 
 ## The Quick Way (with Portainer)
 
