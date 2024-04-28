@@ -12,17 +12,36 @@ NB: Use the Ubuntu Desktop image over the Ubuntu Server image to use `debootstra
 
 - [Introduction](#introduction)
 - [Partitioning the storage drive](#partitioning-the-storage-drive)
+    - [Partitioning with fdisk](#partitioning-with-fdisk)
 - [Encrypting the root partition](#encrypting-the-root-partition)
 - [Creating file systems](#creating-file-systems)
+    - [Swap partitions](#swap-partitions)
+    - [Making file systems](#making-file-systems)
 - [Mounting file systems](#mounting-file-systems)
 - [Installing the operating system](#installing-the-operating-system)
-- [Entering the chroot environment](#entering-the-chroot-environment)
+    - [Package management](#package-management)
+        - [Sources list on Debian](#sources-list-on-debian)
+        - [Sources list on Ubuntu](#sources-list-on-ubuntu)
+- [Setting up the chroot environment](#setting-up-the-chroot-environment)
+- [Making some necessary adjustments](#making-some-necessary-adjustments)
+    - [Time zone](#time-zone)
+    - [Time](#time)
+    - [Locale](#locale)
+    - [Kernel edit (UBUNTU ONLY)](#kernel-edit-ubuntu-only)
+    - [Install packages](#install-packages)
+    - [Fix the fstab file](#fix-the-fstab-file)
+    - [Hostnames](#hostnames)
+    - [Enable networking](#enable-networking)
+    - [Create new main user](#create-new-main-user)
 - [Kernel initialization](#kernel-initialization)
 - [Bootloader](#bootloader)
+    - [Bootloader - BIOS](#bootloader---bios)
+    - [Bootloader - UEFI](#bootloader---uefi)
+    - [Update GRUB](#update-grub)
 
 ## Partitioning the storage drive
 
-Identify whether the computer is UEFI-compatible or not.
+Identify whether the computer is UEFI-compatible or not using the following commands.
 
 ```
 mount | grep efivars
@@ -34,19 +53,23 @@ or:
 ls /sys/firmware/efi/efivars
 ```
 
-Decide whether to install to a UEFI system or a legacy boot (BIOS) system.
+If one of the above commands shows output, then both should display output. If there is an output, then install as a UEFI system. If there is no output, install as a legacy boot (BIOS) system.
 
-Enter root shell:
+If not already logged in as the root user, elevate privileges using the following command:
 
 ```
 sudo -i
 ```
 
-Use `lsblk` to identify the target drive (ex. sdx).
+Use `lsblk` to identify the target drive (ex. "sd*" or "nvme*"):
 
-NB: For newer computers and laptops, the internal drive may look like `/dev/nvme0n1` and not `/dev/sda1`. While the guide uses `$sdxn` as a placeholder, users should substitute the correct drive.
+```
+lsblk
+```
 
-### Partitioning with `fdisk`
+NB: For newer computers and laptops, the internal drive may be an NVMe drive (`/dev/nvme0n1`) and not a SATA drive (`/dev/sda1`). While the guide uses `$sdxn` as a placeholder, users should substitute the correct drive in the place of the variable. Where the placeholder variable appears in the guide, "x" represents the letter of the drive, and "n" represents the partition number. In the instances where `$sdx` appears, no partition value should be given -- only add a partition value when the "n" appears. Also, whenever a number is given in place of "n", that should be the correct partition number. Use best judgment.
+
+### Partitioning with fdisk
 
 Use `fdisk` to partition the drive:
 
@@ -80,14 +103,18 @@ Use `lsblk` to confirm the changes made with `fdisk`.
 
 ## Encrypting the root partition
 
-Also known as full disk encryption (FDE).
+This step may be referred to in other parts of the guide as full disk encryption (FDE).
 
-Use `cryptsetup` to encrypt a volume within the root partition. Then, unlock the encrypted volume.
+Use `cryptsetup` to encrypt a volume within the root partition.
 
 ```
 cryptsetup luksFormat /dev/$sdx2
+```
 
-cryptsetup open /dev/$sdx2 <$LVM_NAME>
+Then, unlock the encrypted volume. In place of `$LVM_NAME`, input a name for the LVM (ex. "cryptlvm").
+
+```
+cryptsetup open /dev/$sdx2 $LVM_NAME
 ```
 
 Use `lsblk` to confirm the changes made with `cryptsetup`. Also, use `ls /dev/mapper` to see the encrypted volume that was created.
@@ -100,7 +127,7 @@ ls /dev/mapper
 
 ### Swap partitions
 
-***NB: I only use swap partitions on computers that run with batteries (laptops, etc). Otherwise, skip to [Making File Systems](#making-file-systems).***
+***NB: Use swap partitions only on computers that run with batteries (laptops, etc). Otherwise, skip to [Making file systems](#making-file-systems).***
 
 Swap partitions are related to suspending computer activity. Most systems support suspending to RAM, but this requires the RAM to have power to save state. On a laptop, this will drain battery life. A better way to suspend activity is to use a swap partition.
 
@@ -108,18 +135,18 @@ Swap partitions work by suspending activity to the disk, rather than RAM. This a
 
 In general, the swap partition should be as large as the RAM space is. For general purposes, the guide has the value set at 4GB. Change this number to whatever is needed by the system.
 
-First, initialize a physical volume. Users using full disk encryption (FDE) will create using `/dev/mapper/<$LVM_NAME>`. Users without FDE will create using `/dev/$sdx2`.
+First, initialize a physical volume. Users using full disk encryption (FDE) will create using `/dev/mapper/$LVM_NAME`. Users without FDE will create using `/dev/$sdx2`.
 
 ```
-pvcreate /dev/mapper/<$LVM_NAME>
+pvcreate /dev/mapper/$LVM_NAME
 ```
 
-Next, create a volume group from that physical volume. Users using full disk encryption (FDE) will create using `/dev/mapper/<$LVM_NAME>`. Users without FDE will create using `/dev/$sdx2`.
+Next, create a volume group from that physical volume. Users using full disk encryption (FDE) will create using `/dev/mapper/$LVM_NAME`. Users without FDE will create using `/dev/$sdx2`.
 
 `vgdebian` can be any name for a volume group.
 
 ```
-vgcreate vgdebian /dev/mapper/<$LVM_NAME>
+vgcreate vgdebian /dev/mapper/$LVM_NAME
 ```
 
 Create a logical volume for the swap partition. The command below assumes a RAM capacity of 4GB -- if different, change it!
@@ -145,10 +172,14 @@ Create a file system for the boot partition.
 mkfs.fat -F32 /dev/$sdx1
 ```
 
-Create a file system for the root partition. Users using full disk encryption (FDE) will make the ext4 file system on `/dev/mapper/<$LVM_NAME>`. Users without FDE will make the file system on `/dev/$sdx2`. Users using a swap partition will make on `/dev/mapper/vgdebian-root`.
+Create a file system for the root partition. Use the following bullet point list to decide which path on which to create the ext4 file system. Going in order, if a bullet point item is true, then stop there and use that path.
+
+- Users using a swap partition will make the file system on `/dev/mapper/vgdebian-root`.
+- Users using full disk encryption (FDE) will make the file system on `/dev/mapper/$LVM_NAME`.
+- Users without FDE will make the file system on `/dev/$sdx2`.
 
 ```
-mkfs.ext4 /dev/mapper/<$LVM_NAME>
+mkfs.ext4 /dev/mapper/$LVM_NAME
 ```
 
 If a swap partition was created, create a file system for it using the following command:
@@ -159,21 +190,33 @@ mkswap /dev/mapper/vgdebian-swap_1
 
 ## Mounting file systems
 
+First, mount the root partition to the `/mnt` directory. This partition should have the same path as the partition on which the ext4 file system was made.
+
 ```
-mount /dev/mapper/<$LVM_NAME> /mnt
+mount /dev/mapper/$LVM_NAME /mnt
+```
 
+Next, create the `/mnt/boot` directory with the following command:
+
+```
 mkdir -pv /mnt/boot
+```
 
+After creating the directory, mount the boot partition to that directory:
+
+```
 mount /dev/$sdx1 /mnt/boot
 ```
 
 ## Installing the operating system
 
+To install an operating system to the drive: update packages, and then install both `debootstrap` and a text editor of choice (ex. `vim`).
+
 ```
 apt update && apt install -y debootstrap vim
 ```
 
-As of writing, the current Debian release (12) is `bookworm`, and the previous release (11) was `bullseye`. The current Ubuntu release is `jammy`.
+As of writing, the current Debian release (12) is `bookworm`, and the previous release (11) was `bullseye`. The current Ubuntu release is `jammy`. Substitute the release of choice in place of `$release`.
 
 ```
 debootstrap $release /mnt
@@ -195,7 +238,7 @@ cp -v /etc/resolv.conf /mnt/etc/
 
 Set up the `/mnt/etc/apt/sources.list` depending on the operating system installed.
 
-#### Sources.list on Debian
+#### Sources list on Debian
 
 [Debian wiki](https://wiki.debian.org/SourcesList#Example_sources.list) has example Debian package lists. Copy one over to `/mnt/etc/apt/sources.list`.
 
@@ -203,7 +246,7 @@ Set up the `/mnt/etc/apt/sources.list` depending on the operating system install
 vim /mnt/etc/apt/sources.list
 ```
 
-#### Sources.list on Ubuntu
+#### Sources list on Ubuntu
 
 Copy over the installer's `sources.list` to the new installation.
 
@@ -217,17 +260,15 @@ NB: Remember to remove `CD-ROM` and add a line for `jammy-backports` (with `univ
 vim /mnt/etc/apt/sources.list
 ```
 
-## Entering the *chroot* environment
+## Setting up the *chroot* environment
 
-Change into the chroot environment:
+Change into the *chroot* environment:
 
 ```
 chroot /mnt /bin/bash
 ```
 
-### Setting up the *chroot* environment
-
-In Arch, the *chroot* environment is set up outside. With Debian and Ubuntu, it's done on the inside.
+NB: In order to save time and effort, there is a script called `debian-setup` that can be used to power through the remainder of the guide. It can be found [here](https://github.com/DavidVogelxyz/debian-setup).
 
 First, `cat` the information on currently mounted drives into the `/etc/fstab` file:
 
@@ -235,7 +276,7 @@ First, `cat` the information on currently mounted drives into the `/etc/fstab` f
 cat /proc/mounts >> /etc/fstab
 ```
 
-Use the `blkid | grep UUID` command to check the output, then add the output to the `/etc/fstab` file:
+Append the output of the `blkid | grep UUID` command to the `/etc/fstab` file:
 
 ```
 blkid | grep UUID >> /etc/fstab
@@ -247,40 +288,48 @@ Install `nala`, a wrapper for `apt`, to get a better view of the package manager
 apt update && apt install -y nala
 ```
 
-Then, using `nala`, install `vim`. If on Debian, install the `locales` package.
+Then, using `nala`, install `vim`. If on Debian, also install the `locales` package.
 
 ```
 nala upgrade && nala install -y vim locales
 ```
 
-### Date, time, and locale
+## Making some necessary adjustments
 
-#### Time zone
+### Time zone
 
-`America/New_York` is the same as `US/Eastern`.
+On Debian-based systems, setting the time zone is easy to do through the use of the `dpkg-reconfigure` command:
 
 ```
 dpkg-reconfigure tzdata
+```
 
+NB: `America/New_York` is the same as `US/Eastern`.
+
+Confirm that the time zone was configured correctly with the following command:
+
+```
 ls -l /etc/localtime
 ```
 
-#### Time
+### Time
+
+Sync the system clock to the hardware clock using the following command:
 
 ```
 hwclock --systohc
 ```
 
-#### Locale
+### Locale
 
-Add two lines to "/etc/locale.conf":
+Using a text editor, create the "/etc/locale.conf" and add the following two lines:
 
 ```
 export LANG="en_US.UTF-8"
 export LC_COLLATE="C"
 ```
 
-Uncomment lines in "/etc/locale.gen", then run `locale-gen`:
+Uncomment lines in "/etc/locale.gen" that pertain to the correct locale (ex. en_US*), then run `locale-gen`:
 
 ```
 locale-gen
@@ -288,7 +337,7 @@ locale-gen
 
 ### Kernel edit ***(UBUNTU ONLY)***
 
-Absolutely necessary to create this file ***BEFORE*** installing `linux-image-generic` on Ubuntu **ONLY**, or the whole install breaks.
+If, ***and only if***, Ubuntu is being installed, it is absolutely necessary to create "/etc/kernel-img.conf" file ***BEFORE*** installing `linux-image-generic` (or the whole install breaks).
 
 ```
 vim /etc/kernel-img.conf
@@ -323,19 +372,25 @@ Confirm that some basic and essential packages are installed by installing them 
 nala install -y curl git gpg htop lvm2 rsync ssh sudo # cryptsetup-initramfs
 ```
 
-#### Should already be installed
+If installing to a BIOS system, the following package should already be installed. However, just to confirm, attempt to install it anyway:
 
 ```
 nala install -y grub-pc
 ```
 
-#### Only necessary for UEFI builds
+If, ***and only if***, installing to a UEFI system, install the following package. Installing `grub-efi` will remove the `grub-pc` package if it is already installed on the system.
 
 ```
 nala install -y grub-efi
 ```
 
-### Fix the `fstab` file
+If the install was set up with FDE, append the output of the `blkid | grep UUID` command to the `/etc/crypttab` file:
+
+```
+blkid | grep UUID >> /etc/crypttab
+```
+
+### Fix the fstab file
 
 Fix the `/etc/fstab` file.
 
@@ -357,7 +412,7 @@ Only for installs that include a swap partition:
 - Add a line for the swap partition. It should look like the following:
 
 ```
-UUID=<UUID_swap> none swap defaults 0 0
+UUID=$UUID_swap none swap defaults 0 0
 ```
 
 After editing the file, run `cat` on the file to confirm the changes.
@@ -366,17 +421,21 @@ After editing the file, run `cat` on the file to confirm the changes.
 cat /etc/fstab
 ```
 
-### Host names
+### Hostnames
 
-New hostname:
+Create a new hostname for the install by either using `echo` and ">" to overwrite the "/etc/hostname" file with the output. Alternatively, use a text editor to edit the file.
 
 ```
 echo "$HOST" > /etc/hostname
+```
 
+To confirm the changes, use `cat` on the file:
+
+```
 cat /etc/hostname
 ```
 
-Add three lines to `vim /etc/hosts`:
+Add three lines to "/etc/hosts":
 
 ```
 127.0.0.1   localhost
@@ -386,19 +445,15 @@ Add three lines to `vim /etc/hosts`:
 
 ### Enable networking
 
-One simple command:
+On Debian, enabling networking is as simple as running one command:
 
 ```
 systemctl enable NetworkManager
 ```
 
-On Ubuntu, a config file must be made:
+On Ubuntu, in addition to enabling `networkmanager`, the "/etc/netplan/networkmanager.yaml" config file must be created:
 
-```
-vim /etc/netplan/networkmanager.yaml
-```
-
-Add the following lines:
+Add the following lines to it:
 
 ```
 network:
@@ -408,25 +463,41 @@ network:
 
 ### Create new main user
 
+First, set a new password for the root user with the following command:
+
 ```
 passwd
+```
 
+Next, create a new user with the `useradd` command. Add the user to the "sudo" group with `-G sudo`, and use `-m` to give that user a home directory. The `-s /bin/bash` is also good, because Debian tends to default the user to the `sh` shell, which has far less features than the standard `bash` shell most users are used to.
+
+```
 useradd -G sudo -s /bin/bash -m $USER
+```
 
+Once the user has been created, set the user's password with the following command:
+
+```
 passwd $USER
+```
 
+While it's not a requirement on Debian-based systems, it's good practice to confirm that users in the "sudo" group are allowed to run root-level commands with the `sudo` command. Near the bottom of the "/etc/sudoers" file, confirm that the command that enables users of group "sudo" to run "any command" is uncommented.
+
+```
 vim /etc/sudoers
 ```
 
 ## Kernel initialization
 
-Instead of editing `/etc/default/grub` as is done on Arch Linux, update the `/etc/crypttab`:
+On a system using FDE, it is a requirement to update the `/etc/crypttab` file, so the system knows to request a password to unlock the encrypted root drive:
 
 ```
-<$LVM_NAME>  UUID=<UUID_$sdx2>  none luks
+$LVM_NAME UUID=$UUID_sdx2 none luks
 ```
 
-Update RAM fs:
+As before, `$LVM_NAME` is the name given to the cryptdevice, and `$UUID_sdx2` is the UUID of the block device that was encrypted.
+
+Whether using FDE or not, update the inital RAM file system with the following command:
 
 ```
 update-initramfs -u -k all
@@ -434,30 +505,32 @@ update-initramfs -u -k all
 
 ## Bootloader
 
-### If BIOS (legacy boot)
+### Bootloader - BIOS
 
-Run this:
+If installing on a BIOS system, run the following command:
 
 ```
 grub-install --target=i386-pc /dev/$sdx
 ```
 
-### If UEFI
+### Bootloader - UEFI
 
-Run this:
+If installing on a UEFI system, run the following command:
 
 ```
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 ```
 
-### After `grub-install`:
+### Update GRUB
 
 Unlike on Arch Linux and similar distribution, this shouldn't be necessary, because no changes were put into effect. In those distributions, the decryption of the root partition is handled by `mkinitcpio`, which is why adjustments are made to `/etc/default/grub`. On Debian and Ubuntu, the kernel does not handle the decryption, and `/etc/crypttab` will instead guide the decryption process.
 
-But, just to be sure, run it anyways.
+But, just to be sure, run the following command anyways:
 
 ```
 update-grub
 ```
 
-# THE END
+---
+
+Congrats on installing an Debian-based Linux system!
