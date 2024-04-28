@@ -1,23 +1,35 @@
 # Installing Docker on Arch Linux
 
-## The Quick Way (with Portainer)
+## The quick way (with Portainer)
 
-Add Docker to the allowed commands in `.config/shell/aliasrc`.
+First, add `docker` to the commands that don't require `sudo` in `~/.config/shell/aliasrc`.
 
-Also, confirm `pacman` alias:
+Update packages and install `docker`:
 
 ```
-alias pacman="p"
+pacman -Sy && pacman -S docker
+```
 
-p -S docker
+Enable and start the `docker` service:
 
-systemctl enable docker
+```
+systemctl enable docker && systemctl start docker
+```
 
-systemctl start docker
+Create a volume to store data from `portainer`:
 
-docker volume create portainer_stuff
+```
+docker volume create portainer_data
+```
 
-docker run -d -p 9443:9443 -p 8000:8000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_stuff:/data portainer/portainer-ce:latest
+Create the `portainer` container:
 
+```
+docker run -d -p 9443:9443 -p 8000:8000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+```
+
+Check to confirm the container is running:
+
+```
 docker ps
 ```
