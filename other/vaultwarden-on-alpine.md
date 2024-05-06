@@ -1,31 +1,47 @@
 # Vaultwarden password manager, running on Alpine Linux
 
-NB: This guide has been tested using an Alpine Linux container on Proxmox, using the default Alpine image that Proxmox pulls.
+NB:
 
-NB: When using a tty on Alpine Linux, "Ctrl-Alt-Del" reboots the computer.
+- This guide has been tested using an Alpine Linux container on Proxmox, using the default Alpine image that Proxmox pulls.
+- On multiple occasions, this guide makes reference to the `service` command. Know that `service` functions the same way as `rc-service`.
+- In addition, `rc-update add $SERVICE` is a shorter way to write `rc-update add $SERVICE default`.
+    - Both commands will add the `$SERVICE` to the "default" run level.
+- When using a tty on Alpine Linux, "Ctrl-Alt-Del" reboots the computer.
 
 ## Table of contents
 
-- [Configure SSH](#configure-ssh)
-- [Add configuration files](#add-configuration-files)
-- [Install Vaultwarden](#install-vaultwarden)
-- [Configure SSL and HTTPS connections](#configure-ssl-and-https-connections)
-- [Configure nginx](#configure-nginx)
+- [Configuring SSH](#configuring-ssh)
+    - [On-prem Proxmox install](#on-prem-proxmox-install)
+    - [Securing SSH](#securing-ssh)
+- [Adding configuration files](#adding-configuration-files)
+- [Installing UFW](#installing-ufw)
+    - [General firewall rules](#general-firewall-rules)
+    - [IP-specific firewall rules](#ip-specific-firewall-rules)
+    - [Enabling UFW](#enabling-ufw)
+- [Installing Vaultwarden](#installing-vaultwarden)
+    - [Securing the Vaultwarden admin panel](#securing-the-vaultwarden-admin-panel)
+- [Configuring SSL and HTTPS connections](#configuring-ssl-and-https-connections)
+- [Configuring nginx](#configuring-nginx)
 - [Final steps](#final-steps)
 - [Additional notes](#additional-notes)
-    - [How to change the admin token password](#how-to-change-the-admin-token-password)
+    - [Changing the admin token password](#changing-the-admin-token-password)
     - [Adding SMTP to Vaultwarden](#adding-smtp-to-vaultwarden)
     - [Fixing icons](#fixing-icons)
+- [References](#references)
 
-## Configure SSH
+## Configuring SSH
 
 First, update the `apk` package list and install some packages that will be used throughout the Vaultwarden installation process.
 
 ```
-apk update && apk add openssh-server vim git curl tmux nginx openssl
+apk update && apk add openssh-server vim git curl tmux ufw nginx openssl
 ```
 
-Next, configure `ssh` by editing the "/etc/ssh/sshd_config" file. Most notably, "PermitRootLogin" needs to be set as "yes", as the Alpine Linux container doesn't have a user created by default.
+At this point, the guide splits depending on whether the install is local / on-premises (on-prem) or via a cloud service provider. For an on-prem solution, start at [on-prem Proxmox install](#on-prem-proxmox-install); for a cloud service provider, start at [securing SSH](#securing-ssh).
+
+### On-prem Proxmox install
+
+Configure `ssh` by editing the "/etc/ssh/sshd_config" file. Most notably, "PermitRootLogin" needs to be set as "yes", as the Alpine Linux container doesn't have a user created by default.
 
 ```
 vim /etc/ssh/sshd_config
@@ -36,10 +52,8 @@ At least on the Alpine Linux container for Proxmox, when `ssh` is installed, `ss
 To ensure that `ssh` lockouts do not occur, run the following command:
 
 ```
-rc-service sshd start && rc-update add sshd default
+service sshd start && rc-update add sshd
 ```
-
-NB: On multiple occasions, this guide makes reference to the `rc-service` command. Know that `service` functions the same way as `rc-service`. In addition, `rc-update add $SERVICE` is a shorter way to write `rc-update add $SERVICE default`; both commands will add the "$SERVICE" to the "default" run level.
 
 In order to test `ssh` login, get the IP address of the VM container.
 
@@ -47,13 +61,9 @@ In order to test `ssh` login, get the IP address of the VM container.
 ip a
 ```
 
-Also, change the password (if necessary).
+### Securing SSH
 
-```
-passwd
-```
-
-Especially if using the root user for configuration, it is best practice to use a SSH key for login. A key can be created on the `ssh` client computer by running the following:
+Especially when using the root user for configuration, it is best practice to use a SSH key for login. A key can be created on the `ssh` client computer by running the following:
 
 ```
 ssh-keygen -t rsa -b 4096
@@ -65,13 +75,24 @@ Once the key is created, copy it over from the `ssh` client using the following 
 ssh-copy-id -i /PATH/TO/SSH/KEY root@$ALPINELINUX
 ```
 
-At this point, the "PasswordAuthentication" setting in "/etc/ssh/sshd_config" should be explicity set to "no". The service can be started with:
+Edit the "/etc/ssh/sshd_config" file and secure `ssh` by updating the following:
+
+- "PermitRootLogin" should be set to "prohibit-password".
+- "PasswordAuthentication" should be explicity set to "no".
+
+The service can be restarted with:
 
 ```
 service sshd restart
 ```
 
-## Add configuration files
+Also, change the password (if necessary).
+
+```
+passwd
+```
+
+## Adding configuration files
 
 First, create some directories that will store some of the configuration files:
 
@@ -118,10 +139,86 @@ echo "source ~/.config/shell/aliasrc" >> ~/.ashrc && echo -e "\nsource ~/.ashrc"
 Another change that, while minimal, can be helpful, is to change the "/etc/profile" file so that the username shows along with the hostname. This can easily be accomplished with the following `sed` command:
 
 ```
-sed "s/PS1='\\\h/PS1='\\\u@\\\h/g" /etc/profile
+sed -i "s/PS1='\\\h/PS1='\\\u@\\\h/g" /etc/profile
 ```
 
-## Install Vaultwarden
+## Installing UFW
+
+Add a default firewall rule to deny incoming connections:
+
+```
+ufw default deny incoming
+```
+
+Add a default firewall rule to allow outgoing connections:
+
+```
+ufw default allow outgoing
+```
+
+Set logging to off:
+
+```
+ufw logging off
+```
+
+For generalized firewall rules, see [general firewall rules](#general-firewall-rules); to create firewall rules that only allow a certain IP to access the services, see [IP-specific firewall rules](#ip-specific-firewall-rules).
+
+### General firewall rules
+
+Add a firewall rule to allow SSH connections:
+
+```
+ufw allow ssh
+```
+
+Add a firewall rule to allow HTTP connections:
+
+```
+ufw allow http
+```
+
+Add a firewall rule to allow HTTPS connections:
+
+```
+ufw allow https
+```
+
+### IP-specific firewall rules
+
+Add a firewall rule to allow SSH connections from only specific IP addresses:
+
+```
+ufw allow from $IP_ADDRESS proto tcp to any port 22
+```
+
+Add a firewall rule to allow HTTP connections from only specific IP addresses:
+
+```
+ufw allow from $IP_ADDRESS proto tcp to any port 80
+```
+
+Add a firewall rule to allow HTTPS connections from only specific IP addresses:
+
+```
+ufw allow from $IP_ADDRESS proto tcp to any port 443
+```
+
+### Enabling UFW
+
+Enable `ufw`:
+
+```
+ufw enable
+```
+
+Enable `ufw` to run on startup:
+
+```
+rc-update add ufw
+```
+
+## Installing Vaultwarden
 
 First, enable packages from the "edge" repository by echoing the following command into the "/etc/apk/repositories" file:
 
@@ -138,19 +235,26 @@ apk update && apk add vaultwarden vaultwarden-web-vault
 Next, add `vaultwarden` into the OpenRC default services and start it up.
 
 ```
-rc-update add vaultwarden default && rc-service vaultwarden start
+rc-update add vaultwarden && service vaultwarden start
 ```
 
-To confirm that the service is running correctly, attempt the following and assess the output:
+To test that `vaultwarden` is running, `curl` the following:
 
 ```
 curl localhost:8000
+```
+
+Using `curl` on `localhost:8000` should return a 404 error.
+
+Now, `curl` the following:
+
+```
 curl localhost:8000/admin
 ```
 
-Neither page should load correctly.
+Using `curl` on `localhost:8000/admin` should return a message about configuring an admin token.
 
-`localhost:8000` should return a 404 error, and the `localhost:8000/admin` page should return a message about configuring an admin token.
+### Securing the Vaultwarden admin panel
 
 Using a ***good password***, an admin token can be created with the following command:
 
@@ -201,7 +305,7 @@ In either case, the ADMIN_TOKEN variable should reflect the admin token that was
 Once the environment variables are set, the `vaultwarden` service should be restarted using the following command:
 
 ```
-rc-service vaultwarden restart
+service vaultwarden restart
 ```
 
 With this configuration in place, the following curl commands should return different output than before:
@@ -213,7 +317,7 @@ curl localhost:8000/admin
 
 `localhost:8000` should return output for the web-vault login page, and the `localhost:8000/admin` page should return a page related to signing in to the admin panel.
 
-## Configure SSL and HTTPS connections
+## Configuring SSL and HTTPS connections
 
 Now, it's time to set up some self-signed SSL certificates in order to enable HTTPS connections. Create the following directory and change directory into it.
 
@@ -223,21 +327,21 @@ mkdir -pv /etc/nginx/ssl && cd /etc/nginx/ssl
 
 Using the following two commands, create the required files.
 
-Replace "[$SERVER]" with a name for the files being generated. This will likely be a name like "vaultwarden" or "server".
+Replace `$SERVER` with a name for the files being generated. This will likely be a name like "vaultwarden" or "server".
 
 The first command creates the server's private key, as well as a "certificate signing request" (CSR) file.
 
 ```
-openssl req -newkey rsa:4096 -nodes -keyout [$SERVER].key -out [$SERVER].csr
+openssl req -newkey rsa:4096 -nodes -keyout $SERVER.key -out $SERVER.csr
 ```
 
 The next command uses the private key and the CSR to generate a certificate file.
 
 ```
-openssl x509 -signkey [$SERVER].key -in [$SERVER].csr -req -days 36500 -out [$SERVER].crt
+openssl x509 -signkey $SERVER.key -in $SERVER.csr -req -days 36500 -out $SERVER.crt
 ```
 
-## Configure nginx
+## Configuring nginx
 
 Create a new configuration file in the "/etc/nginx/http.d" directory:
 
@@ -247,25 +351,25 @@ vim /etc/nginx/http.d/vaultwarden.conf
 
 Configure the file to look something similar to the below configuration file.
 
-Obviously, swap out "[$HOSTNAME]" with the hostname of the server running `vaultwarden`, and change "[$SERVER]" to the name of the '.crt' and '.key' files that were created in the previous step.
+Obviously, swap out `$HOSTNAME` with the hostname of the server running `vaultwarden`, and change `$SERVER` to the name of the '.crt' and '.key' files that were created in the previous step.
 
 ```
 server {
     listen 80;
     listen [::]:80;
-    return 301 https://[$HOSTNAME]$request_uri;
+    return 301 https://$HOSTNAME$request_uri;
 
-    server_name [$HOSTNAME];
+    server_name $HOSTNAME;
 }
 
 server {
     listen 443 ssl;
     listen [::]:443 ;
 
-    server_name [$HOSTNAME];
+    server_name $HOSTNAME;
 
-    ssl_certificate /etc/nginx/ssl/[$SERVER].crt;
-    ssl_certificate_key /etc/nginx/ssl/[$SERVER].key;
+    ssl_certificate /etc/nginx/ssl/$SERVER.crt;
+    ssl_certificate_key /etc/nginx/ssl/$SERVER.key;
 
     location / {
         proxy_pass http://localhost:8000;
@@ -276,20 +380,20 @@ server {
 With the configuration file set up, add the `nginx` service to the list of default services. Then, start the service, and curl the output.
 
 ```
-rc-update add nginx default && rc-service nginx start
+rc-update add nginx && service nginx start
 ```
 
-To test the `nginx` configuration, curl the following (obviously, change "[$HOSTNAME]" to the hostname of the server):
+To test the `nginx` configuration, curl the following (obviously, change `$HOSTNAME` to the hostname of the server):
 
 ```
-curl https://[$HOSTNAME]
+curl https://$HOSTNAME
 ```
 
 This should display the same output as curling "localhost:8000".
 
 ## Final steps
 
-With all of this configuration in place, accessing the server at https://[$HOSTNAME] should return the Vaultwarden login page. Also, accessing https://[$HOSTNAME]/admin should return the administration panel. Simply enter the password that was used to generate the admin token to explore the admin panel.
+With all of this configuration in place, accessing the server at https://$HOSTNAME should return the Vaultwarden login page. Also, accessing https://$HOSTNAME/admin should return the administration panel. Simply enter the password that was used to generate the admin token to explore the admin panel.
 
 Congrats on setting up a Vaultwarden instance using Alpine Linux!
 
@@ -297,7 +401,7 @@ Congrats on setting up a Vaultwarden instance using Alpine Linux!
 
 This section contains additional comments and troubleshooting steps that have been useful in administrating a Vaultwarden server.
 
-### How to change the admin token password
+### Changing the admin token password
 
 In order to change the admin token for the Vaultwarden admin panel, settings must be changed in the correct files. If both files exist, both "/etc/conf.d/vaultwarden" ***AND*** "/var/lib/vaultwarden/config.json" must be edited for the changes to occur.
 
@@ -333,3 +437,7 @@ Regardless, there was a very simple way to resolve this issue.
 The trick was to remove all icon files found in "/var/lib/vaultwarden/icon-cache". Once the icon files have been deleted, the user experiencing the issue should disable icons in the user's preferences (within the web vault's UI) and save the change. Then, re-enable icons and save again. This will force the server to query the URLs for icons, and all the icons will be downloaded again.
 
 NB: One way to confirm whether the icons are loading is to go to "https://vaultwarden-domain.tld/icons/icon-domain.tld/icon.png" and see whether the icon loads correctly or not.
+
+## References
+
+- [Vaultwarden wiki](https://github.com/dani-garcia/vaultwarden/wiki)
