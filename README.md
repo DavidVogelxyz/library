@@ -18,6 +18,7 @@ My guides for different installs and customizations, etc.
     - [Downloading video files using ffmpeg](other/ffmpeg-download-videos.md)
     - [Git](other/git.md)
     - [GPG](other/gpg.md)
+    - [Nextcloud cloud storage, running on Alpine Linux](other/nextcloud-on-alpine.md)
     - [Resizing volumes using LVM](other/resize-volumes-using-lvm.md)
     - [Tactical RMM](other/tactical-rmm.md)
     - [Vaultwarden password manager, running on Alpine Linux](other/vaultwarden-on-alpine.md)

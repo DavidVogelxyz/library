@@ -92,6 +92,8 @@ Also, change the password (if necessary).
 passwd
 ```
 
+In addition, for cloud install, the "/etc/hostname" and "/etc/hosts" files may need to be updated to reflect the correct hostname for the server.
+
 ## Adding configuration files
 
 First, create some directories that will store some of the configuration files:
