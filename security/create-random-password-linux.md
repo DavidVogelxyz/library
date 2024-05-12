@@ -30,3 +30,8 @@ openssl rand -base64 16
 ```
 
 This is generally an easier option to use, as opposed to `tr`, but it requires that `openssl` be installed on the Linux machine. Most Linux installations will have `openssl` by default, but it's even more likely that `tr` will already be installed, as `tr` is a GNU coreutil.
+
+## References
+
+- [StackExchange - How to generate a random string?](https://unix.stackexchange.com/questions/230673/how-to-generate-a-random-string)
+- [Linux for Devices - How to Generate Random Passwords On Linux Shell](https://www.linuxfordevices.com/tutorials/linux/generate-random-passwords)

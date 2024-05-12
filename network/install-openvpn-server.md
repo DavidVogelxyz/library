@@ -15,6 +15,7 @@ As is explained in other parts of the guide, these instructions can be deployed 
 - [Setting up the virtual environment](#setting-up-the-virtual-environment)
 - [Setting up SSH](#setting-up-ssh)
 - [Setting up the OpenVPN server](#setting-up-the-openvpn-server)
+- [References](#references)
 
 ## Initial setup
 
@@ -144,3 +145,8 @@ sftp -i /PATH/TO/THE/KEY.pub $USER@$HOST
 The client files should be dumped into the user's home folder, so the only command that *should* be needed from within `sftp` is the `get FILE.ovpn` command.
 
 With this configuration file, the user should be able to import the configuration file into their OpenVPN client and connect to the server!
+
+## References
+
+- [GitHub - Angristan - openvpn-install](https://github.com/angristan/openvpn-install)
+- [YouTube - MentalOutlaw - How to Create Your Own VPN (and why)](https://www.youtube.com/watch?v=Lk_v6Q0YsNo)

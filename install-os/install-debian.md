@@ -38,6 +38,7 @@ NB: Use the Ubuntu Desktop image over the Ubuntu Server image to use `debootstra
     - [Bootloader - BIOS](#bootloader---bios)
     - [Bootloader - UEFI](#bootloader---uefi)
     - [Update GRUB](#update-grub)
+- [References](#references)
 
 ## Partitioning the storage drive
 
@@ -534,3 +535,10 @@ update-grub
 ---
 
 Congrats on installing an Debian-based Linux system!
+
+## References
+
+- [Youtube - Animortis Fortress - Ubuntu 22.10 Debootstrap Installation](https://www.youtube.com/watch?v=UumkGuoy0tk)
+    - The YouTube video the demonstrated how to install Debian using `debootstrap`
+- [Ubuntu Help - Full Disk Encryption: How To (2019)](https://help.ubuntu.com/community/Full_Disk_Encryption_Howto_2019)
+    - The original reference guide, used from 2020 until 2023

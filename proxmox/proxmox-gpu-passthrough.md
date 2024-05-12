@@ -117,3 +117,8 @@ update-initramfs -u -k all
 ```
 
 ## The end!
+
+## References
+
+- [YouTube - Techno Tim - Before I do anything on Proxmox, I do this first...](https://www.youtube.com/watch?v=GoZaMgEgrHw)
+    - Reference for GPU passthrough on Proxmox

@@ -126,3 +126,11 @@ sha256sum /var/lib/vz/template/iso/virtio-win-0.1.229.iso
 
 ## Link Aggregation (LAG) with Proxmox
 
+## References
+
+- [YouTube - NetworkChuck - Virtual Machines Pt. 2 (Proxmox install w/ Kali Linux)](https://www.youtube.com/watch?v=_u8qTN3cCnQ)
+    - Original video that showed how to install Proxmox using the GUI
+    - Specifically, the reference for "LVM resizing" commands
+- [YouTube - Techno Tim - Before I do anything on Proxmox, I do this first...](https://www.youtube.com/watch?v=GoZaMgEgrHw)
+    - Another video that showed how to essential Proxmox setup
+    - Specifically, the reference for GPU passthrough on Proxmox

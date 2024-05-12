@@ -26,3 +26,11 @@ In a situation where the audio and video have been split into separate files, th
 ```
 ffmpeg -i "$video_URL" -i "$audio_URL" -c copy $FILE_NAME.mp4
 ```
+
+## References
+
+- [Reddit - Is there any way to download view only videos from sharepoint?](https://www.reddit.com/r/sharepoint/comments/nuk8q0/is_there_any_way_to_download_view_only_videos/)
+    - The original Reddit post where the solution was found.
+- [Linux | Security | Networking - How to Download View-Only Teams Meeting Recording Video from SharePoint](https://www.lisenet.com/2022/how-to-download-view-only-teams-meeting-recording-video-from-sharepoint/)
+    - According to the Reddit users with the solution, this was the source.
+- [Imgur - Image of the correct object in the browser's developer tools](https://imgur.com/a/V0IfOxM)

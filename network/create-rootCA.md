@@ -5,6 +5,7 @@
 - [Creating a root CA](#creating-a-root-ca)
 - [Single server certificate](#single-server-certificate)
 - [Wildcard server certificate](#wildcard-server-certificate)
+- [References](#references)
 
 ## Creating a root CA
 
@@ -122,3 +123,8 @@ An additional note on wildcard certificates: when a wildcard certificate is crea
     - However, a FQDN such as `additional.subdomain.example.com` would not be covered by a wildcard certificate for `*.example.com`.
 
 In order to get a wildcard certificate working for `additional.subdomain.example.com`, as well as another FQDN (like `another.subdomain.example.com`), the wildcard certificate would need to be issued for `*.subdomain.example.com`.
+
+## References
+
+- [Baeldung - Creating a Self-Signed Certificate with OpenSSL](https://www.baeldung.com/openssl-self-signed-cert)
+- [GitHub - fntlnz - Self-Signed Certificate with Custom CA](https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309)

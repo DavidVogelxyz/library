@@ -13,6 +13,7 @@
     - [Adding SSL certificates signed by a root CA](#adding-ssl-certificates-signed-by-a-root-ca)
     - [Getting agent installers to work](#getting-agent-installers-to-work)
     - [Updating Tactical RMM breaks agent installers](#updating-tactical-rmm-breaks-agent-installers)
+- [References](#references)
 
 ## Installation
 
@@ -164,3 +165,9 @@ As of current testing, this has always resolved the problem.
 ---
 
 Congrats on getting the Tactical RMM server deployed!
+
+## References
+
+- [Tactical RMM's official guide on installing a Tactical RMM server](https://docs.tacticalrmm.com/install_server/)
+- [GitHub - Tactical RMM Issue #1114 - Unable to download the mesh agent from the RMM](https://github.com/amidaware/tacticalrmm/discussions/1114)
+    - MrGoodbody's response was the key to fixing agent installers

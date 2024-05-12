@@ -38,6 +38,7 @@ This guide will work for both Arch and Artix Linux. Any differences between the 
     - [Bootloader - BIOS](#bootloader---bios)
     - [Bootloader - UEFI](#bootloader---uefi)
     - [Update GRUB](#update-grub)
+- [References](#references)
 
 ## Enabling wireless internet on Artix Linux
 
@@ -535,3 +536,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ---
 
 Congrats on installing an Arch-based Linux system!
+
+## References
+
+- [YouTube - Luke Smith - Install Artix or Arch Linux (Encrypted system)](https://www.youtube.com/watch?v=dI3bGeT31Bo)
+    - [Alternative link to Luke's personal site](https://videos.lukesmith.xyz/w/n1cMQYYzwPoegM2oXfz2iC)

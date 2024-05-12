@@ -5,6 +5,7 @@
 - [Local SSH tunnel](#local-ssh-tunnel)
 - [Remote SSH tunnel](#remote-ssh-tunnel)
 - [SSH proxy tunnel](#ssh-proxy-tunnel)
+- [References](#references)
 
 ## Local SSH tunnel
 
@@ -134,3 +135,12 @@ Explanation:
     - Example: `ssh $USER@example.com`
 
 When running this command, the `ssh` command will appear to hang, so long as the connection is active. Cancelling out of the command breaks the tunnel, and would result in the webpage no longer being accessible to the local user.
+
+## References
+
+- [YouTube - Tony Teaches Tech - How to SSH Tunnel (simple example)](https://www.youtube.com/watch?v=x1yQF1789cE)
+    - Reference for "creating local SSH tunnel"
+- [YouTube - Tony Teaches Tech - How to Reverse SSH Tunnel](https://www.youtube.com/watch?v=TZ6W9Hi9YJw)
+    - Reference for "creating remote SSH tunnel"
+- [YouTube - Tony Teaches Tech - How to Make an SSH Proxy Tunnel](https://www.youtube.com/watch?v=F-ubwghsWPM)
+    - Reference for "creating SSH proxy tunnel"

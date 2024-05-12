@@ -20,6 +20,7 @@
   - [Disable VPN kill-switch](#disable-vpn-kill-switch)
 - [Using the Travel Router](#using-the-travel-router)
   - [Troubleshooting](#troubleshooting)
+- [References](#references)
 
 ## Start up
 
@@ -353,3 +354,7 @@ In addition, when configuring the travel router to work as a VPN client to a VPN
 ```
 auth-user-pass /etc/openvpn/client.auth
 ```
+
+## References
+
+- [YouTube - NetworkChuck - Super Secure Raspberry Pi Router (Wireless VPN Travel Router)](https://www.youtube.com/watch?v=jlHWnKVpygw)

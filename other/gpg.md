@@ -8,6 +8,7 @@ NB: What some people refer to as "private keys", `gpg` refers to as "secret keys
 - [Listing keys](#listing-keys)
 - [How to encrypt a file](#how-to-encrypt-a-file)
 - [Exporting keys](#exporting-keys)
+- [References](#references)
 
 ## Creating a GPG key
 
@@ -110,3 +111,8 @@ Delete a key:
 ```
 gpg --delete-key $KEY_ID
 ```
+
+## References
+
+- [Medium - GPG Quickstart Guide](https://medium.com/@acparas/gpg-quickstart-guide-d01f005ca99)
+    - Original reference for how to create GPG keys and how to use them properly

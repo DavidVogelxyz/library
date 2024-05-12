@@ -115,3 +115,7 @@ sudo mkinitcpio -p linux
 ## The end!
 
 the end
+
+## References
+
+- [YouTube - MentalOutlaw - GPU Pass-through On Linux/Virt-Manager](https://www.youtube.com/watch?v=KVDUs019IB8)
