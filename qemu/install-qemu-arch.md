@@ -42,3 +42,7 @@ sv restart libvirtd
 sudo sv restart libvirtd
 sv status libvirtd
 ```
+
+## References
+
+- [YouTube - MentalOutlaw - Ditch Virtualbox, Get QEMU/Virt Manager](https://www.youtube.com/watch?v=wxxP39cNJOs)

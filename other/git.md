@@ -10,6 +10,7 @@ NB: For any `git config` command, omitting the "--global" or "--local" option wi
 - [Patch adding and patch committing](#patch-adding-and-patch-committing)
 - [Using diff](#using-diff)
 - [Using restore](#using-restore)
+- [References](#references)
 
 ## Setting up a new Git repository
 
@@ -178,3 +179,38 @@ To restore a file to the version found in the most recent commit and discard the
 ```
 git restore $FILE
 ```
+
+## References
+
+- [Git SCM documentation - Getting Started - First-Time Git Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
+    - Reference for `user.name` and `user.email` commands
+- [FreeCodeCamp - A Beginner's Guide to Git](https://www.freecodecamp.org/news/a-beginners-guide-to-git-how-to-create-your-first-github-project-c3ff53f56861/)
+    - Reference for setting up a `git` repository with GitHub
+    - Specifically, [this image](https://cdn-media-1.freecodecamp.org/images/cxRrZUe-tW2Wkn0WUg-MsN1m1WesvGPlJT7V) for the command: `git remote add origin $URL`
+- [Atlassian - Setting up a repository](https://www.atlassian.com/git/tutorials/setting-up-a-repository)
+    - Another reference for setting up a `git` repository with GitHub
+    - Again, for the command: `git remote add origin $URL`
+- [GitHub Documentation - Signing Commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)
+    - Reference for `commit.gpgsign` command
+- [GitHub Documentation - Telling Git about your signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key)
+    - Reference for `user.signingkey` command
+- [StackOverflow - How do I revert a Git repository to a previous commit?](https://stackoverflow.com/questions/4114095/how-do-i-revert-a-git-repository-to-a-previous-commit)
+    - Reference for [the correct way to do a rollback](#the-correct-way-to-do-a-rollback)
+- [YouTube - The Modern Coder - Learn how to rewrite Git history - Amend, Reword, Delete, Reorder, Squash and Split](https://www.youtube.com/watch?v=ElRzTuYln0M)
+    - Reference for using `git rebase -i` ([a more correct way to do a rollback](#a-more-correct-way-to-do-a-rollback))
+- [YouTube - ChaelCodes - Stop Using git add .](https://www.youtube.com/watch?v=u3NG1966zso)
+    - Reference for [patch adding and patch committing](#patch-adding-and-patch-committing)
+- [NuclearSquid - git add --patch and --interactive](https://nuclearsquid.com/writings/git-add/)
+    - Reference for other options for `git add -p`
+- [Atlassian - Git diff](https://www.atlassian.com/git/tutorials/saving-changes/git-diff)
+    - Reference for `git diff`
+- [Git SCM documentation - git restore](https://git-scm.com/docs/git-restore)
+    - Reference for `git restore`
+- [StackOverflow - What is `git restore` and how is it different from `git reset`?](https://stackoverflow.com/questions/58003030/what-is-git-restore-and-how-is-it-different-from-git-reset)
+    - Another reference for `git restore`
+- [Git SCM documentation - git stash](https://git-scm.com/docs/git-stash)
+    - Reference for `git stash`
+- [YouTube - Chris Titus Tech - How to Use GitHub](https://www.youtube.com/watch?v=v_1iqtOnUMg)
+    - One of the first videos viewed about how to use GitHub
+- [YouTube - Fireship - 13 Advanced (but useful) Git Techniques and Shortcuts](https://www.youtube.com/watch?v=ecK3EnyGD8o)
+    - Another one of the first videos viewed about how to use Git

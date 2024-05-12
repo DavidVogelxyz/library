@@ -33,3 +33,8 @@ Check to confirm the container is running:
 ```
 docker ps
 ```
+
+## References
+
+- [YouTube - NetworkChuck - Portainer](https://www.youtube.com/watch?v=iX0HbrfRyvc)
+- [YouTube - NetworkChuck - Docker Containers 101](https://www.youtube.com/watch?v=eGz9DS-aIeY&list=PLIhvC56v63IJlnU4k60d0oFIrsbXEivQo)

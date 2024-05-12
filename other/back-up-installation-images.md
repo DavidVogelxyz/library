@@ -12,6 +12,7 @@ This guide shares some of those methods.
     - [Using sparse conversion with dd](#using-sparse-conversion-with-dd)
 - [Using gzip and zcat](#using-gzip-and-zcat)
 - [Notes from "old ways"](#notes-from-"old-ways")
+- [References](#references)
 
 ## Using dd
 
@@ -98,3 +99,8 @@ dd if=/dev/$sdx | gzip -v9c > file.img.gz
 ```
 
 However, `gzip` can be run directly on files. It is not necessary to run `cat` or `dd` on the device in order to pipe it into `gzip`. This is identical to Luke Smith's rant about "[don't `cat` into `grep`](https://www.youtube.com/watch?v=82NBMvx6vFY)"
+
+## References
+
+- [ServerFault - What is fastest way to copy a sparse file? What method results in the smallest file?](https://serverfault.com/questions/665335/what-is-fastest-way-to-copy-a-sparse-file-what-method-results-in-the-smallest-f)
+- [YouTube - Luke Smith - Don't cat into grep](https://www.youtube.com/watch?v=82NBMvx6vFY)

@@ -130,3 +130,7 @@ systemctl restart nginx
 ```
 
 Navigate to http://yourls.local/admin or http://IPADDRESS/admin and install YOURLS via the web interface. Only one of the two will work, and that's the one that was entered into "/var/www/YOURLS/user/config.php"
+
+## References
+
+- [YOURLS official documentation](https://yourls.org/docs)
