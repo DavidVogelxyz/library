@@ -2,14 +2,26 @@
 
 NB: For any `git config` command, omitting the "--global" or "--local" option will set the config local to the current working directory (repo).
 
+## Introduction
+
+`Git` is a version control system (VCS), also known as a source-control management (SCM) system. Knowing how to use `git` properly is essential to being a developer and IT professional. This guide will summarize how to perform many useful tasks in `git`.
+
 ## Table of contents
 
+- [Introduction](#introduction)
 - [Setting up a new Git repository](#setting-up-a-new-git-repository)
 - [How to set up a Git repo with GPG signing](#how-to-set-up-a-git-repo-with-gpg-signing)
-- [The correct way to do a rollback](#the-correct-way-to-do-a-rollback)
+- [Rolling back commits](#rolling-back-commits)
+    - [The correct way to do a rollback](#the-correct-way-to-do-a-rollback)
+    - [A more correct way to do a rollback](#a-more-correct-way-to-do-a-rollback)
+        - [Fixing commit messages](#fixing-commit-messages)
+        - [Fixing files that were previously committed](#fixing-files-that-were-previously-committed)
 - [Patch adding and patch committing](#patch-adding-and-patch-committing)
+    - [Patch committing](#patch-committing)
+    - [Patch adding](#patch-adding)
 - [Using diff](#using-diff)
 - [Using restore](#using-restore)
+- [Using stash](#using-stash)
 - [References](#references)
 
 ## Setting up a new Git repository
@@ -20,6 +32,9 @@ First, set the user's name and the user's e-mail. To do this system-wide (global
 
 ```
 git config --global user.name $NAME
+```
+
+```
 git config --global user.email $EMAIL_ADDRESS
 ```
 
@@ -27,6 +42,9 @@ To do the same for only the current repo, use the following commands:
 
 ```
 git config --local user.name $NAME
+```
+
+```
 git config --local user.email $EMAIL_ADDRESS
 ```
 
@@ -76,7 +94,15 @@ To set a key local to a specific repo, use the following command:
 git config --local user.signingkey $KEY_ID
 ```
 
-## The correct way to do a rollback
+## Rolling back commits
+
+Sometimes, errors are made when committing to `git` and GitHub, and edits are required.
+
+Originally, the section "[the correct way to do a rollback](#the-correct-way-to-do-a-rollback)" was written as a way to perform these changes. But, it's actually a clunky way of making these changes. A better way to rollback commits is described in "[a more correct way to do a rollback](#a-more-correct-way-to-do-a-rollback)".
+
+For now, the original method will stay in the guide as a reference, as it does work. However, it may be removed in the future.
+
+### The correct way to do a rollback
 
 There have been times when I've made commits in a less-than-preferred manner.
 
@@ -106,7 +132,57 @@ git push -fu origin master
 
 Normally, I use `git push -u origin master`. However, in this case, I require a --force flag to overwrite the commit that was already pushed to the public repo. While I could write the flags as `-uf`, I find the other way to be more amusing.
 
+### A more correct way to do a rollback
+
+Recently, I learned that the method described in the [previous section](#the-correct-way-to-do-a-rollback) is actually a sub-optimal way of performing these changes. A better method is described below.
+
+#### Fixing commit messages
+
+A prime example of a use case for this method is the following: wanting to change a commit message (to fix a typo) for a commit that is no longer the previous commit.
+
+Use the following command:
+
+```
+git rebase -i $HASH_OF_COMMIT
+```
+
+Note: `$HASH_OF_COMMIT` can either be a hash, or it can be a reference to the commit, such as `HEAD^^` or `HEAD~2`.
+
+This will open up an interactive window using the default terminal text editor. By choosing the relevant commit, changing "pick" to "reword", and saving, a second interactive window will open. Now, it is possible to edit the typos and fix the commit message, and `git` will rebase the commits.
+
+If the commits were pushed to a remote location, it is possible to overwrite the published commits with the new commits using the following command:
+
+```
+git push -fu origin master
+```
+
+#### Fixing files that were previously committed
+
+What if the change isn't a commit message, but a typo in a committed file?
+
+Again, use the following `rebase` command:
+
+```
+git rebase -i $HASH_OF_COMMIT
+```
+
+Note: `$HASH_OF_COMMIT` can either be a hash, or it can be a reference to the commit, such as `HEAD^^` or `HEAD~2`.
+
+This will open up an interactive window using the default terminal text editor. By choosing the relevant commit, changing "pick" to "edit", and saving, a second interactive window will open. Now, it is possible to edit the typos and fix the committed files, and `git` will rebase the commits.
+
+If the commits were pushed to a remote location, it is possible to overwrite the published commits with the new commits using the following command:
+
+```
+git push -fu origin master
+```
+
 ## Patch adding and patch committing
+
+As with the rollback section, I have learned better how to use patch adding and patch committing. The original method is described in "[patch committing](#patch-committing)", and the improved way is outlined in "[patch adding](#patch-adding)".
+
+The simple explanation is this: it's better to stage files for commit using `git add -p` before committing, rather than using `git commit -pm`. Potentially, and likely, it will lead to less errors. It's not "wrong" to skip a step and use `git commit -pm`; it's just sub-optimal.
+
+### Patch committing
 
 Sometimes, I don't want to add or commit all the changes in a file. Rather, I only want to commit *some* of the changes made to a file.
 
@@ -122,7 +198,23 @@ git commit -pm "commit message"
 
 NB: this should be obvious, but if the example vimrc file was staged using `git add`, then the "-p" won't work as intended. This is because all the changes to that file have already been staged. In order for the "-p" to work as intended, the file has to be a tracked file without being a staged file.
 
-By running `git commit -p`, git will look at all staged files that have changes, and will go through chunks of the file to ask which chunks should be staged. This gives me some discretion about what changes should be included in the commit, and which should not.
+By running `git commit -p`, git will look at all staged files that have changes, and will go through hunks of the file to ask which hunks should be staged. This gives me some discretion about what changes should be included in the commit, and which should not.
+
+### Patch adding
+
+As described above, there's nothing wrong with using `git commit -pm`; but, it's probably more optimal to use `git add -p` to stage the files first, and then use `git commit -m` to commit the files.
+
+The main reason is that `git add -p` can be used repeatedly before making a commit. If `git commit -pm` is used, then an error in staging hunks may inadvertently result in the wrong hunks being committed.
+
+Another worthwhile note is this: there are more options to `-p` than just "y" and "n". This is true for both `git commit -pm` and `git add -p`.
+
+Sometimes, if the changes are close enough, `git` will include in "one hunk" changes that should be split into two hunks. This way, one hunk can be added, while other is not added.
+
+- In this case, and there are lines between the two changes, simply use the "s" option to split the hunk into two smaller hunks.
+
+In other situations, there's a bunch of changes in a file, but only one needs to be staged. Instead of having to press "n" repeatedly, just use "d". All other changes will be skipped, saving time.
+
+Patch adding, in addition to the "s" and "d" options, gives the user even more discretion in deciding what changes to commit, and which to leave behind for a future commit.
 
 ## Using diff
 
@@ -179,6 +271,28 @@ To restore a file to the version found in the most recent commit and discard the
 ```
 git restore $FILE
 ```
+
+## Using stash
+
+Sometimes, changes to the working directory need to be saved and hidden away, so that other work can be done.
+
+An example use case is the following: a rebase to a previous commit is required, but new changes have already been added to the working directory. Git will mention that those changes cannot take place while those differences exist. In this case, the new changes need to either be committed, or they can be stashed.
+
+To stash changes to the working directory, use the following command:
+
+```
+git stash
+```
+
+Note that `git stash` is a shorthand for `git stash push`: both commands will push the current changes into a stashed entry.
+
+To recover the changes that have been stashed, use the following command:
+
+```
+git stash pop
+```
+
+This command will "pop" the most recently stashed entry back onto the current commit.
 
 ## References
 
