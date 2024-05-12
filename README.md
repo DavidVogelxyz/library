@@ -10,6 +10,7 @@ My guides for different installs and customizations, etc.
     - [Installing Arch / Artix Linux](install-os/install-arch.md)
     - [Installing Debian / Ubuntu](install-os/install-debian.md)
 - [Networking](network/)
+    - [Configuring VLANs on TP-Link switches, connected to a pfSense router](network/vlans-on-tplink-switches.md)
     - [Creating and configuring a root certificate authority](network/create-rootCA.md)
     - [Installing OpenVPN server](network/install-openvpn-server.md)
     - [Travel Router using a Raspberry Pi and OpenWrt](network/install-openwrt-travelrouter.md)
