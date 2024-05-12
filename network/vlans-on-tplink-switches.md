@@ -92,6 +92,8 @@ When completed, the PVID table should show the a list of ports where:
 
 [This image](https://static.tp-link.com/image010_1525420757235x.png) can be used as a reference.
 
+- For some reason, on first click, this link directs to a landing page instead of the image. Highlighting the address bar (suggestion: use "Ctrl-L") and pressing "Enter" will refresh the page and reveal the image.
+
 Now, when a device is plugged into the corresponding switch port, it should be assigned an IP address within that VLAN.
 
 ## References
