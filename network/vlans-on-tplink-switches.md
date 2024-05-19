@@ -100,5 +100,6 @@ Now, when a device is plugged into the corresponding switch port, it should be a
 
 - [TP-Link's official FAQ for creating VLANs on these switches](https://www.tp-link.com/us/support/faq/788/)
 - [Nguvu.org guide on installing and configuring pfSense](https://nguvu.org/pfsense/pfsense-baseline-setup/)
-- [YouTube - Lawrence Systems - TP-Link Switch Setup](https://www.youtube.com/watch?v=5ohLAFHnOHg)
+- [YouTube - Lawrence Systems - TP-Link Switch Setup](https://www.youtube.com/watch?v=5ohLAFHnOHg&t=855)
     - This video doesn't explicity resolve the issue, but it is the video where the misconfiguration became clear.
+    - Timestamped for convenience.

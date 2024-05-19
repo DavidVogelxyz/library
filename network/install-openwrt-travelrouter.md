@@ -358,3 +358,5 @@ auth-user-pass /etc/openvpn/client.auth
 ## References
 
 - [YouTube - NetworkChuck - Super Secure Raspberry Pi Router (Wireless VPN Travel Router)](https://www.youtube.com/watch?v=jlHWnKVpygw)
+- [OpenWrt documentation - OpenVPN client using LuCI](https://openwrt.org/docs/guide-user/services/vpn/openvpn/client-luci)
+    - Reference for VPN killswitch

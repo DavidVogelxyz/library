@@ -91,13 +91,13 @@ NB: If no $KEY_ID is specified, then all keys will be exported. This is true for
 Export a public key:
 
 ```
-gpg --export $KEY_ID --armor --output $OUTPUT_FILENAME
+gpg --armor --output $OUTPUT_FILENAME --export $KEY_ID
 ```
 
 Export a secret key:
 
 ```
-gpg --export-secret-keys $KEY_ID --armor --output $OUTPUT_FILENAME
+gpg --armor --output $OUTPUT_FILENAME --export-secret-keys $KEY_ID
 ```
 
 Import a key:

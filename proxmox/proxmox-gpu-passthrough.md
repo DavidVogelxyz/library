@@ -1,6 +1,6 @@
 # Tips for PCIe (GPU) passthrough on Proxmox
 
-Part of a guide on setting up a [Proxmox server]().
+Part of a guide on setting up a [Proxmox server](install-proxmox.md).
 
 ## How to set up GPU passthrough
 
@@ -116,9 +116,8 @@ softdep drm pre: vfio-pci
 update-initramfs -u -k all
 ```
 
-## The end!
-
 ## References
 
 - [YouTube - Techno Tim - Before I do anything on Proxmox, I do this first...](https://www.youtube.com/watch?v=GoZaMgEgrHw)
     - Reference for GPU passthrough on Proxmox
+- [Proxmox documentation - PCI Passthrough](https://pve.proxmox.com/wiki/PCI_Passthrough)
