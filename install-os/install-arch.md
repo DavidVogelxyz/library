@@ -267,7 +267,7 @@ basestrap -i /mnt base base-devel linux linux-firmware runit elogind-runit crypt
 
 ### UEFI
 
-Add the `efibootmgr` package at the end of the command.
+Add the `efibootmgr` package to the end of the command.
 
 #### UEFI - Arch Linux
 
@@ -541,3 +541,5 @@ Congrats on installing an Arch-based Linux system!
 
 - [YouTube - Luke Smith - Install Artix or Arch Linux (Encrypted system)](https://www.youtube.com/watch?v=dI3bGeT31Bo)
     - [Alternative link to Luke's personal site](https://videos.lukesmith.xyz/w/n1cMQYYzwPoegM2oXfz2iC)
+- [Arch Linux wiki](https://wiki.archlinux.org)
+- [Artix Linux wiki](https://wiki.artixlinux.org)

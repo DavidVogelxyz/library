@@ -471,7 +471,6 @@ http {
 	# Disable TLS session tickets (they are insecure). Default is 'on'.
 	ssl_session_tickets off;
 
-
 	# Enable gzipping of responses.
 	#gzip on;
 

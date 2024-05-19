@@ -1,8 +1,13 @@
 # Tips for PCIe (GPU) passthrough on QEMU
 
-## How to set up GPU passthrough
+## Table of contents
 
-### BIOS side
+- [Setting up the BIOS](#setting-up-the-bios)
+- [Setting up the base operating system](#setting-up-the-base-operating-system)
+- [Extras](#extras)
+    - [A different way to load IDs and modules](#a-different-way-to-load-ids-and-modules)
+
+## Setting up the BIOS
 
 Intel users look for `Intel VT-d`.
 
@@ -12,7 +17,7 @@ Some motherboards don't have options for either; instead, it will be listed as `
 
 In either case, IOMMU needs to be enabled.
 
-### Operating System side
+## Setting up the base operating system
 
 Gather the necessary information using `lspci`:
 
@@ -82,7 +87,7 @@ lspci -k
 
 ## Extras
 
-### A different way to load `IDs` and `modules`
+### A different way to load IDs and modules
 
 Edit the following file:
 
@@ -112,10 +117,7 @@ softdep drm pre: vfio-pci
 sudo mkinitcpio -p linux
 ```
 
-## The end!
-
-the end
-
 ## References
 
 - [YouTube - MentalOutlaw - GPU Pass-through On Linux/Virt-Manager](https://www.youtube.com/watch?v=KVDUs019IB8)
+- [Arch Linux wiki - PCI passthrough via OVMF](https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF)
