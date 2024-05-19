@@ -22,7 +22,7 @@ There are multiple steps to resizing all volumes correctly. They are as follows:
 
 ## Resize the volume group
 
-Resize the parition (volume group) using a live USB environment, as the partition being resized up ***must be*** unmounted.
+Resize the partition (volume group) using a live USB environment, as the partition being resized up ***must be*** unmounted.
 
 This can most easily be done by using a GUI tool such as `gparted`. In `gparted`, resizing the parition is as simple as selecting the partition ("sda2" in the above example) and dragging the slider to fill all the free space that now exists on the new drive.
 

@@ -12,10 +12,17 @@ Example for a 16 character password:
 tr -dc A-Za-z0-9 </dev/urandom | head -c 16; echo
 ```
 
-- 'd' represents "delete", and deletes the characters from the first array (which is the input from /dev/urandom)
-- 'c' represents "complement", and it's what allows `tr` to take in the random input and output a password using the characters provided
-- "A-za-z0-9" is the list of characters that are allowed to be used by `tr` to make the random password
-- "</dev/urandom" uses "/dev/urandom" as the source of randomness, and uses that as the input for `tr` to translate into a password
+The options for `tr` are as follows:
+
+- `-d` represents "delete", and deletes the characters from the first array (which is the input from /dev/urandom)
+- `-c` represents "complement", and it's what allows `tr` to take in the random input and output a password using the characters provided
+- `A-za-z0-9` is the list of characters that are allowed to be used by `tr -c` to make the random password
+- `</dev/urandom` tells `tr` to use "/dev/urandom" as the input source
+    - that input is then used as the source of randomness for `tr` to translate into a password
+
+The options for `head` are as follows:
+
+- `-c` tells `head` to only show the amount of characters taken in as an argument (in the above case, 16 characters)
 
 By piping that output into `head` and specifying a character length, a password can be obtained. Using `echo` at the end removes the unnecessary character produced by the shell.
 

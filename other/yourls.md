@@ -2,23 +2,50 @@
 
 [YOURLS](https://github.com/YOURLS/YOURLS) is a self-hostable URL shortener, written in PHP.
 
-Update package repositories and install packages:
+This guide assumes that YOURLS is being installed on a Debian server, with `nala` already installed. Also, it is assumed that the user installing YOURLS has certain aliases set up, such that commands like `nala` and `systemctl` can be run without `sudo` in front of the commands.
+
+## Table of contents
+
+- [Initial setup](#initial-setup)
+- [Configuring database](#configuring-database)
+- [Installing YOURLS](#installing-yourls)
+- [References](#references)
+
+## Initial setup
+
+Update package repositories:
 
 ```
 nala update && nala upgrade
+```
+
+Install packages:
+
+```
 nala install -y git mariadb-server nginx php php-bcmath php-cli php-curl php-fpm php-gd php-json php-mbstring php-mysql php-pear php-xml php-zip unzip wget
 ```
 
-Set up the requisite services:
+Set up the requisite services.
+
+First, stop and disable `apache2`.
 
 ```
-systemctl stop apache2
-systemctl disable apache2
-systemctl enable nginx
-systemctl start nginx
-systemctl enable mariadb
-systemctl start mariadb
+systemctl stop apache2 && systemctl disable apache2
 ```
+
+Next, enable and start `nginx`.
+
+```
+systemctl enable nginx && systemctl start nginx
+```
+
+Also, enable and start `mariadb`.
+
+```
+systemctl enable mariadb && systemctl start mariadb
+```
+
+## Configuring database
 
 Secure the new `mysql` installation:
 
@@ -41,13 +68,18 @@ FLUSH PRIVILEGES;
 exit;
 ```
 
-Download the YOURLS `git` repo:
+## Installing YOURLS
+
+Clone the YOURLS `git` repo:
 
 ```
-cd /var/www
-sudo git clone https://github.com/YOURLS/YOURLS.git
-cd YOURLS/user/
-sudo cp config-sample.php config.php
+cd /var/www && sudo git clone https://github.com/YOURLS/YOURLS.git
+```
+
+Copy over the sample `config.php` file:
+
+```
+cd YOURLS/user/ && sudo cp config-sample.php config.php
 ```
 
 Configure YOURLS:
@@ -88,18 +120,16 @@ In addition, whenever YOURLS "is run", it will hash the passwords in the config 
 Change permissions:
 
 ```
-sudo chown -R www-data: /var/www/YOURLS
-sudo chmod -R 775 /var/www/YOURLS
+sudo chown -R www-data: /var/www/YOURLS && sudo chmod -R 775 /var/www/YOURLS
 ```
 
-Edit `nginx`:
+Edit `nginx` configuration file:
 
 ```
-sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/yourls.conf
-sudo vim /etc/nginx/sites-available/yourls.conf
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/yourls.conf && sudo vim /etc/nginx/sites-available/yourls.conf
 ```
 
-Edit the file to contain this block. "server_name" can be either a domain, or IP, or both:
+Edit the file to contain this block. `server_name` can be either a domain, or IP, or both:
 
 ```
 server {
@@ -125,8 +155,7 @@ server {
 Enable the site's `nginx` config:
 
 ```
-sudo ln -s /etc/nginx/sites-available/yourls.conf /etc/nginx/sites-enabled/
-systemctl restart nginx
+sudo ln -s /etc/nginx/sites-available/yourls.conf /etc/nginx/sites-enabled/ && systemctl restart nginx
 ```
 
 Navigate to http://yourls.local/admin or http://IPADDRESS/admin and install YOURLS via the web interface. Only one of the two will work, and that's the one that was entered into "/var/www/YOURLS/user/config.php"
