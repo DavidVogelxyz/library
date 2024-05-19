@@ -16,7 +16,17 @@ This guide shares some of those methods.
 
 ## Using dd
 
-`dd` is a coreutil of GNU, accessible by nearly every Linux installation, that allows the user to copy inputs to outputs. By making use of `dd`, it is possible to create a bit-for-bit copy of any drive, which makes it perfect as a backup utility. Often, this backup will be saved as a file ending in ".img" or ".iso". The one limitation
+`dd` is a coreutil of GNU, accessible by nearly every Linux installation, that allows the user to copy inputs to outputs. By making use of `dd`, it is possible to create a bit-for-bit copy of any drive, which makes it perfect as a backup utility. Often, this backup will be saved as a file ending in ".img" or ".iso".
+
+Options used with `dd` include the following:
+
+- `if=` specifies the input file.
+- `of=` specifies the output file.
+- `status=progress` will tell `dd` to show progress information as it runs.
+- `conv=` converts the input file "as per the comma separated symbol list"
+- `iflag=` tells `dd` to read input "as per the comma separated symbol list"
+- `oflag=` tells `dd` to write output "as per the comma separated symbol list"
+- `bs=` defines the block size that `dd` uses when writing the output
 
 Do this using a live USB environment, as the device being backed up ***must be*** unmounted.
 
