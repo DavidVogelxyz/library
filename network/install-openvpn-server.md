@@ -13,6 +13,10 @@ As is explained in other parts of the guide, these instructions can be deployed 
 - [Introduction](#introduction)
 - [Initial setup](#initial-setup)
 - [Setting up the virtual environment](#setting-up-the-virtual-environment)
+- [Installing UFW](#installing-ufw)
+    - [General firewall rules](#general-firewall-rules)
+    - [IP-specific firewall rules](#ip-specific-firewall-rules)
+    - [Enabling UFW](#enabling-ufw)
 - [Setting up SSH](#setting-up-ssh)
 - [Setting up the OpenVPN server](#setting-up-the-openvpn-server)
 - [References](#references)
@@ -24,7 +28,7 @@ The first step in setting up an OpenVPN server is to create the virtual environm
 The following are suggestions for how to set up each of those options:
 
 - Cloud server: spin up a Debian 12 cloud server using a cloud service provider (such as Vultr or Linode)
-- Proxmox VM: spin up a Debian 12 VM
+- Proxmox VM: spin up a Debian 12 VM; reference [guide on installing Debian](../install-os/install-debian.md) for assistance with this.
 - Raspberry Pi: install Raspbian (Debian for Raspberry Pi) or Ubuntu Server (ARM version)
 
 Once the virtual environment has been provisioned and initialized, the next step is to configure the server.
@@ -37,19 +41,95 @@ After booting into the server and signing in (likely as the root user), the firs
 apt update && apt upgrade
 ```
 
-The next step is to create a new user (ex: openvpn) to administer and manage the OpenVPN server. It is highly advisable that the root user is not used for this purpose. Whether using Debian/Ubuntu or an Arch-based distribution, the commands to create a new user are the same. Follow up the new user creation with a password change and a change of shell (on Debian, the default shell is "sh"):
+The next step is to create a new user (ex: openvpn) to administer and manage the OpenVPN server. It is highly advisable that the root user is not used for this purpose.
+
+Create a new user with the `useradd` command. Add the user to the "sudo" group with `-G sudo`, and use `-m` to give that user a home directory. The `-s /bin/bash` is also useful, because Debian tends to default the user to the `sh` shell, which has far less features than the standard `bash` shell most users are used to.
 
 ```
-useradd -G sudo -m $USER
+useradd -G sudo -s /bin/bash -m $USER
+```
 
+Once the user has been created, set the user's password with the following command:
+
+```
 passwd $USER
-
-chsh -s /bin/bash $USER
 ```
 
 It is also worth checking the "/etc/hostname" and "/etc/hosts" files at this point. Confirm that the hostname is correct for the OpenVPN server, and confirm that it is found in "/etc/hosts" under a loopback address. If any adjustments were made to either of these files, it is advisable to restart the server after and then to log back in.
 
-Finally, depending on the network's setup, it may also make sense to include a software firewall, such as `ufw`. For a publicly accessible server, such as a cloud server VPN, it is highly advisable to configure `ufw` such that the available ports are limited as much as possible. However, it is not necessary to open port 1194 (OpenVPN's standard port) into the `ufw` rules, as OpenVPN is configured to listen to receive inbound connections despite the port being blocked by the firewall.
+## Installing UFW
+
+Depending on the network's setup, it may also make sense to include a software firewall, such as `ufw`. For a publicly accessible server, such as a cloud server VPN, it is highly advisable to configure `ufw` such that the available ports are limited as much as possible.
+
+It does not seem to be necessary to open port 1194 (OpenVPN's standard port) on the `ufw` rules, as OpenVPN is configured to listen to receive inbound connections despite the port being blocked by the firewall. Despite this, the guide describes how to open the OpenVPN port when using `ufw`.
+
+First, install `ufw` with the following command:
+
+```
+apt install ufw
+```
+
+Add a default firewall rule to deny incoming connections:
+
+```
+ufw default deny incoming
+```
+
+Add a default firewall rule to allow outgoing connections:
+
+```
+ufw default allow outgoing
+```
+
+Set logging to off:
+
+```
+ufw logging off
+```
+
+For generalized firewall rules, see [general firewall rules](#general-firewall-rules); to create firewall rules that only allow a certain IP to access the services, see [IP-specific firewall rules](#ip-specific-firewall-rules).
+
+### General firewall rules
+
+Add a firewall rule to allow SSH connections:
+
+```
+ufw allow ssh
+```
+
+Add a firewall rule to allow OpenVPN connections:
+
+```
+ufw allow openvpn
+```
+
+### IP-specific firewall rules
+
+Add a firewall rule to allow SSH connections from only specific IP addresses:
+
+```
+ufw allow from $IP_ADDRESS proto tcp to any port 22
+```
+
+Add a firewall rule to allow OpenVPN connections from only specific IP addresses (this is not advised, as it will limit the utility of the VPN):
+
+```
+ufw allow from $IP_ADDRESS proto tcp to any port 1194
+```
+
+### Enabling UFW
+
+Enable `ufw`:
+
+```
+ufw enable
+```
+
+Enable `ufw` to run on startup:
+
+```
+systemctl enable ufw
+```
 
 ## Setting up SSH
 
@@ -114,7 +194,9 @@ Now that SSH logins have been secured, it's time to set up the OpenVPN server.
 
 ## Setting up the OpenVPN server
 
-The easiest way to grab @Angristan's install script is to clone the git repo and work from there. First, confirm that the directory that will store the source files exists.
+The easiest way to install an OpenVPN server is to grab an install script written by @Angristan and deploy it.
+
+The simplest way to do this is to clone the `git` repo and work from there. First, confirm that the directory that will store the source files exists.
 
 ```
 mkdir -pv ~/.local/src
