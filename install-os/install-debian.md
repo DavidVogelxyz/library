@@ -2,11 +2,15 @@
 
 ## Introduction
 
-This guide uses the `debootstrap` command to install a clean Debian/Ubuntu Server image. Any differences between the two will be specified.
+This guide uses the `debootstrap` command to install a clean Debian/Ubuntu OS image. This guide can and should be followed regardless of whether the install is for a desktop or server installation. Any differences between the Debian and Ubuntu installs will be specified.
 
-NB: Use the Ubuntu Desktop image over the Ubuntu Server image to use `debootstrap`. True whether installing Debian or Ubuntu. Why?
-- Can scroll output on the terminal screen.
-- Can paste in commands from the guide.
+**NB:** Use an Ubuntu 24 (Noble) Desktop image over the Ubuntu Server image to perform the install. This guideline should be followed whether installing Debian or Ubuntu.
+
+Why?
+
+- By using the Ubuntu desktop GUI:
+    - it is possible to scroll output in the terminal.
+    - commands from the guide can be pasted into the terminal.
 
 ## Table of Contents
 
@@ -217,7 +221,7 @@ To install an operating system to the drive: update packages, and then install b
 apt update && apt install -y debootstrap vim
 ```
 
-As of writing, the current Debian release (12) is `bookworm`, and the previous release (11) was `bullseye`. The current Ubuntu release is `jammy`. Substitute the release of choice in place of `$release`.
+As of writing, the current Debian release (12) is `bookworm`, and the previous release (11) was `bullseye`. The current Ubuntu release (24) is `noble`, and the previous release (22) was `jammy`. Substitute the release of choice in place of `$release`.
 
 ```
 debootstrap $release /mnt
@@ -229,7 +233,9 @@ When `debootstrap` completes, run the following command:
 for d in sys dev proc ; do mount --rbind /$d /mnt/$d && mount --make-rslave /mnt/$d ; done
 ```
 
-Also, copy over the `/etc/resolv.conf` file to assist with DNS queries:
+Also, copy over the `/etc/resolv.conf` file to assist with DNS queries.
+
+**Note:** When installing Ubuntu 24 (Noble) [and potentially Debian 12 (bookworm)], this step doesn't appear to be necessary, as the `debootstrap` command seems to copy the `/etc/resolv.conf` file. Check both files to confirm, and copy the file only if it's not identical. That being said, even if they are identical, there's no concern about copying it over again anyway.
 
 ```
 cp -v /etc/resolv.conf /mnt/etc/
@@ -249,13 +255,15 @@ vim /mnt/etc/apt/sources.list
 
 #### Sources list on Ubuntu
 
-Copy over the installer's `sources.list` to the new installation.
+**Note:** This step only appears to be necessary on Ubuntu 22 (Jammy), as a recent `debootstrap` of Ubuntu 24 (Noble) already had a working `sources.list` file in `/etc/apt`. When installing Ubuntu 24 (Noble), the only step required is to edit the `sources.list` file to contain `universe` at the end of the entry. Enabling the `universe` repository will allow `nala` and `stow` to be installed in future steps.
+
+If installing Ubuntu 22 (Jammy), copy over the installer's `sources.list` to the new installation.
 
 ```
 cp -v /etc/apt/sources.list /mnt/etc/apt/sources.list
 ```
 
-NB: Remember to remove `CD-ROM` and add a line for `jammy-backports` (with `universe` for all) for `nala` and `neovim`. *May not be necessary in future releases.*
+NB: Remember to remove the `CD-ROM` line, and add a line for `jammy-backports` (with `universe` for all) for `nala`.
 
 ```
 vim /mnt/etc/apt/sources.list
@@ -370,7 +378,7 @@ nala install -y linux-image-generic build-essential network-manager # intel-micr
 Confirm that some basic and essential packages are installed by installing them now. Also, if installing to an encrypted root partition, include the `cryptsetup-initramfs` package here.
 
 ```
-nala install -y curl git gpg htop lvm2 rsync ssh sudo # cryptsetup-initramfs
+nala install -y curl git gpg htop lvm2 rsync ssh stow sudo # cryptsetup-initramfs
 ```
 
 If installing to a BIOS system, the following package should already be installed. However, just to confirm, attempt to install it anyway:
