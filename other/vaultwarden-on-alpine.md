@@ -34,7 +34,7 @@ NB:
 First, update the `apk` package list and install some packages that will be used throughout the Vaultwarden installation process.
 
 ```
-apk update && apk add openssh-server vim git curl tmux ufw nginx openssl
+apk update && apk add openssh-server vim tmux ufw git curl nginx openssl
 ```
 
 At this point, the guide splits depending on whether the install is local / on-premises (on-prem) or via a cloud service provider. For an on-prem solution, start at [on-prem Proxmox install](#on-prem-proxmox-install); for a cloud service provider, start at [securing SSH](#securing-ssh).
