@@ -1,5 +1,13 @@
 # Nextcloud cloud storage, running on Alpine Linux
 
+NB:
+
+- This guide has been tested using a VM hosted on Vultr.
+- On multiple occasions, this guide makes reference to the `service` command. Know that `service` functions the same way as `rc-service`.
+- In addition, `rc-update add $SERVICE` is a shorter way to write `rc-update add $SERVICE default`.
+    - Both commands will add the `$SERVICE` to the "default" run level.
+- When using a tty on Alpine Linux, "Ctrl-Alt-Del" reboots the computer.
+
 ## Table of contents
 
 - [Configuring SSH](#configuring-ssh)
@@ -25,7 +33,7 @@
 First, update the `apk` package list and install some packages that will be used throughout the Nextcloud installation process.
 
 ```
-apk update && apk add openssh-server vim git curl tmux ufw nginx openssl
+apk update && apk add openssh-server vim tmux ufw git curl nginx openssl
 ```
 
 At this point, the guide splits depending on whether the install is local / on-premises (on-prem) or via a cloud service provider. For an on-prem solution, start at [on-prem Proxmox install](#on-prem-proxmox-install); for a cloud service provider, start at [securing SSH](#securing-ssh).
