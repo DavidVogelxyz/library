@@ -28,7 +28,7 @@ The first step in setting up an OpenVPN server is to create the virtual environm
 The following are suggestions for how to set up each of those options:
 
 - Cloud server: spin up a Debian 12 cloud server using a cloud service provider (such as Vultr or Linode)
-- Proxmox VM: spin up a Debian 12 VM; reference [guide on installing Debian](../install-os/install-debian.md) for assistance with this.
+- Proxmox VM: spin up a Debian 12 VM; reference [guide on installing Debian](/install-os/install-debian.md) for assistance with this.
 - Raspberry Pi: install Raspbian (Debian for Raspberry Pi) or Ubuntu Server (ARM version)
 
 Once the virtual environment has been provisioned and initialized, the next step is to configure the server.
