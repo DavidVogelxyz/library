@@ -37,6 +37,7 @@ My guides for different installs and customizations, etc.
     - [Tips for PCIe (GPU) passthrough on QEMU](qemu/qemu-gpu-passthrough.md)
 - [Security](security/)
     - [Creating random passwords on Linux](security/create-random-password-linux.md)
+    - [Cryptsetup](security/cryptsetup.md)
     - [Security hardening on Arch Linux](security/secure-arch.md)
     - [Security hardening on Debian/Ubuntu](security/secure-debian.md)
     - [SSH tunneling](security/ssh-tunneling.md)

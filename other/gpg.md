@@ -8,6 +8,7 @@ NB: What some people refer to as "private keys", `gpg` refers to as "secret keys
 - [Listing keys](#listing-keys)
 - [How to encrypt a file](#how-to-encrypt-a-file)
 - [Exporting keys](#exporting-keys)
+- [Changing the passphrase to a GPG key](#changing-the-passphrase-to-a-gpg-key)
 - [References](#references)
 
 ## Creating a GPG key
@@ -112,7 +113,31 @@ Delete a key:
 gpg --delete-key $KEY_ID
 ```
 
+## Changing the passphrase to a GPG key
+
+To change the passphrase to a GPG private key, use the following command:
+
+```
+gpg --edit-key $KEY_ID
+```
+
+After using the above command to enter the "edit key" menu, use the following command to change the passphrase:
+
+```
+passwd
+```
+
+Once the passphrase has been changed, use `save` to confirm the changes and exit the GPG key menu.
+
+There are a few additional things to note about the use of this command:
+
+- The key ID for the private key must be specified
+- The key must be stored in the keyring
+    - It is not possible to use this command to change the passphrase on a key that's been exported using `gpg --export-secret-keys $KEY_ID`
+
 ## References
 
 - [Medium - GPG Quickstart Guide](https://medium.com/@acparas/gpg-quickstart-guide-d01f005ca99)
     - Original reference for how to create GPG keys and how to use them properly
+- [CyberCiti - GPG Change Passphrase Secret Key Password Command](https://www.cyberciti.biz/faq/linux-unix-gpg-change-passphrase-command/)
+    - Reference for changing the passphrase on a GPG key
