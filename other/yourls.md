@@ -88,29 +88,23 @@ Configure YOURLS:
 sudo vim config.php
 ```
 
-Change the following lines. Note that the "YOURLS_SITE" entry can be an IP address (http://IPADDRESS) if DNS is not configured:
+Change the following lines. Note that the "YOURLS_SITE" entry can be an IP address (`http://$IPADDRESS`) if DNS is not configured:
 
 ```
-/** MySQL database username */
 define( 'YOURLS_DB_USER', 'yourls' );
 
-/** MySQL database password */
 define( 'YOURLS_DB_PASS', 'password' );
 
-/** The name of the database for YOURLS
- ** Use lower case letters [a-z], digits [0-9] and underscores [_] only */
 define( 'YOURLS_DB_NAME', 'yourls_db' );
 
-/** MySQL hostname.
- ** If using a non standard port, specify it like 'hostname:port', eg. 'localhost:9999' or '127.0.0.1:666' */
 define( 'YOURLS_DB_HOST', 'localhost' );
 
-/** MySQL tables prefix
- ** YOURLS will create tables using this prefix (eg `yourls_url`, `yourls_options`, ...)
- ** Use lower case letters [a-z], digits [0-9] and underscores [_] only */
 define( 'YOURLS_DB_PREFIX', 'yourls_' );
 
 define( 'YOURLS_SITE', 'http://yourls.local' );
+
+define( 'YOURLS_COOKIEKEY', 'A random secret hash used to encrypt cookies. You don't have to remember it, make it long and complicated' );
+
 $yourls_user_passwords = array(
         'admin' => 'adminpassword',
 ```
@@ -133,32 +127,34 @@ Edit the file to contain this block. `server_name` can be either a domain, or IP
 
 ```
 server {
-  listen 80;
-  server_name yourls.local $IPADDRESS;
-  root /var/www/YOURLS;
-  index index.php index.html index.htm;
-  location / {
-    try_files $uri $uri/ /yourls-loader.php$is_args$args;
-  }
+    listen 80;
+    server_name yourls.local $IPADDRESS;
+    root /var/www/YOURLS;
+    index index.php index.html index.htm;
+    location / {
+        try_files $uri $uri/ /yourls-loader.php$is_args$args;
+    }
 
-  location ~ \.php$ {
-    try_files $uri =404;
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_index index.php;
-    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-    fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
-    include fastcgi_params;
-  }
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_index index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+        include fastcgi_params;
+    }
 }
 ```
 
-Enable the site's `nginx` config:
+As a note: the `fastcgi_pass` parameter needs to reference the correct version of PHP found on the system. If the webpage doesn't appear after linking the site's `nginx` configuration in the next step, check the PHP version installed on the server against this value, and update it if necessary.
+
+Enable the site's `nginx` configuration by adding a symlink to `/etc/nginx/sites-enabled`:
 
 ```
 sudo ln -s /etc/nginx/sites-available/yourls.conf /etc/nginx/sites-enabled/ && systemctl restart nginx
 ```
 
-Navigate to http://yourls.local/admin or http://IPADDRESS/admin and install YOURLS via the web interface. Only one of the two will work, and that's the one that was entered into "/var/www/YOURLS/user/config.php"
+Navigate to `http://yourls.local/admin` or `http://$IPADDRESS/admin` and install YOURLS via the web interface. Only one of the two will work, and that's the one that was entered into "/var/www/YOURLS/user/config.php"
 
 ## References
 
