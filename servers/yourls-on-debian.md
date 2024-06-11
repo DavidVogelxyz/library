@@ -1,6 +1,6 @@
-# YOURLS (Your Own URL Shortener)
+# YOURLS link shortener, running on Debian
 
-[YOURLS](https://github.com/YOURLS/YOURLS) is a self-hostable URL shortener, written in PHP.
+[YOURLS (Your Own URL Shortener)](https://github.com/YOURLS/YOURLS) is a self-hostable URL shortener, written in PHP.
 
 This guide assumes that YOURLS is being installed on a Debian server, with `nala` already installed. Also, it is assumed that the user installing YOURLS has certain aliases set up, such that commands like `nala` and `systemctl` can be run without `sudo` in front of the commands.
 
