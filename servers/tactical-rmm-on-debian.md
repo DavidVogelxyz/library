@@ -1,4 +1,4 @@
-# Tactical RMM
+# Tactical RMM server, running on Debian
 
 ## Table of contents
 

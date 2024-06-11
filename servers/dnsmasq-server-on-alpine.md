@@ -1,4 +1,4 @@
-# Creating a DNS server using dnsmasq, running on Alpine Linux
+# DNS server using dnsmasq, running on Alpine Linux
 
 NB:
 

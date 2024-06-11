@@ -1,4 +1,4 @@
-# Installing OpenVPN server
+# OpenVPN server, running on Debian
 
 NB: This guide has been adapted from a [YouTube video](https://www.youtube.com/watch?v=Lk_v6Q0YsNo) by @MentalOutlaw.
 
