@@ -42,6 +42,7 @@ My guides for different installs and customizations, etc.
     - [Looping a video file on a display, using a mini-PC running Alpine Linux](servers/looped-video-display-on-alpine.md)
     - [Nextcloud cloud storage, running on Alpine Linux](servers/nextcloud-on-alpine.md)
     - [OpenVPN server, running on Debian](servers/openvpn-server-on-debian.md)
+    - [SMTP server, running on Debian](servers/smtp-server-on-debian.md)
     - [Tactical RMM server, running on Debian](servers/tactical-rmm-on-debian.md)
     - [Vaultwarden password manager, running on Alpine Linux](servers/vaultwarden-on-alpine.md)
     - [YOURLS link shortener, running on Debian](servers/yourls-on-debian.md)
