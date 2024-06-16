@@ -1,6 +1,9 @@
 # Vaultwarden password manager, running on Alpine Linux
 
-NB: This guide has been tested using an Alpine Linux container on Proxmox, using the default Alpine image that Proxmox pulls. In addition, this guide has also been tested using VMs hosted on Vultr and Linode.
+NB:
+
+- This guide has been tested using an Alpine Linux container on Proxmox, using the default Alpine image that Proxmox pulls. In addition, this guide has also been tested using VMs hosted on Vultr and Linode.
+- This guide makes frequent references to the IP address `127.0.0.1`. Obviously, this is a reference to the hostname `localhost`. Either can be used in place of the other; however, using the IP address itself avoids both the "host file lookup", as well as the potential for trying the IPv6 entry for `localhost`.
 
 ## Table of contents
 
@@ -137,18 +140,18 @@ rc-update add vaultwarden && service vaultwarden start
 To test that `vaultwarden` is running, `curl` the following:
 
 ```
-curl localhost:8000
+curl 127.0.0.1:8000
 ```
 
-Using `curl` on `localhost:8000` should return a 404 error.
+Using `curl` on `127.0.0.1:8000` should return a 404 error.
 
 Now, `curl` the following:
 
 ```
-curl localhost:8000/admin
+curl 127.0.0.1:8000/admin
 ```
 
-Using `curl` on `localhost:8000/admin` should return a message about configuring an admin token.
+Using `curl` on `127.0.0.1:8000/admin` should return a message about configuring an admin token.
 
 ### Securing the Vaultwarden admin panel
 
@@ -179,7 +182,7 @@ If editing "/etc/conf.d/vaultwarden", the following options should be set **usin
 ```
 export ADMIN_TOKEN='$argon2id'
 export DATA_FOLDER=/var/lib/vaultwarden
-export DOMAIN=https://localhost
+export DOMAIN=https://127.0.0.1
 export ORG_EVENTS_ENABLED=true
 export WEB_VAULT_ENABLED=true
 export WEB_VAULT_FOLDER=/usr/share/webapps/vaultwarden-web/
@@ -190,13 +193,13 @@ If editing the "/var/lib/vaultwarden/.env" file, the following options can be se
 ```
 ADMIN_TOKEN='$argon2id'
 DATA_FOLDER=/var/lib/vaultwarden
-DOMAIN=https://localhost
+DOMAIN=https://127.0.0.1
 ORG_EVENTS_ENABLED=true
 WEB_VAULT_ENABLED=true
 WEB_VAULT_FOLDER=/usr/share/webapps/vaultwarden-web/
 ```
 
-In either case, the ADMIN_TOKEN variable should reflect the admin token that was created with the `vaultwarden hash` command. Also, a DOMAIN of "https://localhost" will work to get the server running; however, if/when implementing SMTP, "DOMAIN" should reflect the domain on which Vaultwarden is being served (ex. "https://domain.tld").
+In either case, the ADMIN_TOKEN variable should reflect the admin token that was created with the `vaultwarden hash` command. Also, a DOMAIN of "https://127.0.0.1" will work to get the server running; however, if/when implementing SMTP, "DOMAIN" should reflect the domain on which Vaultwarden is being served (ex. "https://domain.tld").
 
 Once the environment variables are set, the `vaultwarden` service should be restarted using the following command:
 
@@ -207,11 +210,11 @@ service vaultwarden restart
 With this configuration in place, the following curl commands should return different output than before:
 
 ```
-curl localhost:8000
-curl localhost:8000/admin
+curl 127.0.0.1:8000
+curl 127.0.0.1:8000/admin
 ```
 
-`localhost:8000` should return output for the web-vault login page, and the `localhost:8000/admin` page should return a page related to signing in to the admin panel.
+`127.0.0.1:8000` should return output for the web-vault login page, and the `127.0.0.1:8000/admin` page should return a page related to signing in to the admin panel.
 
 ## Configuring SSL and HTTPS connections
 
@@ -268,7 +271,7 @@ server {
     ssl_certificate_key /etc/nginx/ssl/$SERVER.key;
 
     location / {
-        proxy_pass http://localhost:8000;
+        proxy_pass http://127.0.0.1:8000;
     }
 }
 ```
@@ -285,7 +288,7 @@ To test the `nginx` configuration, curl the following (obviously, change `$HOSTN
 curl https://$HOSTNAME
 ```
 
-This should display the same output as curling "localhost:8000".
+This should display the same output as curling "127.0.0.1:8000".
 
 ## Final steps
 
@@ -337,3 +340,5 @@ NB: One way to confirm whether the icons are loading is to go to "https://vaultw
 ## References
 
 - [Vaultwarden wiki](https://github.com/dani-garcia/vaultwarden/wiki)
+- [YouTube - anthonywritescode - don't use localhost (intermediate) anthony explains #534](https://www.youtube.com/watch?v=98SYTvNw1kw)
+    - A video referencing the benefits of using `127.0.0.1`, as opposed to `localhost`

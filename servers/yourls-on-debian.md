@@ -1,11 +1,16 @@
 # YOURLS link shortener, running on Debian
 
+NB: this guide references the IP address `127.0.0.1`. Obviously, this is a reference to the hostname `localhost`. Either can be used in place of the other; however, using the IP address itself avoids both the "host file lookup", as well as the potential for trying the IPv6 entry for `localhost`.
+
+## Introduction
+
 [YOURLS (Your Own URL Shortener)](https://github.com/YOURLS/YOURLS) is a self-hostable URL shortener, written in PHP.
 
 This guide assumes that YOURLS is being installed on a Debian server, with `nala` already installed. Also, it is assumed that the user installing YOURLS has certain aliases set up, such that commands like `nala` and `systemctl` can be run without `sudo` in front of the commands.
 
 ## Table of contents
 
+- [Introduction](#introduction)
 - [Initial configuration](#initial-configuration)
 - [Preparing the server for YOURLS](#preparing-the-server-for-yourls)
 - [Configuring database](#configuring-database)
@@ -68,7 +73,7 @@ Do this in `mysql`:
 
 ```
 CREATE DATABASE yourls_db;
-GRANT ALL PRIVILEGES ON yourls_db.* TO 'yourls'@'localhost' IDENTIFIED BY "password";
+GRANT ALL PRIVILEGES ON yourls_db.* TO 'yourls'@'127.0.0.1' IDENTIFIED BY "password";
 FLUSH PRIVILEGES;
 exit;
 ```
@@ -102,7 +107,7 @@ define( 'YOURLS_DB_PASS', 'password' );
 
 define( 'YOURLS_DB_NAME', 'yourls_db' );
 
-define( 'YOURLS_DB_HOST', 'localhost' );
+define( 'YOURLS_DB_HOST', '127.0.0.1' );
 
 define( 'YOURLS_DB_PREFIX', 'yourls_' );
 
@@ -164,3 +169,5 @@ Navigate to `http://yourls.local/admin` or `http://$IPADDRESS/admin` and install
 ## References
 
 - [YOURLS official documentation](https://yourls.org/docs)
+- [YouTube - anthonywritescode - don't use localhost (intermediate) anthony explains #534](https://www.youtube.com/watch?v=98SYTvNw1kw)
+    - A video referencing the benefits of using `127.0.0.1`, as opposed to `localhost`
