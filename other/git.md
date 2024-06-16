@@ -309,6 +309,11 @@ Below are some additional quick tips:
 
 - `git log` is a useful command for showing commit history in the terminal. However, it has options that can increase its usefulness:
     - `git log --oneline` will shorten the commit history to show only the title of the commit message. This can be useful in a repository with many commits, where a quick scroll is all that's necessary.
+- `git rm` will allow a user to remove a file that is part of the index.
+    - If the file needs to be removed from the index ***without*** being deleted entirely, then use `git rm --cached`.
+        - This is useful during a `git rebase`, when a file was added to the index when it shouldn't have been.
+            - In this case, don't use `git rm`, or it will remove the file entirely.
+            - Using `git rm --cached` will preserve the file while removing it from the index.
 
 ## Outdated methods
 

@@ -1,5 +1,7 @@
 # SSH tunneling
 
+NB: this guide makes frequent references to the IP address `127.0.0.1`. Obviously, this is a reference to the hostname `localhost`. Either can be used in place of the other; however, using the IP address itself avoids both the "host file lookup", as well as the potential for trying the IPv6 entry for `localhost`.
+
 ## Table of contents
 
 - [Local SSH tunnel](#local-ssh-tunnel)
@@ -20,22 +22,22 @@ This is a great use case for a "regular" SSH tunnel.
 The local user would run the following command from their local machine:
 
 ```
-ssh -N -L localhost:9999:localhost:80 $USER@123.123.123.123
+ssh -N -L 127.0.0.1:9999:127.0.0.1:80 $USER@123.123.123.123
 ```
 
-Using this command, the webpage at 123.123.123.123 would now be accessible at http://localhost:9999
+Using this command, the webpage at 123.123.123.123 would now be accessible at http://127.0.0.1:9999
 
 Explanation:
 
 - The `-N` flag makes the shell non-interactive, and tells the shell not to allow remote commands to be executed.
     - Without this flag, the `ssh` command would log into a shell as a normal `ssh` command would, and allows the connected user to enter commands as one may expect.
-- The `-L` flag opens a local port with a specific endpoint (in this case, "localhost:9999").
-- "localhost:9999" is the bind address of the connection on the local machine. This means that the SSH connection is essentially "port forwarded" to that address, at that port.
+- The `-L` flag opens a local port with a specific endpoint (in this case, "127.0.0.1:9999").
+- "127.0.0.1:9999" is the bind address of the connection on the local machine. This means that the SSH connection is essentially "port forwarded" to that address, at that port.
     - "What is being accessed."
-    - It is common that "localhost" isn't written into this section of the command, as the connection assumes the bind address would be "localhost".
-    - Therefore, `ssh -N -L 9999:localhost:80 $USER@123.123.123.123` would function the exact same way as the above command.
+    - It is common that "127.0.0.1" isn't written into this section of the command, as the connection assumes the bind address would be "127.0.0.1".
+    - Therefore, `ssh -N -L 9999:127.0.0.1:80 $USER@123.123.123.123` would function the exact same way as the above command.
     - By connecting to the local machine at port 9999, the connection is tunneled over to the remote machine and talks to port 80.
-- "localhost:80" is the host address of the connection on the remote machine. This means that the SSH connection is being made with "localhost:80" of the remote machine.
+- "127.0.0.1:80" is the host address of the connection on the remote machine. This means that the SSH connection is being made with "127.0.0.1:80" of the remote machine.
     - "What is received."
     - This is why the connection servers as a tunnel, allowing the local user running the `ssh` command to interact with the HTTP page on the remote address.
 - "$USER@123.123.123.123" is the typical use of the `ssh` command. It specifies that `ssh` establishes a connection to the designated IP, signing in as the user specified.
@@ -57,7 +59,7 @@ This is a great use case for a remote SSH tunnel.
 The local user would run the following command from the local server hosting the service (192.168.10.50), connecting to a remote server (123.123.123.123) that they also control.
 
 ```
-ssh -N -R localhost:9999:localhost:80 $USER@123.123.123.123
+ssh -N -R 127.0.0.1:9999:127.0.0.1:80 $USER@123.123.123.123
 ```
 
 Using this command, the webpage that the local server is hosting would now be available to anyone who connects to the remote server at http://123.123.123.123:9999
@@ -65,29 +67,29 @@ Using this command, the webpage that the local server is hosting would now be av
 Explanation:
 
 - As before, the `-N` flag makes the shell non-interactive, and tells the shell not to allow remote commands to be executed.
-- The `-R` flag designates the port on the remote server ("localhost:80") to be forwarded to the given host and port on the local side ("localhost:9999").
+- The `-R` flag designates the port on the remote server ("127.0.0.1:80") to be forwarded to the given host and port on the local side ("127.0.0.1:9999").
     - As will be noted in the following bullet points, the "location" of the addresses has been reversed.
         - In the "regular" tunnel, the first address and port is for the local machine, and the second set refers to the remote machine.
         - With a remote tunnel, the first address and port refer to the remote machine, and the second set refers to the local machine.
-- In this case, "localhost:9999" is the bind address of the connection on the ***remote*** machine.
+- In this case, "127.0.0.1:9999" is the bind address of the connection on the ***remote*** machine.
     - "What is being accessed."
-    - Any user logged into a session at 123.123.123.123 would be able to access the service on 192.168.10.50 by going to http://localhost:9999
+    - Any user logged into a session at 123.123.123.123 would be able to access the service on 192.168.10.50 by going to http://127.0.0.1:9999
     - Another result of this connection is that, with the remote server available to the public, anyone who connects to http://123.123.123.123:9999 would *also* be able to access the service.
-    - It is common that "localhost" isn't written into this section of the command, as the connection assumes the bind address would be "localhost".
-    - Therefore, `ssh -N -R 9999:localhost:80 $USER@123.123.123.123` would function the exact same way as the above command.
+    - It is common that "127.0.0.1" isn't written into this section of the command, as the connection assumes the bind address would be "127.0.0.1".
+    - Therefore, `ssh -N -R 9999:127.0.0.1:80 $USER@123.123.123.123` would function the exact same way as the above command.
     - However, there's an additional trick that can be used with a remote tunnel:
         - If the bind address is set to "0.0.0.0", then the SSH connection will listen for any outside SSH connections connecting to port 9999.
         - This trick can be used to allow SSH connections to a local machine that's behind a firewall that doesn't allow *any* SSH connections.
-- "localhost:80" is the host address on the connection on the ***local*** machine.
+- "127.0.0.1:80" is the host address on the connection on the ***local*** machine.
     - "What is received."
-    - In this example, the `ssh` command is being run from the server hosting the service, which is why "localhost:80" is being used.
+    - In this example, the `ssh` command is being run from the server hosting the service, which is why "127.0.0.1:80" is being used.
     - However, any machine on the local network that has access to the service could facilitate the connection by specifying "192.168.10.50:80" in its place.
-        - Example: `ssh -N -R localhost:9999:192.168.10.50:80 $USER@123.123.123.123`
+        - Example: `ssh -N -R 127.0.0.1:9999:192.168.10.50:80 $USER@123.123.123.123`
         - Using the example of a server running a service to be accessed remotely, it makes sense that the server itself would open the `ssh` connection, rather than a separate machine.
         - Technically, this would be a form of a proxy tunnel. Specifically, this would be both a proxy and a remote SSH tunnel.
     - In addition, just like with other `ssh` connections, the address specified here could be a domain.
         - If the service was being hosted on example.com's internal network, the command may look like the following:
-            - Example: `ssh -N -R localhost:9999:$SERVER.example.com:80 $USER@123.123.123.123`
+            - Example: `ssh -N -R 127.0.0.1:9999:$SERVER.example.com:80 $USER@123.123.123.123`
 - "$USER@123.123.123.123" is the typical use of the `ssh` command. It specifies that `ssh` establishes a connection to the designated IP, signing in as the user specified.
     - Obviously, as would be true with any other `ssh` connection, the address could be an IP address, but could also be a domain name.
     - Example: `ssh $USER@example.com`
@@ -115,18 +117,18 @@ This is a great use case for a proxied "regular" SSH tunnel.
 The local user would run the following command from their local machine:
 
 ```
-ssh -N -L localhost:9999:123.123.123.123:80 $USER@222.222.222.222
+ssh -N -L 127.0.0.1:9999:123.123.123.123:80 $USER@222.222.222.222
 ```
 
-Through the use of this command, the server will accept the SSH connection, and will see that the local user is connecting to the server from a public IP address of 222.222.222.222. Therefore, the webpage at 123.123.123.123 will now be accessible at http://localhost:9999
+Through the use of this command, the server will accept the SSH connection, and will see that the local user is connecting to the server from a public IP address of 222.222.222.222. Therefore, the webpage at 123.123.123.123 will now be accessible at http://127.0.0.1:9999
 
 Explanation:
 
 - The `-N` flag makes the shell non-interactive, and tells the shell not to allow remote commands to be executed.
     - Without this flag, the `ssh` command would log into a shell as a normal `ssh` command would, and allows the connected user to enter commands as one may expect.
-- The `-L` flag opens a local port with a specific endpoint (in this case, "localhost:9999").
-- "localhost:9999" is the bind address of the connection on the local machine. This means that the SSH connection is essentially "port forwarded" to that address, at that port.
-    - It is common that "localhost" isn't written into this section of the command, as the connection assumes the bind address would be "localhost".
+- The `-L` flag opens a local port with a specific endpoint (in this case, "127.0.0.1:9999").
+- "127.0.0.1:9999" is the bind address of the connection on the local machine. This means that the SSH connection is essentially "port forwarded" to that address, at that port.
+    - It is common that "127.0.0.1" isn't written into this section of the command, as the connection assumes the bind address would be "127.0.0.1".
     - Therefore, `ssh -N -L 9999:123.123.123.123:80 $USER@222.222.222.222` would function the exact same way as the above command.
 - "123.123.123.123:80" is the host address of the connection on the remote machine. This means that the SSH connection is being made with "123.123.123.123:80" of the remote machine.
     - This is why the connection servers as a tunnel, allowing the local user running the `ssh` command to interact with the HTTP page on the remote address.
@@ -144,3 +146,5 @@ When running this command, the `ssh` command will appear to hang, so long as the
     - Reference for "creating remote SSH tunnel"
 - [YouTube - Tony Teaches Tech - How to Make an SSH Proxy Tunnel](https://www.youtube.com/watch?v=F-ubwghsWPM)
     - Reference for "creating SSH proxy tunnel"
+- [YouTube - anthonywritescode - don't use localhost (intermediate) anthony explains #534](https://www.youtube.com/watch?v=98SYTvNw1kw)
+    - A video referencing the benefits of using `127.0.0.1`, as opposed to `localhost`
