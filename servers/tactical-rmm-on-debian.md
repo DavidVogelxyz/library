@@ -2,7 +2,8 @@
 
 ## Table of contents
 
-- [Installation](#installation)
+- [Initial configuration](#initial-configuration)
+- [Installing Tactical RMM](#installing-tactical-rmm)
 - [Troubleshooting a local deployment](#troubleshooting-a-local-deployment)
     - [tmux](#tmux)
     - [Self-signed SSL certificates](#self-signed-ssl-certificates)
@@ -15,7 +16,11 @@
     - [Updating Tactical RMM breaks agent installers](#updating-tactical-rmm-breaks-agent-installers)
 - [References](#references)
 
-## Installation
+## Initial configuration
+
+Follow this guide on [configuring a server running Debian](/servers/configuring-debian-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
+
+## Installing Tactical RMM
 
 Use [the guide](https://docs.tacticalrmm.com/install_server/) provided by the Tactical RMM team. However, be sure to read the remainder of this guide ***before*** attempting the install, as it will prevent what seem to be "common errors."
 

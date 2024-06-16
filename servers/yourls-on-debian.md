@@ -6,12 +6,17 @@ This guide assumes that YOURLS is being installed on a Debian server, with `nala
 
 ## Table of contents
 
-- [Initial setup](#initial-setup)
+- [Initial configuration](#initial-configuration)
+- [Preparing the server for YOURLS](#preparing-the-server-for-yourls)
 - [Configuring database](#configuring-database)
 - [Installing YOURLS](#installing-yourls)
 - [References](#references)
 
-## Initial setup
+## Initial configuration
+
+Follow this guide on [configuring a server running Debian](/servers/configuring-debian-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
+
+## Preparing the server for YOURLS
 
 Update package repositories:
 

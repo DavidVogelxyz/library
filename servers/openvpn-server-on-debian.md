@@ -11,17 +11,16 @@ As is explained in other parts of the guide, these instructions can be deployed 
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Initial setup](#initial-setup)
-- [Setting up the virtual environment](#setting-up-the-virtual-environment)
-- [Installing UFW](#installing-ufw)
+- [Setting up a cloud server](#setting-up-a-cloud-server)
+- [Initial configuration](#initial-configuration)
+- [Configuring UFW](#configuring-ufw)
     - [General firewall rules](#general-firewall-rules)
     - [IP-specific firewall rules](#ip-specific-firewall-rules)
     - [Enabling UFW](#enabling-ufw)
-- [Setting up SSH](#setting-up-ssh)
 - [Setting up the OpenVPN server](#setting-up-the-openvpn-server)
 - [References](#references)
 
-## Initial setup
+## Setting up a cloud server
 
 The first step in setting up an OpenVPN server is to create the virtual environment onto which OpenVPN will be installed. This virtual environment can take many forms, such as a cloud server, a Proxmox VM, or a standalone device such as a Raspberry Pi.
 
@@ -33,58 +32,32 @@ The following are suggestions for how to set up each of those options:
 
 Once the virtual environment has been provisioned and initialized, the next step is to configure the server.
 
-## Setting up the virtual environment
+## Initial configuration
 
-After booting into the server and signing in (likely as the root user), the first step is to confirm that all currently installed packages are up to date. If the server is running Debian or Ubuntu, this is achieved through the command:
+Follow this guide on [configuring a server running Debian](/servers/configuring-debian-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
 
-```
-apt update && apt upgrade
-```
+## Configuring UFW
 
-The next step is to create a new user (ex: openvpn) to administer and manage the OpenVPN server. It is highly advisable that the root user is not used for this purpose.
-
-Create a new user with the `useradd` command. Add the user to the "sudo" group with `-G sudo`, and use `-m` to give that user a home directory. The `-s /bin/bash` is also useful, because Debian tends to default the user to the `sh` shell, which has far less features than the standard `bash` shell most users are used to.
-
-```
-useradd -G sudo -s /bin/bash -m $USER
-```
-
-Once the user has been created, set the user's password with the following command:
-
-```
-passwd $USER
-```
-
-It is also worth checking the "/etc/hostname" and "/etc/hosts" files at this point. Confirm that the hostname is correct for the OpenVPN server, and confirm that it is found in "/etc/hosts" under a loopback address. If any adjustments were made to either of these files, it is advisable to restart the server after and then to log back in.
-
-## Installing UFW
-
-Depending on the network's setup, it may also make sense to include a software firewall, such as `ufw`. For a publicly accessible server, such as a cloud server VPN, it is highly advisable to configure `ufw` such that the available ports are limited as much as possible.
+Depending on the network's setup, it may also make sense to include a software firewall, such as `ufw`. For a publicly accessible server, it is highly advisable to configure `ufw` such that the available ports are limited as much as possible.
 
 It does not seem to be necessary to open port 1194 (OpenVPN's standard port) on the `ufw` rules, as OpenVPN is configured to listen to receive inbound connections despite the port being blocked by the firewall. Despite this, the guide describes how to open the OpenVPN port when using `ufw`.
-
-First, install `ufw` with the following command:
-
-```
-apt install ufw
-```
 
 Add a default firewall rule to deny incoming connections:
 
 ```
-ufw default deny incoming
+sudo ufw default deny incoming
 ```
 
 Add a default firewall rule to allow outgoing connections:
 
 ```
-ufw default allow outgoing
+sudo ufw default allow outgoing
 ```
 
 Set logging to off:
 
 ```
-ufw logging off
+sudo ufw logging off
 ```
 
 For generalized firewall rules, see [general firewall rules](#general-firewall-rules); to create firewall rules that only allow a certain IP to access the services, see [IP-specific firewall rules](#ip-specific-firewall-rules).
@@ -94,13 +67,13 @@ For generalized firewall rules, see [general firewall rules](#general-firewall-r
 Add a firewall rule to allow SSH connections:
 
 ```
-ufw allow ssh
+sudo ufw allow ssh
 ```
 
 Add a firewall rule to allow OpenVPN connections:
 
 ```
-ufw allow openvpn
+sudo ufw allow openvpn
 ```
 
 ### IP-specific firewall rules
@@ -108,13 +81,13 @@ ufw allow openvpn
 Add a firewall rule to allow SSH connections from only specific IP addresses:
 
 ```
-ufw allow from $IP_ADDRESS proto tcp to any port 22
+sudo ufw allow from $IP_ADDRESS proto tcp to any port 22
 ```
 
 Add a firewall rule to allow OpenVPN connections from only specific IP addresses (this is not advised, as it will limit the utility of the VPN):
 
 ```
-ufw allow from $IP_ADDRESS proto tcp to any port 1194
+sudo ufw allow from $IP_ADDRESS proto tcp to any port 1194
 ```
 
 ### Enabling UFW
@@ -122,7 +95,7 @@ ufw allow from $IP_ADDRESS proto tcp to any port 1194
 Enable `ufw`:
 
 ```
-ufw enable
+sudo ufw enable
 ```
 
 Enable `ufw` to run on startup:
@@ -131,66 +104,11 @@ Enable `ufw` to run on startup:
 systemctl enable ufw
 ```
 
-## Setting up SSH
-
-A crucial step in the setup process is to properly configure SSH login. There are two main components to this:
-
-- disabling "root login via SSH"
-- disabling "password-based authentication"
-
-By disabling both of those options, the server will be limited to only accepting SSH connections from non-root users, and those users will not be able to login using a password alone. Therefore, a public/private keypair will need to be configured to allow the user to login safely.
-
-Create a key on the machine accessing the VPN server by using the following command:
+To check and confirm the firewall rules, use the following command:
 
 ```
-ssh-keygen -b rsa -t 4096
+sudo ufw status
 ```
-
-Note that the above command works both with Linux machines and Windows computers (through PowerShell). During keyfile generation, the command will prompt the user for a password. It is a acceptable practice to have the keyfile password be the same as the user's password on the VPN server.
-
-Next, the key needs to be copied over to the VPN server and added to the list of keys authorized for SSH. On a Linux machine, this is most easily accomplished through the use of the following command:
-
-```
-ssh-copy-id -i /PATH/TO/THE/KEY.pub $USER@$HOST
-```
-
-The benefit of `ssh-copy-id` is that the key will automatically be entered into the '~/.ssh/authorized_keys' file for that particular user.
-
-If `ssh-copy-id` is unavailable, the next best method to add the key to the 'authorized_keys' file is to use `scp` to securely copy the 'KEY.pub' file over to the VPN server. Then, the contents of that 'KEY.pub' file can be appended to the '~/.ssh/authorized_keys' file for that user.
-
-From a Windows machine, neither `ssh-copy-id` not `scp` are readily available in PowerShell. Therefore, the simplest method for a Windows admin is to open up an SSH connection to the VPN server, open up the '~/.ssh/authorized_keys' in a preferred text editor, and paste the pubkey's content into the file.
-
-Once the key is confirmed as resident within the '~/.ssh/authorized_keys' file, it is time to update the '/etc/ssh/sshd_config' file by disabling root access and password-based authentication. Since this is a file located in '/etc/...', open up the file using elevated privileges (eg. `sudo vim /etc/ssh/sshd_config`).
-
-After opening the file, there are three lines of interest:
-
-- PermitRootLogin
-- PasswordAuthentication
-- KbdInteractiveAuthentication
-
-Whether by commenting out the already-existing lines and adding additional lines, or by replacing what's already there, those three lines should read:
-
-```
-PermitRootLogin no
-PasswordAuthentication no
-KbdInteractiveAuthentication no
-```
-
-Once these lines have been edited, the `sshd` service requires a restart for the changes to take effect. This can be accompished with the following command:
-
-```
-sudo systemctl restart sshd
-```
-
-Once this command has been entered, test the changes by logging out and trying to log in again using the original `ssh $USER@$HOST` command. This should be refused with an error message of "Permission denied (publickey)." To connect using the keyfile that was added to the server, modify the command to read:
-
-```
-ssh -i /PATH/TO/THE/KEY.pub $USER@$HOST
-```
-
-This command should work, and will prompt the user for the password added during the key's creation.
-
-Now that SSH logins have been secured, it's time to set up the OpenVPN server.
 
 ## Setting up the OpenVPN server
 
