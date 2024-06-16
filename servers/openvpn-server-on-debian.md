@@ -123,10 +123,10 @@ mkdir -pv ~/.local/src
 Now that the directory is confirmed to exist, change directory into '~/.local/src'. Next, clone the git repo using the following command:
 
 ```
-git clone https://github.com/angristan/openvpn-install.git
+git clone https://github.com/angristan/openvpn-install
 ```
 
-Change directory to the new 'openvpn-install' project and run the following command to start the script:
+Change directory to the new 'openvpn-install' directory and run the following command to start the script:
 
 ```
 sudo bash openvpn-install.sh
