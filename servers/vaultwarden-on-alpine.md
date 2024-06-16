@@ -1,20 +1,11 @@
 # Vaultwarden password manager, running on Alpine Linux
 
-NB:
-
-- This guide has been tested using an Alpine Linux container on Proxmox, using the default Alpine image that Proxmox pulls.
-- On multiple occasions, this guide makes reference to the `service` command. Know that `service` functions the same way as `rc-service`.
-- In addition, `rc-update add $SERVICE` is a shorter way to write `rc-update add $SERVICE default`.
-    - Both commands will add the `$SERVICE` to the "default" run level.
-- When using a tty on Alpine Linux, "Ctrl-Alt-Del" reboots the computer.
+NB: This guide has been tested using an Alpine Linux container on Proxmox, using the default Alpine image that Proxmox pulls. In addition, this guide has also been tested using VMs hosted on Vultr and Linode.
 
 ## Table of contents
 
-- [Configuring SSH](#configuring-ssh)
-    - [On-prem Proxmox install](#on-prem-proxmox-install)
-    - [Securing SSH](#securing-ssh)
-- [Adding configuration files](#adding-configuration-files)
-- [Installing UFW](#installing-ufw)
+- [Initial configuration](#initial-configuration)
+- [Configuring UFW](#configuring-ufw)
     - [General firewall rules](#general-firewall-rules)
     - [IP-specific firewall rules](#ip-specific-firewall-rules)
     - [Enabling UFW](#enabling-ufw)
@@ -29,139 +20,42 @@ NB:
     - [Fixing icons](#fixing-icons)
 - [References](#references)
 
-## Configuring SSH
+## Initial configuration
 
-First, update the `apk` package list and install some packages that will be used throughout the Vaultwarden installation process.
-
-```
-apk update && apk add openssh-server vim tmux ufw git curl nginx openssl
-```
-
-At this point, the guide splits depending on whether the install is local / on-premises (on-prem) or via a cloud service provider. For an on-prem solution, start at [on-prem Proxmox install](#on-prem-proxmox-install); for a cloud service provider, start at [securing SSH](#securing-ssh).
-
-### On-prem Proxmox install
-
-Configure `ssh` by editing the "/etc/ssh/sshd_config" file. Most notably, "PermitRootLogin" needs to be set as "yes", as the Alpine Linux container doesn't have a user created by default.
+First, update the `apk` package list and install some packages that will be used throughout the Vaultwarden server setup process.
 
 ```
-vim /etc/ssh/sshd_config
+apk update && apk add curl git openssh-server sudo tmux ufw vim
 ```
 
-At least on the Alpine Linux container for Proxmox, when `ssh` is installed, `sshd` is not automatically configured to run as a service. This can be a problem on a container restart, if the service is expected to be running on reboot.
-
-To ensure that `ssh` lockouts do not occur, run the following command:
+Then, enable packages from the "edge" repository by echoing the following command into the "/etc/apk/repositories" file:
 
 ```
-service sshd start && rc-update add sshd
+echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
 ```
 
-In order to test `ssh` login, get the IP address of the VM container.
+Next, follow this guide on [configuring a server running Alpine Linux](/servers/configuring-alpine-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
 
-```
-ip a
-```
+## Configuring UFW
 
-### Securing SSH
-
-Especially when using the root user for configuration, it is best practice to use a SSH key for login. A key can be created on the `ssh` client computer by running the following:
-
-```
-ssh-keygen -t rsa -b 4096
-```
-
-Once the key is created, copy it over from the `ssh` client using the following command. Obviously, "$ALPINELINUX" should either be the hostname of the Alpine Linux server, or its IP address.
-
-```
-ssh-copy-id -i /PATH/TO/SSH/KEY root@$ALPINELINUX
-```
-
-Edit the "/etc/ssh/sshd_config" file and secure `ssh` by updating the following:
-
-- "PermitRootLogin" should be set to "prohibit-password".
-- "PasswordAuthentication" should be explicity set to "no".
-
-The service can be restarted with:
-
-```
-service sshd restart
-```
-
-Also, change the password (if necessary).
-
-```
-passwd
-```
-
-In addition, for cloud install, the "/etc/hostname" and "/etc/hosts" files may need to be updated to reflect the correct hostname for the server.
-
-## Adding configuration files
-
-First, create some directories that will store some of the configuration files:
-
-```
-mkdir -pv ~/.local/src ~/.config/shell
-```
-
-Change directory into the newly created "~/.local/src" directory.
-
-```
-cd ~/.local/src/
-```
-
-Clone a few GitHub repositories with already-created configuration files.
-
-```
-git clone https://github.com/davidvogelxyz/dotfiles && git clone https://github.com/davidvogelxyz/vim
-```
-
-Return to the home directory of the active user.
-
-```
-cd
-```
-
-Symbolically link the `vim` configurations to the home directory of the active user.
-
-```
-ln -s ~/.local/src/vim ~/.vim
-```
-
-Copy the "aliasrc" file for Alpine Linux into the newly created "~/.config/shell" directory.
-
-```
-cp ~/.local/src/dotfiles/.config/shell/aliasrc-alpine ~/.config/shell/aliasrc && source ~/.config/shell/aliasrc
-```
-
-To the "~/.ashrc" file, add the line `source ~/.config/shell/aliasrc`. To the "/etc/profile" file, add the line `source ~/.ashrc`.
-
-```
-echo "source ~/.config/shell/aliasrc" >> ~/.ashrc && echo -e "\nsource ~/.ashrc" >> /etc/profile
-```
-
-Another change that, while minimal, can be helpful, is to change the "/etc/profile" file so that the username shows along with the hostname. This can easily be accomplished with the following `sed` command:
-
-```
-sed -i "s/PS1='\\\h/PS1='\\\u@\\\h/g" /etc/profile
-```
-
-## Installing UFW
+Depending on the network's setup, it may also make sense to include a software firewall, such as `ufw`. For a publicly accessible server, it is highly advisable to configure `ufw` such that the available ports are limited as much as possible.
 
 Add a default firewall rule to deny incoming connections:
 
 ```
-ufw default deny incoming
+sudo ufw default deny incoming
 ```
 
 Add a default firewall rule to allow outgoing connections:
 
 ```
-ufw default allow outgoing
+sudo ufw default allow outgoing
 ```
 
 Set logging to off:
 
 ```
-ufw logging off
+sudo ufw logging off
 ```
 
 For generalized firewall rules, see [general firewall rules](#general-firewall-rules); to create firewall rules that only allow a certain IP to access the services, see [IP-specific firewall rules](#ip-specific-firewall-rules).
@@ -171,19 +65,19 @@ For generalized firewall rules, see [general firewall rules](#general-firewall-r
 Add a firewall rule to allow SSH connections:
 
 ```
-ufw allow ssh
+sudo ufw allow ssh
 ```
 
 Add a firewall rule to allow HTTP connections:
 
 ```
-ufw allow http
+sudo ufw allow http
 ```
 
 Add a firewall rule to allow HTTPS connections:
 
 ```
-ufw allow https
+sudo ufw allow https
 ```
 
 ### IP-specific firewall rules
@@ -191,19 +85,19 @@ ufw allow https
 Add a firewall rule to allow SSH connections from only specific IP addresses:
 
 ```
-ufw allow from $IP_ADDRESS proto tcp to any port 22
+sudo ufw allow from $IP_ADDRESS proto tcp to any port 22
 ```
 
 Add a firewall rule to allow HTTP connections from only specific IP addresses:
 
 ```
-ufw allow from $IP_ADDRESS proto tcp to any port 80
+sudo ufw allow from $IP_ADDRESS proto tcp to any port 80
 ```
 
 Add a firewall rule to allow HTTPS connections from only specific IP addresses:
 
 ```
-ufw allow from $IP_ADDRESS proto tcp to any port 443
+sudo ufw allow from $IP_ADDRESS proto tcp to any port 443
 ```
 
 ### Enabling UFW
@@ -211,7 +105,7 @@ ufw allow from $IP_ADDRESS proto tcp to any port 443
 Enable `ufw`:
 
 ```
-ufw enable
+sudo ufw enable
 ```
 
 Enable `ufw` to run on startup:
@@ -220,18 +114,18 @@ Enable `ufw` to run on startup:
 rc-update add ufw
 ```
 
+To check and confirm the firewall rules, use the following command:
+
+```
+sudo ufw status
+```
+
 ## Installing Vaultwarden
 
-First, enable packages from the "edge" repository by echoing the following command into the "/etc/apk/repositories" file:
+Now, update the package list with the additions from the "edge" repository, and install `vaultwarden` and `vaultwarden-web-vault`. The `vaultwarden-openrc` package is installed during the install of `vaultwarden`, so no need to include it. Also, install `nginx` and `openssl` at this time.
 
 ```
-echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-```
-
-Update the package list with the additions from the "edge" repository and install `vaultwarden` and `vaultwarden-web-vault`. The `vaultwarden-openrc` package is installed during the install of `vaultwarden`, so no need to include it.
-
-```
-apk update && apk add vaultwarden vaultwarden-web-vault
+apk update && apk add vaultwarden vaultwarden-web-vault nginx openssl
 ```
 
 Next, add `vaultwarden` into the OpenRC default services and start it up.
@@ -261,7 +155,7 @@ Using `curl` on `localhost:8000/admin` should return a message about configuring
 Using a ***good password***, an admin token can be created with the following command:
 
 ```
-vaultwarden hash
+sudo vaultwarden hash
 ```
 
 By editing either the "/etc/conf.d/vaultwarden" (default configurations) file, or the "/var/lib/vaultwarden/.env" (overriding changes) file, the admin token can be added in.
@@ -271,13 +165,13 @@ NB: While the ".env" file should override any and all changes made, issues seem 
 Open either file in an editor of choice:
 
 ```
-vim /etc/conf.d/vaultwarden
+sudo vim /etc/conf.d/vaultwarden
 ```
 
 or:
 
 ```
-vim /var/lib/vaultwarden/.env
+sudo vim /var/lib/vaultwarden/.env
 ```
 
 If editing "/etc/conf.d/vaultwarden", the following options should be set **using the `export` command**:
@@ -324,7 +218,7 @@ curl localhost:8000/admin
 Now, it's time to set up some self-signed SSL certificates in order to enable HTTPS connections. Create the following directory and change directory into it.
 
 ```
-mkdir -pv /etc/nginx/ssl && cd /etc/nginx/ssl
+sudo mkdir -pv /etc/nginx/ssl && cd /etc/nginx/ssl
 ```
 
 Using the following two commands, create the required files.
@@ -334,13 +228,13 @@ Replace `$SERVER` with a name for the files being generated. This will likely be
 The first command creates the server's private key, as well as a "certificate signing request" (CSR) file.
 
 ```
-openssl req -newkey rsa:4096 -nodes -keyout $SERVER.key -out $SERVER.csr
+sudo openssl req -newkey rsa:4096 -nodes -keyout $SERVER.key -out $SERVER.csr
 ```
 
 The next command uses the private key and the CSR to generate a certificate file.
 
 ```
-openssl x509 -signkey $SERVER.key -in $SERVER.csr -req -days 36500 -out $SERVER.crt
+sudo openssl x509 -signkey $SERVER.key -in $SERVER.csr -req -days 36500 -out $SERVER.crt
 ```
 
 ## Configuring nginx
@@ -348,7 +242,7 @@ openssl x509 -signkey $SERVER.key -in $SERVER.csr -req -days 36500 -out $SERVER.
 Create a new configuration file in the "/etc/nginx/http.d" directory:
 
 ```
-vim /etc/nginx/http.d/vaultwarden.conf
+sudo vim /etc/nginx/http.d/vaultwarden.conf
 ```
 
 Configure the file to look something similar to the below configuration file.

@@ -21,7 +21,7 @@ NB:
 First, create a new public/private keypair specific to the target computer that's being working on. On a Linux client machine, creating a new SSH key is as simple as using the following command. In Windows, it *should* be possible to open a PowerShell terminal and use the same command to create a new SSH key.
 
 ```
-ssh-keygen -b 4096 -t rsa
+ssh-keygen -t rsa -b 4096
 ```
 
 The two options in this command set the encryption bits (`-b`) and the encryption type (`-t`).

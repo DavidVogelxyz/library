@@ -12,8 +12,7 @@ NB:
 
 - [Making changes to the BIOS of the mini-PC](#making-changes-to-the-bios-of-the-mini-pc)
 - [Installing Alpine Linux](#installing-alpine-linux)
-- [Securing SSH](#securing-ssh)
-- [Adding configuration files](#adding-configuration-files)
+- [Initial configuration](#initial-configuration)
 - [Configuring the video loop](#configuring-the-video-loop)
 - [References](#references)
 
@@ -42,99 +41,18 @@ Now, boot from the USB, and enter the Alpine Linux live USB environment.
 
 This step should not require much explanation. Install Alpine Linux onto the mini-PC using `setup-alpine` from within the live USB environment. Consult the [Alpine Linux documentation](https://docs.alpinelinux.org/user-handbook/0.1a/Installing/setup_alpine.html) regarding `setup-alpine` if instruction is needed.
 
-## Securing SSH
+## Initial configuration
 
-Once Alpine Linux is installed onto the mini-PC, the next step is to secure the `ssh` connection to prevent unwanted connections.
-
-Especially when using the root user for configuration, it is best practice to use a SSH key for login. A key can be created on the `ssh` client computer by running the following:
-
-```
-ssh-keygen -t rsa -b 4096
-```
-
-Once the key is created, copy it over from the `ssh` client using the following command. Obviously, "$ALPINELINUX" should either be the hostname of the Alpine Linux server, or its IP address.
-
-```
-ssh-copy-id -i /PATH/TO/SSH/KEY root@$ALPINELINUX
-```
-
-Edit the "/etc/ssh/sshd_config" file and secure `ssh` by updating the following:
-
-- "PermitRootLogin" should be set to "prohibit-password".
-- "PasswordAuthentication" should be explicity set to "no".
-
-The service can be restarted with:
-
-```
-service sshd restart
-```
-
-Also, change the password (if necessary).
-
-```
-passwd
-```
-
-In addition, for cloud install, the "/etc/hostname" and "/etc/hosts" files may need to be updated to reflect the correct hostname for the server.
-
-## Adding configuration files
-
-First, create some directories that will store some of the configuration files:
-
-```
-mkdir -pv ~/.local/src ~/.config/shell
-```
-
-Change directory into the newly created "~/.local/src" directory.
-
-```
-cd ~/.local/src/
-```
-
-Clone a few GitHub repositories with already-created configuration files.
-
-```
-git clone https://github.com/davidvogelxyz/dotfiles && git clone https://github.com/davidvogelxyz/vim
-```
-
-Return to the home directory of the active user.
-
-```
-cd
-```
-
-Symbolically link the `vim` configurations to the home directory of the active user.
-
-```
-ln -s ~/.local/src/vim ~/.vim
-```
-
-Copy the "aliasrc" file for Alpine Linux into the newly created "~/.config/shell" directory.
-
-```
-cp ~/.local/src/dotfiles/.config/shell/aliasrc-alpine ~/.config/shell/aliasrc && source ~/.config/shell/aliasrc
-```
-
-To the "~/.ashrc" file, add the line `source ~/.config/shell/aliasrc`. To the "/etc/profile" file, add the line `source ~/.ashrc`.
-
-```
-echo "source ~/.config/shell/aliasrc" >> ~/.ashrc && echo -e "\nsource ~/.ashrc" >> /etc/profile
-```
-
-Another change that, while minimal, can be helpful, is to change the "/etc/profile" file so that the username shows along with the hostname. This can easily be accomplished with the following `sed` command:
-
-```
-sed -i "s/PS1='\\\h/PS1='\\\u@\\\h/g" /etc/profile
-```
+Follow this guide on [configuring a server running Alpine Linux](/servers/configuring-alpine-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
 
 ## Configuring the video loop
 
 With `ssh` secured, the next step is to install some packages required to make the video loop and display properly.
 
-Install the following packages:
+Update the package repositories, and install the following packages:
 
 ```
-apk update && apk add vim git curl mpv ffmpeg mesa-dri-gallium intel-media-driver mesa-va-gallium
+apk update && apk add ffmpeg intel-media-driver mesa-dri-gallium mesa-va-gallium mpv
 ```
 
 Then, open "/etc/init.d/videoloop" in a text editor:

@@ -37,6 +37,8 @@ My guides for different installs and customizations, etc.
     - [SSH tunneling](security/ssh-tunneling.md)
     - [SSH](security/ssh.md)
 - [Server projects](servers/)
+    - [Configuring a server running Alpine Linux](servers/configuring-alpine-server.md)
+    - [Configuring a server running Debian](servers/configuring-debian-server.md)
     - [DNS server using dnsmasq, running on Alpine Linux](servers/dnsmasq-server-on-alpine.md)
     - [Nextcloud cloud storage, running on Alpine Linux](servers/nextcloud-on-alpine.md)
     - [OpenVPN server, running on Debian](servers/openvpn-server-on-debian.md)
