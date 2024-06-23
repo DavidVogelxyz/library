@@ -73,7 +73,7 @@ Save the file, and restart the node. Now, the laptop lid can be closed without t
 Next, install `zsh` and `zsh-syntax-highlighting`:
 
 ```
-nala install zsh zsh-syntax-highlighting
+nala install -y zsh zsh-syntax-highlighting
 ```
 
 Set the user's preferred shell to `zsh` with the following command:
@@ -236,7 +236,7 @@ sudo ufw status
 Next, install `fail2ban`, a package designed to temporarily ban users who fail to login too many times in a short period of time. No configuration is needed besides installing the package.
 
 ```
-nala install fail2ban
+nala install -y fail2ban
 ```
 
 Open the "/etc/security/limits.d/90-limits.conf" file:
@@ -283,7 +283,7 @@ session required    pam_limits.so
 Now, install `nginx`:
 
 ```
-nala install nginx
+nala install -y nginx
 ```
 
 Configure an SSL certificate for the server:
@@ -337,7 +337,7 @@ sudo nginx -t
 If the test fails in reference to `unknown directive "stream"`, install the following package and test again:
 
 ```
-nala install libnginx-mod-stream
+nala install -y libnginx-mod-stream
 ```
 
 ## Configuring Tor
@@ -345,7 +345,7 @@ nala install libnginx-mod-stream
 Now, install `tor`:
 
 ```
-nala install tor
+nala install -y tor
 ```
 
 Open the "/etc/tor/torrc" file with a text editor:
@@ -878,7 +878,7 @@ Fulcrum --version
 First, install the `libssl-dev` package:
 
 ```
-nala update && nala install libssl-dev
+nala update && nala install -y libssl-dev
 ```
 
 Next, clone the git repo for `zram-swap`:
@@ -1225,7 +1225,7 @@ curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 Now, install `nodejs`:
 
 ```
-nala install nodejs
+nala install -y nodejs
 ```
 
 To confirm that `nodejs` installed correctly, check the node's `node` version:
@@ -1285,7 +1285,7 @@ Log out of the "mempool" user, and back to the main admin user.
 As the main admin user, install the MariaDB database package:
 
 ```
-nala update && nala install mariadb-server mariadb-client
+nala update && nala install -y mariadb-server mariadb-client
 ```
 
 Use the following command to generate a randomized 25 character password; this password will be used to secure the SQL database:
