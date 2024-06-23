@@ -11,7 +11,7 @@ My guides for different installs and customizations, etc.
     - [Installing Debian / Ubuntu](install-os/install-debian.md)
 - [Networking](network/)
     - [Configuring VLANs on TP-Link switches, connected to a pfSense router](network/vlans-on-tplink-switches.md)
-    - [Creating and configuring a root certificate authority](network/create-rootCA.md)
+    - [Creating and configuring a root certificate authority](network/create-root-certificate-authority.md)
     - [GRE tunnels between Linux machines](network/gre.md)
     - [SSH tunneling](network/ssh-tunneling.md)
     - [Travel Router using a Raspberry Pi and OpenWrt](network/install-openwrt-travelrouter.md)
