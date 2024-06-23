@@ -220,7 +220,7 @@ Note: for this next section, references to `$HOSTNAME` represent the domain of t
 First, update the package repositories, and install some packages that will be used throughout the SMTP server setup process:
 
 ```
-nala update && nala install nginx python3-certbot-nginx
+nala update && nala install -y nginx python3-certbot-nginx
 ```
 
 Now, create a new file at "/etc/nginx/sites-available/$HOSTNAME" and add the following content to it:
