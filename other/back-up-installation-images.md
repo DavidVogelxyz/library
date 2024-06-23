@@ -113,5 +113,5 @@ However, `gzip` can be run directly on files. It is not necessary to run `cat` o
 ## References
 
 - [ServerFault - What is fastest way to copy a sparse file? What method results in the smallest file?](https://serverfault.com/questions/665335/what-is-fastest-way-to-copy-a-sparse-file-what-method-results-in-the-smallest-f)
-- [YouTube - Luke Smith - Don't cat into grep](https://www.youtube.com/watch?v=82NBMvx6vFY)
+- [YouTube - Luke Smith - Only Linux Brainlets CAT into GREP!!!](https://www.youtube.com/watch?v=82NBMvx6vFY)
 - [YouTube - anthonywritescode - don't use cat! (intermediate) anthony explains #508](https://www.youtube.com/watch?v=vWMiBVkdJjA)
