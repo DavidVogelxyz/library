@@ -11,6 +11,9 @@ This guide will assist with perform basic server tasks on Debian, such as creati
 - [Creating a new user](#creating-a-new-user)
 - [Securing SSH](#securing-ssh)
 - [Adding configuration files](#adding-configuration-files)
+    - [Adding configuration files to new user](#adding-configuration-files-to-new-user)
+    - [Adding configuration files to root user](#adding-configuration-files-to-root-user)
+- [Checking user access logs](#checking-user-access-logs)
 
 ## Updating packages
 
@@ -118,47 +121,69 @@ It is also worth checking the "/etc/hostname" and "/etc/hosts" files at this poi
 First, update packages repositiories again, upgrade installed packages, and install some additional packages:
 
 ```
-sudo nala update && sudo nala upgrade && sudo nala install -y curl git htop rsync tmux tree ufw
+sudo nala update && sudo nala upgrade -y && sudo nala install -y curl git htop rsync tmux tree ufw
 ```
+
+### Adding configuration files to new user
 
 Next, create some directories that will store some of the configuration files:
 
 ```
-mkdir -pv ~/.local/src ~/.config/shell
-```
-
-Change directory into the newly created "~/.local/src" directory.
-
-```
-cd ~/.local/src/
+mkdir -pv ~/.cache/bash ~/.cache/zsh ~/.config/shell ~/.local/bin ~/.local/src
 ```
 
 Clone a few GitHub repositories with already-created configuration files.
 
 ```
-git clone https://github.com/davidvogelxyz/dotfiles && git clone https://github.com/davidvogelxyz/vim
-```
-
-Return to the home directory of the active user.
-
-```
-cd
+git clone https://github.com/davidvogelxyz/dotfiles ~/.dotfiles && ln -s ../../.dotfiles ~/.local/src/dotfiles && git clone https://github.com/davidvogelxyz/vim ~/.local/src/vim
 ```
 
 Symbolically link the `vim` configurations to the home directory of the active user.
 
 ```
-ln -s ~/.local/src/vim ~/.vim
+ln -s .local/src/vim ~/.vim
 ```
 
 Symbolically link the "aliasrc" file for Debian into the newly created "~/.config/shell" directory.
 
 ```
-ln -s ~/.local/src/dotfiles/.config/shell/aliasrc-debian ~/.config/shell/aliasrc && source ~/.config/shell/aliasrc
+ln -s ../../.dotfiles/.config/shell/aliasrc-debian ~/.config/shell/aliasrc && source ~/.config/shell/aliasrc
 ```
 
-To the "~/.bashrc" file, add the line `source ~/.config/shell/aliasrc`.
+To the "~/.bashrc" file, add the line: `source ~/.config/shell/aliasrc`.
 
 ```
 echo -e "\\nsource ~/.config/shell/aliasrc" >> ~/.bashrc
+```
+
+### Adding configuration files to root user
+
+It can be helpful to apply the same configuration changes to the root user as well. Examples of this include using `sudo vim`. If the Vim configuration files don't exist in the same way as for the new user, then the root account's Vim will be the default, and won't have the "quality of life" improvements that the new user's Vim has.
+
+To make this easy, the following commands can all be run as a single set of commands, as can be seen in the following code block:
+
+```
+mkdir -pv ~/.cache/bash ~/.cache/zsh ~/.config/shell ~/.local/bin ~/.local/src
+git clone https://github.com/davidvogelxyz/dotfiles ~/.dotfiles && ln -s ../../.dotfiles ~/.local/src/dotfiles && git clone https://github.com/davidvogelxyz/vim ~/.local/src/vim
+ln -s .local/src/vim ~/.vim
+ln -s ../../.dotfiles/.config/shell/aliasrc-debian ~/.config/shell/aliasrc && source ~/.config/shell/aliasrc
+echo -e "\\nsource ~/.config/shell/aliasrc" >> ~/.bashrc
+```
+
+## Checking user access logs
+
+While the configurations have all been pushed, and the server should be largely secured (sans `ufw`), it is also useful to know how to verify that no unintended logins have occurred while performing the initial configuration.
+
+On Debian, there are two commands that can be used to easily query the logs for attempted logins.
+
+The first command is `last`, which can be run as any user, without requiring `sudo`. `last` will list out all the successful user logins on the machine, and will print the user that logged in, as well as the IP address of the machine that successfully logged in. As stated, `last` can be used by simply running the following:
+
+```
+last
+```
+
+The second command is `lastb`, which can only be run by a user with superuser privileges. Therefore, it must be run with `sudo` as a prefix. `lastb` will list out all of the *failed* login attempts to the machine, and will print the username used, as well as the IP address of the machine that attempted the login. As stated, `lastb` can be used by running the following command:
+
+```
+sudo lastb
 ```
