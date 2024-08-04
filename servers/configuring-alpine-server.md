@@ -20,13 +20,16 @@ This guide will assist with perform basic server tasks on Alpine Linux, such as 
 - [Creating a new user](#creating-a-new-user)
 - [Securing SSH](#securing-ssh)
 - [Adding configuration files](#adding-configuration-files)
+    - [Adding configuration files to new user](#adding-configuration-files-to-new-user)
+    - [Adding configuration files to root user](#adding-configuration-files-to-root-user)
+- [Checking user access logs](#checking-user-access-logs)
 
 ## Updating packages
 
 To begin, log in to the server. Next, update the package repositories and install some immediate essentials:
 
 ```
-apk update && apk add openssh-server sudo vim
+apk update && apk add openssh-server shadow sudo vim
 ```
 
 ## Enabling SSH
@@ -61,18 +64,32 @@ Now, log in to the Alpine Linux server as the root user, using SSH.
 
 If the root user was used to log into the server, the next step is to create a new user to administer and manager the server. It is highly advisable that the root user is not used for this purpose.
 
-A new user can be created with the `adduser` command. By adding `sudo` after the username, the new user will be added to the "sudo" group, allowing the user to execute commands as if they were the root user.
+A new user can be created with the `adduser` command. By adding `wheel` after the username, the new user will be added to the "wheel" group, allowing the user to execute commands as if they were the root user.
 
 Create a new user account with the following command:
 
 ```
-adduser $USERNAME sudo
+adduser $USERNAME wheel
+```
+
+Alternatively, if the `shadow` package has been installed, a new user can be created with the `useradd` command. Add the user to the "wheel" group with `-G wheel`, and use `-m` to give that user a home directory. The `-s /bin/ash` is also useful in order to guarantee that the user's default shell is `ash`.
+
+The `useradd` can be utilized with the following command:
+
+```
+useradd -G wheel -s /bin/ash -m $USERNAME
 ```
 
 Once the user has been created, set the user's password with the following command:
 
 ```
 passwd $USERNAME
+```
+
+On Alpine, just like on Arch Linux, it is important to check the "/etc/sudoers" file and confirm that users in the "wheel" group are able to run commands with `sudo`. Use the following `sed` command to confirm that this is the case:
+
+```
+sed -i "s/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g" /etc/sudoers
 ```
 
 Now, log out, and log back in using the new user account using SSH. Once logged in as the new user, it's time to secure the SSH connection.
@@ -160,56 +177,74 @@ First, update packages repositiories again, upgrade installed packages, and inst
 sudo apk update && sudo apk upgrade && sudo apk add curl git htop tmux tree ufw
 ```
 
+### Adding configuration files to new user
+
 Next, create some directories that will store some of the configuration files:
 
 ```
-mkdir -pv ~/.local/src ~/.config/shell
-```
-
-Change directory into the newly created "~/.local/src" directory.
-
-```
-cd ~/.local/src/
+mkdir -pv ~/.config/shell ~/.local/src
 ```
 
 Clone a few GitHub repositories with already-created configuration files.
 
 ```
-git clone https://github.com/davidvogelxyz/dotfiles && git clone https://github.com/davidvogelxyz/vim
-```
-
-Return to the home directory of the active user.
-
-```
-cd
+git clone https://github.com/davidvogelxyz/dotfiles ~/.dotfiles && ln -s ../../.dotfiles ~/.local/src/dotfiles && git clone https://github.com/davidvogelxyz/vim ~/.local/src/vim
 ```
 
 Symbolically link the `vim` configurations to the home directory of the active user.
 
 ```
-ln -s ~/.local/src/vim ~/.vim
+ln -s .local/src/vim ~/.vim
 ```
 
 Symbolically link the "aliasrc" file for Alpine Linux into the newly created "~/.config/shell" directory.
 
 ```
-ln -s ~/.local/src/dotfiles/.config/shell/aliasrc-alpine ~/.config/shell/aliasrc && source ~/.config/shell/aliasrc
+ln -s ../../.dotfiles/.config/shell/aliasrc-alpine ~/.config/shell/aliasrc && source ~/.config/shell/aliasrc
 ```
 
-To the "~/.ashrc" file, add the line `source ~/.config/shell/aliasrc`. To the "/etc/profile" file, add the line `source ~/.ashrc`.
+To the "~/.ashrc" file, add the line: `source ~/.config/shell/aliasrc`.
 
 ```
-echo -e "\\nsource ~/.config/shell/aliasrc" >> ~/.ashrc && echo -e "\nsource ~/.ashrc" >> /etc/profile
+echo -e "\\nsource ~/.config/shell/aliasrc" >> ~/.ashrc
 ```
 
-Another change that, while minimal, can be helpful, is to change the "/etc/profile" file so that the username shows along with the hostname. This can easily be accomplished with the following `sed` command:
+Another change that, while minimal, can be helpful, is to change the "/etc/profile" file so that the username shows along with the hostname. This can easily be accomplished with the following `sed` command, which also sources the "/etc/profile" file after to update the shell:
 
 ```
-sudo sed -i "s/PS1='\\\h/PS1='\\\u@\\\h/g" /etc/profile
+sudo sed -i "s/PS1='\\\h/PS1='\\\u@\\\h/g" /etc/profile && source /etc/profile
 ```
 
-Now, source the "/etc/profile" file to update the shell:
+### Adding configuration files to root user
+
+It can be helpful to apply the same configuration changes to the root user as well. Examples of this include using `sudo vim`. If the Vim configuration files don't exist in the same way as for the new user, then the root account's Vim will be the default, and won't have the "quality of life" improvements that the new user's Vim has.
+
+To make this easy, the following commands can all be run as a single set of commands, as can be seen in the following code block:
 
 ```
-source /etc/profile
+mkdir -pv ~/.config/shell ~/.local/src
+git clone https://github.com/davidvogelxyz/dotfiles ~/.dotfiles && ln -s ../../.dotfiles ~/.local/src/dotfiles && git clone https://github.com/davidvogelxyz/vim ~/.local/src/vim
+ln -s .local/src/vim ~/.vim
+ln -s ../../.dotfiles/.config/shell/aliasrc-alpine ~/.config/shell/aliasrc && source ~/.config/shell/aliasrc
+echo -e "\\nsource ~/.config/shell/aliasrc" >> ~/.ashrc
 ```
+
+Since the root user is the active user, this is also the best time to update the "/etc/profile" file with a new line. To the "/etc/profile" file, add the line: `source ~/.ashrc`.
+
+```
+echo -e "\nsource ~/.ashrc" >> /etc/profile && source /etc/profile
+```
+
+Since the `sed` command was run using `sudo`, and already modified the "/etc/profile" for all users, it is not necessary to run this command again. However, if using the above code block for the new user as well (or, if "new user creation" was skipped entirely), do remember to run the `sed` at this time (no `sudo` required).
+
+## Checking user access logs
+
+While the configurations have all been pushed, and the server should be largely secured (sans `ufw`), it is also useful to know how to verify that no unintended logins have occurred while performing the initial configuration.
+
+Checking the user logins on Alpine is a bit more obtuse than it is on a Debian or Arch Linux machine. It requires that the user reference the actual log files found in "/var/log" -- the files that contain the relevant information are the "messages" files. As an example, consider a machine that has two log files: an older "messages.0" file, and a more recent "messages" file. A simple way to manage the information found in those files is to run the following command:
+
+```
+grep "Accepted" /var/log/messages.0 >> logfile && grep "Accepted" /var/log/messages >> logfile
+```
+
+Now, there exists a "logfile" in the current working directory that will list out all of the connections accepted by the server.
