@@ -20,7 +20,10 @@ NB:
 - [Additional notes](#additional-notes)
     - [Changing the admin token password](#changing-the-admin-token-password)
     - [Adding SMTP to Vaultwarden](#adding-smtp-to-vaultwarden)
+    - [Webpage settings](#webpage-settings)
+    - [Browser extensions](#browser-extensions)
     - [Fixing icons](#fixing-icons)
+    - [Disabling new user registration](#disabling-new-user-registration)
 - [References](#references)
 
 ## Initial configuration
@@ -182,7 +185,8 @@ If editing "/etc/conf.d/vaultwarden", the following options should be set **usin
 ```
 export ADMIN_TOKEN='$argon2id'
 export DATA_FOLDER=/var/lib/vaultwarden
-export DOMAIN=https://127.0.0.1
+export DOMAIN=https://DOMAIN.TLD
+export IP_HEADER=X-Forwarded-For
 export ORG_EVENTS_ENABLED=true
 export WEB_VAULT_ENABLED=true
 export WEB_VAULT_FOLDER=/usr/share/webapps/vaultwarden-web/
@@ -193,13 +197,27 @@ If editing the "/var/lib/vaultwarden/.env" file, the following options can be se
 ```
 ADMIN_TOKEN='$argon2id'
 DATA_FOLDER=/var/lib/vaultwarden
-DOMAIN=https://127.0.0.1
+DOMAIN=https://DOMAIN.TLD
+IP_HEADER=X-Forwarded-For
 ORG_EVENTS_ENABLED=true
 WEB_VAULT_ENABLED=true
 WEB_VAULT_FOLDER=/usr/share/webapps/vaultwarden-web/
 ```
 
-In either case, the ADMIN_TOKEN variable should reflect the admin token that was created with the `vaultwarden hash` command. Also, a DOMAIN of "https://127.0.0.1" will work to get the server running; however, if/when implementing SMTP, "DOMAIN" should reflect the domain on which Vaultwarden is being served (ex. "https://domain.tld").
+In either case:
+
+- The value for ADMIN_TOKEN should reflect the admin token that was created with the command: `vaultwarden hash`.
+- A value for DOMAIN of "https://127.0.0.1" will work to get the server running.
+    - However, if/when implementing SMTP, "DOMAIN" should reflect the domain on which Vaultwarden is being served (ex. "https://DOMAIN.TLD").
+        - The importance of this setting can be seen when using SMTP with Vaultwarden.
+            - When a new user registers with the server, the value for DOMAIN will be what appears in the e-mail.
+                - "Thank you for creating an account at https://DOMAIN.TLD" vs "Thank you for creating an account at https://127.0.0.1".
+- Setting the value for IP_HEADER as "X-Forwarded-For" will avoid an issue that can occur when implementing SMTP with Vaultwarden.
+    - If "IP_HEADER" is left as the default (which seems to be "X-Real-IP"), then e-mails sent by Vaultwarden regarding "New Device Login" will only show the IP address of 127.0.0.1.
+        - This is technically correct, as this is the IP address of the local `nginx` instance that is forwarding the requests over to the local Vaultwarden server.
+        - However, this is unhelpful, as the purpose of reporting an IP address in a "New Device Login" e-mail would be to record the IP address of the actual user.
+        - Therefore, setting the IP_HEADER as "X-Forwarded-For" will direct the server to use the forwarded IP address, which is the address for the user signing in.
+            - In order for this to work correctly, another setting has to exist in the `nginx` configuration file. See the [`nginx` configuration section](#configuring-nginx) for more details.
 
 Once the environment variables are set, the `vaultwarden` service should be restarted using the following command:
 
@@ -272,6 +290,7 @@ server {
 
     location / {
         proxy_pass http://127.0.0.1:8000;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
 ```
@@ -327,6 +346,29 @@ This is relatively self-explanatory, so there's no need to go in depth here.
 
 However, as mentioned earlier, if "/var/lib/vaultwarden/config.json" exists, the "SMTP_FROM_NAME" will also need to be updated there.
 
+### Webpage settings
+
+Once logged in, there are a few settings that can (and should) be changed.
+
+Navigate to "Settings > Preferences" and observe the default settings for "Vault timeout" (15 minutes) and "Theme" (light).
+
+For most users, a "Vault timeout" of 15 minutes may be too high, and can be lowered to a setting that is convenient, yet secure. Also, most users will likely prefer the dark theme to the light theme.
+
+### Browser extensions
+
+Similarly to the webpage settings, there are a few settings that should be changed for the browser extension. Note that, as of 2024 August 8, both Chrome-based browsers and Firefox appear to have identical locations for their settings.
+
+First, navigate to "Settings > Account Security" and observe the default setting for "Vault timeout" (on browser restart). Users may prefer to set this to a discrete timeout, rather than leaving their Vaultwarden unlocked for the duration of their browser session.
+
+Next, navigate to "Settings > Auto-fill" and observe the default setting for "Clear clipboard" (never). It is probably a good security practice to have this set to a convenient (yet secure) value, such as 10 or 20 seconds.
+
+Last, navigate to "Settings > Vault > Sync". While this isn't a setting, it is good to note that manual sync can always be achieved through this menu option.
+
+- Note: for users that don't have a root certificate authority installed at the browser or OS level, there may be times when a sync failed with an error of "failed to fetch".
+    - This is often due to the fact that the certificate needs to be (re)accepted.
+    - Simply navigate to the URL of the Vaultwarden server, accept the security warning regarding the certificate, and attempt to sync again.
+        - The user does **NOT** need to sign in on the webpage -- accepting the security warning so the page can load is sufficient to resolve this issue.
+
 ### Fixing icons
 
 Sometimes, icons that previously displayed properly will fail to load. I experienced this when migrating a Vaultwarden Alpine container from one Proxmox instance to another. However, I am unsure whether this was due to the container being redeployed on a different Proxmox, or a different network. It didn't happen for all favicons; but, there were a certain handful that failed to load on the new server.
@@ -337,8 +379,30 @@ The trick was to remove all icon files found in "/var/lib/vaultwarden/icon-cache
 
 NB: One way to confirm whether the icons are loading is to go to "https://vaultwarden-domain.tld/icons/icon-domain.tld/icon.png" and see whether the icon loads correctly or not.
 
+### Disabling new user registration
+
+There may be times when the server should have "new user registration" off by default. An example of this is when a server is sufficiently public that there are concerns of malicious users creating (or, spamming) new accounts on the server.
+
+This can be easily achieved by adding the following line to the "/etc/conf.d/vaultwarden" file:
+
+```
+export SIGNUPS_ALLOWED=false
+```
+
+Note that this only disables the ability for new users to register themselves using the "New around here? Create account" option on the sign-in page. By default, users can still be added by administrators in the admin panel through an e-mail invitation. This can further be restricted by adding the following line to the "/etc/conf.d/vaultwarden" file:
+
+```
+export INVITATIONS_ALLOWED=false
+```
+
+At this point, unless one of these two options are changed back to true (or, simply commented out), no new users can be added to the Vaultwarden server.
+
 ## References
 
 - [Vaultwarden wiki](https://github.com/dani-garcia/vaultwarden/wiki)
 - [YouTube - anthonywritescode - don't use localhost (intermediate) anthony explains #534](https://www.youtube.com/watch?v=98SYTvNw1kw)
     - A video referencing the benefits of using `127.0.0.1`, as opposed to `localhost`
+- [GitHub - Vaultwarden - IP Address always reports as 127.0.0.1 in email logs](https://github.com/dani-garcia/vaultwarden/discussions/3485)
+    - A GitHub issue that resolved the IP address discrepancy in the e-mail logs
+- [GitHub - Vaultwarden - Proxy Examples](https://github.com/dani-garcia/vaultwarden/wiki/Proxy-examples)
+    - Documentation for Vaultwarden that goes into more details about how to configure `nginx` re: IP address discrepancies in e-mail logs (and other points about proxies)
