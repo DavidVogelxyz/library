@@ -114,22 +114,16 @@ sudo ufw status
 
 The easiest way to install an OpenVPN server is to grab an install script written by @Angristan and deploy it.
 
-The simplest way to do this is to clone the `git` repo and work from there. First, confirm that the directory that will store the source files exists.
+The simplest way to do this is to clone the git repository and work from there. First, confirm that the "~/.local/src" directory exists; then, clone the git repo. Use the following command to easily perform these actions:
 
 ```
-mkdir -pv ~/.local/src
+mkdir -pv ~/.local/src && git clone https://github.com/angristan/openvpn-install ~/.local/src/openvpn-install
 ```
 
-Now that the directory is confirmed to exist, change directory into '~/.local/src'. Next, clone the git repo using the following command:
+Next, run the following command to start the script:
 
 ```
-git clone https://github.com/angristan/openvpn-install
-```
-
-Change directory to the new 'openvpn-install' directory and run the following command to start the script:
-
-```
-sudo bash openvpn-install.sh
+sudo bash ~/.local/src/openvpn-install/openvpn-install.sh
 ```
 
 Follow the on-screen prompts to set up the VPN server. The default configurations should be more than fine for most use cases: IPv6 support is unnecessary; port 1194 for OpenVPN is fine; AdGuard DNS (option 11) is a good choice; no need to enable compression or encryption. And, that's it. Let the script run, and it will soon ask for a client name. This client name is the name for the credentials for any particular one user.
