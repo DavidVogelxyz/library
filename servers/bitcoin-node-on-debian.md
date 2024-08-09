@@ -15,6 +15,7 @@ This guide has been written to simplify the installation of a Bitcoin node runni
 - [Initial configuration](#initial-configuration)
     - [Preventing laptop lid closes from suspending processes](#preventing-laptop-lid-closes-from-suspending-processes)
     - [Configuring zsh](#configuring-zsh)
+        - [lf](#lf)
     - [Finalizing initial configuration](#finalizing-initial-configuration)
 - [Configuring UFW](#configuring-ufw)
     - [General firewall rules](#general-firewall-rules)
@@ -70,10 +71,27 @@ Save the file, and restart the node. Now, the laptop lid can be closed without t
 
 ### Configuring zsh
 
-Next, install `zsh` and `zsh-syntax-highlighting`:
+Next, install the following packages to configure `zsh`:
 
 ```
-nala install -y zsh zsh-syntax-highlighting
+nala install -y bat fzf lf stow ueberzug zsh zsh-syntax-highlighting
+```
+
+As a note:
+
+- Packages for `zsh` prompt:
+    - `zsh`, `zsh-syntax-highlighting`
+- Packages for setting up dotfiles:
+    - `stow`
+- Packages for `tmux` and `tmux-sessionizer`:
+    - `fzf`
+- Packages for `lf`:
+    - `lf`, `ueberzug`, `bat`
+
+Confirm that any missing directories exist with the following command:
+
+```
+mkdir -pv ~/.cache/zsh ~/.local/bin
 ```
 
 Set the user's preferred shell to `zsh` with the following command:
@@ -111,33 +129,39 @@ for font in "${fonts[@]}"; do
 done
 ```
 
-Since personal dotfiles should already exist in the `~/.local/src/dotfiles` directory, use `stow` to deploy them, or symlink the `~/.config/zsh/.zshrc` and `~/.config/zsh/.p10k.zsh` files into the correct directory. To use `stow`, first symlink the dotfiles into the home directory:
+Since personal dotfiles should already exist in the `~/.dotfiles` directory, they can be deployed in their entirety using `stow`. Alternatively, to get `zsh` working, symlink only the `~/.dotfiles/.config/zsh/.zshrc` and `~/.dotfiles/.config/zsh/.p10k.zsh` files into the `~/.config/zsh`.
 
-```
-ln -s ~/.local/src/dotfiles ~/.dotfiles
-```
-
-Next, change directory into the new "~/.dotfiles" and deploy the dotfiles using `stow`. If there are any conflicts, be sure to address them:
+To deploy the whole suite of dotfiles, change directory into the "~/.dotfiles" directory and deploy them using `stow .`:
 
 ```
 cd ~/.dotfiles && stow .
 ```
 
-If desired, change the color of the user's prompt by editing the `POWERLEVEL9K_USER_FOREGROUND` option in the "~/.config/zsh/.p10k.zsh" file.
+If there are any conflicts, be sure to address them.
 
-Also, it is possible to change the prompt's OS icon to a Bitcoin logo. Add the following to the `os_icon: os identifier` section:
+If desired, change the color of the user's prompt by editing the `POWERLEVEL9K_USER_FOREGROUND` option in the "~/.config/zsh/.p10k.zsh" file. Also, it is possible to change the prompt's OS icon to a Bitcoin logo. Add the following to the `os_icon: os identifier` section:
 
 ```
 typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION=''
 ```
 
-Note: the emoji in the above command may not render properly on GitHub. However, if the correct fonts are installed on the computer, then the configuration should work as intended.
+Note: the emoji in the above command may not render properly on GitHub. However, if the "MesloLGS_NF" fonts are installed on the computer, then the configuration should work as intended.
 
-Begin using the `zsh` shell with the following command.
+Now that `zsh` has been configured, begin using the `zsh` shell with the following command.
 
 ```
 zsh
 ```
+
+#### lf
+
+The other utility worth noting is `lf`, a command line file explorer. To get it working on Debian, the `~/.config/lf/lfrc` file needs a small edit. The easiest way to achieve that edit is with the following command:
+
+```
+sed -i "s/'~\/.config\/lf\/scope/'~\/.config\/lf\/scope-debian/g" ~/.config/lf/lfrc
+```
+
+`lf` can be invoked with the `lfub` command; alternatively, use the keymap "Ctrl+O" when using the command line.
 
 ### Finalizing initial configuration
 
