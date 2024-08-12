@@ -10,6 +10,7 @@ My guides for different installs and customizations, etc.
     - [Installing Arch / Artix Linux](install-os/install-arch.md)
     - [Installing Debian / Ubuntu](install-os/install-debian.md)
 - [Networking](network/)
+    - [Configuring pfSense with a "WAN within a VLAN"](network/pfsense-with-wan-within-vlan.md)
     - [Configuring VLANs on TP-Link switches, connected to a pfSense router](network/vlans-on-tplink-switches.md)
     - [Creating and configuring a root certificate authority](network/create-root-certificate-authority.md)
     - [GRE tunnels between Linux machines](network/gre.md)
