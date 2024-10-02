@@ -28,6 +28,7 @@ My guides for different installs and customizations, etc.
     - [Tips for setting up a Linux VM in Proxmox](proxmox/proxmox-create-linux.md)
     - [Tips for setting up a Windows VM in Proxmox](proxmox/proxmox-create-windows.md)
 - [QEMU](qemu/)
+    - [Connecting a QEMU VM to the local network](qemu/connect-qemu-vm-to-local-network.md)
     - [Installing QEMU on Arch Linux](qemu/install-qemu-arch.md)
     - [Tips for creating optimized Windows VMs on QEMU](qemu/qemu-create-windows.md)
     - [Tips for PCIe (GPU) passthrough on QEMU](qemu/qemu-gpu-passthrough.md)
