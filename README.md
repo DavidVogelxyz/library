@@ -50,3 +50,5 @@ My guides for different installs and customizations, etc.
     - [Tactical RMM server, running on Debian](servers/tactical-rmm-on-debian.md)
     - [Vaultwarden password manager, running on Alpine Linux](servers/vaultwarden-on-alpine.md)
     - [YOURLS link shortener, running on Debian](servers/yourls-on-debian.md)
+- [Windows](windows/)
+    - [Extending Windows VM Disk Image](windows/extending-windows-disk-image.md)
