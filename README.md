@@ -4,6 +4,12 @@ My guides for different installs and customizations, etc.
 
 ## List of guides
 
+### Most recent guides
+
+- [Git Good at Git](git-related/README.md)
+
+### Other guides
+
 - [Docker](docker/)
     - [Installing Docker on Arch Linux](docker/install-docker-arch.md)
 - [Install operating systems](install-os/)
@@ -19,7 +25,6 @@ My guides for different installs and customizations, etc.
 - [Other guides](other/)
     - [Backing up installation images](other/back-up-installation-images.md)
     - [Downloading video files using ffmpeg](other/ffmpeg-download-videos.md)
-    - [Git](other/git.md)
     - [GPG](other/gpg.md)
     - [Resizing volumes using LVM](other/resize-volumes-using-lvm.md)
 - [Proxmox](proxmox/)
