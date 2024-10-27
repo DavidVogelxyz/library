@@ -1,6 +1,6 @@
 # git-reflog - Recovering Lost History
 
-[Back to the home page](README.md)
+[Back to the home page](../README.md)
 
 ## Table of contents
 

@@ -1,6 +1,6 @@
 # git-difftool - Viewing Differences using a Text Editor
 
-[Back to the home page](README.md)
+[Back to the home page](../README.md)
 
 ## Table of contents
 

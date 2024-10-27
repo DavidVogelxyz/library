@@ -22,51 +22,61 @@ man git-add
 
 - [Introduction](#introduction)
 
-- [Terms and Definitions](terms-and-definitions.md)
+- Git
 
-- [git-config - Setting Up a New Git Environment](git-config.md)
+    - [Terms and Definitions](git/terms-and-definitions.md)
 
-- [git-init - Initializing a New Git Repository](git-init.md)
+    - [git-config - Setting Up a New Git Environment](git/git-config.md)
 
-- [git-status - Viewing the Status of the Index](git-status.md)
+    - [git-init - Initializing a New Git Repository](git/git-init.md)
 
-- [git-add - Staging Changes to be Committed](git-add.md)
+    - [git-status - Viewing the Status of the Index](git/git-status.md)
 
-- [git-commit - Saving Changes to a Repo](git-commit.md)
+    - [git-add - Staging Changes to be Committed](git/git-add.md)
 
-- [git-log - Viewing a History of Changes](git-log.md)
+    - [git-commit - Saving Changes to a Repo](git/git-commit.md)
 
-- [Git's Internal File Structure](git-internal-file-structure.md)
+    - [git-log - Viewing a History of Changes](git/git-log.md)
 
-- [git-branch - Separating Development from Production](git-branch.md)
+    - [Git's Internal File Structure](git/git-internal-file-structure.md)
 
-- [git-merge - Bringing Changes Over to Other Branches](git-merge.md)
+    - [git-branch - Separating Development from Production](git/git-branch.md)
 
-- [git-rebase - Guaranteeing Linear History](git-rebase.md)
+    - [git-merge - Bringing Changes Over to Other Branches](git/git-merge.md)
 
-- [git-reflog - Recovering Lost History](git-reflog.md)
+    - [git-rebase - Guaranteeing Linear History](git/git-rebase.md)
 
-- [Working with Remote Repositories in Git](git-remote.md)
+    - [git-reflog - Recovering Lost History](git/git-reflog.md)
 
-- [git-stash - Saving Changes Without Commiting](git-stash.md)
+    - [Working with Remote Repositories in Git](git/git-remote.md)
 
-- [git-restore - Restoring Files to the State of the Working Tree](git-restore.md)
+    - [git-stash - Saving Changes Without Commiting](git/git-stash.md)
 
-- [git-rm - Removing Files from the Working Tree and Index](git-rm.md)
+    - [git-restore - Restoring Files to the State of the Working Tree](git/git-restore.md)
 
-- [Resolving Merge Conflicts](resolving-merge-conflicts.md)
+    - [git-rm - Removing Files from the Working Tree and Index](git/git-rm.md)
 
-- [Interactive rebases - Editing Commit History](interactive-rebase.md)
+    - [Resolving Merge Conflicts](git/resolving-merge-conflicts.md)
 
-- [git-bisect - Testing to Find a "Breaking Change" in a Branch](git-bisect.md)
+    - [Interactive rebases - Editing Commit History](git/interactive-rebase.md)
 
-- [git-revert - Reverting Changes with a New Commit](git-revert.md)
+    - [git-bisect - Testing to Find a "Breaking Change" in a Branch](git/git-bisect.md)
 
-- [git-reset - Resetting the State of a Branch](git-reset.md)
+    - [git-revert - Reverting Changes with a New Commit](git/git-revert.md)
 
-- [git-diff - Viewing Differences in the Command Line](git-diff.md)
+    - [git-reset - Resetting the State of a Branch](git/git-reset.md)
 
-- [git-difftool - Viewing Differences using a Text Editor](git-difftool.md)
+    - [git-diff - Viewing Differences in the Command Line](git/git-diff.md)
+
+    - [git-difftool - Viewing Differences using a Text Editor](git/git-difftool.md)
+
+- GitHub / GitLab
+
+    - [Pull requests (PRs)](github/pull-requests.md)
+
+    - [When dates differ between GitHub's commit history and "git-log"](github/different-dates.md)
+
+    - [The "user commit counter"](github/user-commit-counter.md)
 
 - [References](#References)
 
