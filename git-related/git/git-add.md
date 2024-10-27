@@ -1,6 +1,6 @@
 # git-add - Staging Changes to be Committed
 
-[Back to the home page](README.md)
+[Back to the home page](../README.md)
 
 ## Table of contents
 

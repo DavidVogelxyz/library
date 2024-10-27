@@ -1,6 +1,6 @@
 # git-init - Initializing a New Git Repository
 
-[Back to the home page](README.md)
+[Back to the home page](../README.md)
 
 ## Table of contents
 

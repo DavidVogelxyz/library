@@ -1,6 +1,6 @@
 # git-stash - Saving Changes Without Commiting
 
-[Back to the home page](README.md)
+[Back to the home page](../README.md)
 
 ## Table of contents
 

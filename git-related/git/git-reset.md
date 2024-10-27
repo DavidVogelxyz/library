@@ -1,6 +1,6 @@
 # git-reset - Resetting the State of a Branch
 
-[Back to the home page](README.md)
+[Back to the home page](../README.md)
 
 ## Table of contents
 
