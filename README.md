@@ -8,6 +8,7 @@ My guides for different installs and customizations, etc.
 
 - [Bitcoin node, running on Debian](servers/bitcoin-node-on-debian/README.md)
 - [Git Good at Git](git-related/README.md)
+- [Vim guide](vim/README.md)
 
 ### Other guides
 
