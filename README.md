@@ -8,6 +8,7 @@ My guides for different installs and customizations, etc.
 
 - [Bitcoin node, running on Debian](servers/bitcoin-node-on-debian/README.md)
 - [Git Good at Git](git-related/README.md)
+- [SSH guide](security/ssh/README.md)
 - [Vim guide](vim/README.md)
 
 ### Other guides
@@ -44,7 +45,6 @@ My guides for different installs and customizations, etc.
     - [Cryptsetup](security/cryptsetup.md)
     - [Security hardening on Arch Linux](security/secure-arch.md)
     - [Security hardening on Debian/Ubuntu](security/secure-debian.md)
-    - [SSH](security/ssh.md)
 - [Server projects](servers/)
     - [Configuring a server running Alpine Linux](servers/configuring-alpine-server.md)
     - [Configuring a server running Debian](servers/configuring-debian-server.md)
