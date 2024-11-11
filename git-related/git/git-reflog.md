@@ -9,6 +9,7 @@
 - [Using "git-reflog" and "git-cat-file" to recover lost history](#Using-git-reflog-and-git-cat-file-to-recover-lost-history)
 - [Using "git-reflog" and "git-merge" to recover lost history](#Using-git-reflog-and-git-merge-to-recover-lost-history)
 - [Using "git-reflog" and "git-checkout" to recover lost history](#Using-git-reflog-and-git-checkout-to-recover-lost-history)
+- [Using "git-reflog" and "git-cherry-pick" to recover lost history](#Using-git-reflog-and-git-cherry-pick-to-recover-lost-history)
 - [References](#References)
 
 ## Introduction
@@ -84,6 +85,22 @@ For more information, refer to the following section:
 
 - ["git-checkout"](git-branch.md#Creating-and-switching-to-new-branches)
 - ["Interactive rebasing"](interactive-rebase.md#The-basics-of-an-interactive-rebase)
+
+## Using "git-reflog" and "git-cherry-pick" to recover lost history
+
+What happens in a situation where a user doesn't want to apply all commits between the current tip and another tip?
+
+Consider the following example:
+
+```
+   B --- C      dev
+ /
+A               prod
+```
+
+If the user is on branch `prod` (at commit `A`), and only wants to apply commit `C` from `dev`, then neither `git merge <HASH_OF_C>` or `git checkout <HASH_OF_C>` will work, as they both will apply `B` to the history.
+
+In this case, a user's preferred tool will be `git cherry-pick`. For more information, refer to the section on ["git-cherry-pick"](git-cherry-pick.md).
 
 ## References
 

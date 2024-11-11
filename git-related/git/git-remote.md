@@ -365,3 +365,4 @@ To delete the local branch after deleting the remote branch, follow the steps in
 - [StackOverflow - Git - How do I update or sync a forked repository on GitHub?](https://stackoverflow.com/questions/7244321/how-do-i-update-or-sync-a-forked-repository-on-github)
     - An additional reference for syncing a forked repository
 - [StackOverflow - How do I delete a Git branch locally and remotely?](https://stackoverflow.com/questions/2003505/how-do-i-delete-a-git-branch-locally-and-remotely/2003515#2003515)
+    - A reference for deleting a Git branch from a `remote`

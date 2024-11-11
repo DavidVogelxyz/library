@@ -48,6 +48,8 @@ man git-add
 
     - [git-reflog - Recovering Lost History](git/git-reflog.md)
 
+    - [git-cherry-pick - Applying Commits from One Branch to Another](git/git-cherry-pick.md)
+
     - [Working with Remote Repositories in Git](git/git-remote.md)
 
     - [git-stash - Saving Changes Without Commiting](git/git-stash.md)
@@ -65,6 +67,8 @@ man git-add
     - [git-revert - Reverting Changes with a New Commit](git/git-revert.md)
 
     - [git-reset - Resetting the State of a Branch](git/git-reset.md)
+
+    - [git-tag - Creating Tags](git/git-tag.md)
 
     - [git-diff - Viewing Differences in the Command Line](git/git-diff.md)
 
