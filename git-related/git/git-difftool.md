@@ -7,6 +7,7 @@
 - [Introduction](#introduction)
 - [Using "git-difftool" to view diffs in a text editor](#Using-git-difftool-to-view-diffs-in-a-text-editor)
 - [Configuring the default tool for "git-difftool"](#Configuring-the-default-tool-for-git-difftool)
+- [Getting text to wrap when using "vimdiff" or "nvimdiff"](#Getting-text-to-wrap-when-using-vimdiff-or-nvimdiff)
 - [References](#References)
 
 ## Introduction
@@ -65,7 +66,26 @@ git config --global difftool.prompt false
 
 By running `git config --global`, these configs are set in the `~/.gitconfig` file. For more information, refer to the section on ["git-config"](git-config.md#Global-configs-for-git-difftool).
 
+## Getting text to wrap when using "vimdiff" or "nvimdiff"
+
+By default, `vimdiff` and `nvimdiff` do not wrap text, even if a user's Vim or Neovim is configured to do so. While `:set wrap` does work, as it would in `vim` or `nvim`, the option only takes effect on a single pane.
+
+
+In order to wrap text in `vimdiff` or `nvimdiff` for all panes in a window, run the following command:
+
+```
+:windo set wrap
+```
+
+To remove the wrapping option for all panes, run the following command:
+
+```
+:windo set nowrap
+```
+
 ## References
 
 - [StackOverflow - Configuring diff tool with .gitconfig](https://stackoverflow.com/questions/6412516/configuring-diff-tool-with-gitconfig)
     - Reference on how to configure a default `difftool`
+- [SuperUser - How do I enable word wrap in all open splits?](https://superuser.com/questions/307331/how-do-i-enable-word-wrap-in-all-open-splits)
+    - Reference for getting text to wrap when using `vimdiff` and `nvimdiff`
