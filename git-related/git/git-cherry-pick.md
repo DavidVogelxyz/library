@@ -6,6 +6,7 @@
 
 - [Introduction](#introduction)
 - [Using "git-cherry-pick" to apply a commit from one branch to another branch](#using-git-cherry-pick-to-apply-a-commit-from-one-branch-to-another-branch)
+- [Troubleshooting conflicts with "git-cherry-pick"](#troubleshooting-conflicts-with-git-cherry-pick)
 - [References](#references)
 
 ## Introduction
@@ -29,6 +30,24 @@ git cherry-pick <HASH_OF_COMMIT>
 This will take the commit referenced by `<HASH_OF_COMMIT>` and apply it to the current branch. The commit will receive a new hash, but the commit's message and its changes will stay the same.
 
 As described in the section on ["git-reflog"](git-reflog.md), `git reflog` can be utilized with both `git merge` and `git checkout` to recover lost history. In some situations, it will make more sense to run `git merge` or `git checkout` in order to reorient the tip of a branch. In other cases, `git cherry-pick` will give the user more flexibility by allowing them to choose which commits are applied, and in what order.
+
+## Troubleshooting conflicts with "git-cherry-pick"
+
+Occasionally, a `git cherry-pick` will result in a conflict. For more information on how to resolve a conflict, refer to the section on [resolving merge conflicts](resolving-merge-conflicts.md). More specifically, review the section on [resolving a conflict when rebasing](resolving-merge-conflicts.md#resolving-a-conflict-when-rebasing).
+
+The section on "resolving conflicts when rebasing" is suggested because `git cherry-pick` and `git rebase` share many similarities -- both commands are essentially checking out a previous commit and then playing back a new commit on top. Because of this, the commands to handle a `git cherry-pick` conflict mimic the `git rebase` commands.
+
+To abort a `git cherry-pick`, run the following command:
+
+```
+git cherry-pick --abort
+```
+
+When conflict resolution is complete, the user proceeds with the following command:
+
+```
+git cherry-pick --continue
+```
 
 ## References
 
