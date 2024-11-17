@@ -5,11 +5,11 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [The files are in the computer](#The-files-are-in-the-computer)
-- [What is HEAD?](#What-is-HEAD)
-- [Excluding files from "git-add" with the ".gitignore" file](#Excluding-files-from-git-add-with-the-gitignore-file)
-- [Excluding files from "git-add" with the ".git/info/exclude" file](#Excluding-files-from-git-add-with-the-gitinfoexclude-file)
-- [References](#References)
+- [The files are in the computer](#the-files-are-in-the-computer)
+- [What is HEAD?](#what-is-head)
+- [Excluding files from "git-add" with the ".gitignore" file](#excluding-files-from-git-add-with-the-gitignore-file)
+- [Excluding files from "git-add" with the ".git/info/exclude" file](#excluding-files-from-git-add-with-the-gitinfoexclude-file)
+- [References](#references)
 
 ## Introduction
 
@@ -17,7 +17,7 @@ Almost everything that Git works with is assigned a 40 character SHA (hash) valu
 
 SHA values are unique because they take in many outputs, including date and time, author name and e-mail, contents of files, and many other factors, when creating their outputs. Even if two users create the same repos, with the same names and file contents, and commit the same changes at the same time, they will receive two very different SHA values. In addition, if a minor change is made to a file, the hash of the file will be wildly different than the hash from before the change. For these reasons, SHAs are a great way to differentiate between files, commits, and refs.
 
-Also, as stated in the section on ["git-config"](git-config.md#Viewing-the-config-files), everything that Git works with has a file associated with it, and those files can be found in the `.git` directory.
+Also, as stated in the section on ["git-config"](git-config.md#viewing-the-config-files), everything that Git works with has a file associated with it, and those files can be found in the `.git` directory.
 
 With these facts in mind, it's possible to work within Git to manipulate those files in extraordinary ways.
 

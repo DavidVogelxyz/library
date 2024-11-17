@@ -4,10 +4,10 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Linux client machines](#Linux-client-machines)
-- [Windows client machines](#Windows-client-machines)
-- [Logging in with a private key](#Logging-in-with-a-private-key)
+- [Introduction](#introduction)
+- [Linux client machines](#linux-client-machines)
+- [Windows client machines](#windows-client-machines)
+- [Logging in with a private key](#logging-in-with-a-private-key)
 
 ## Introduction
 

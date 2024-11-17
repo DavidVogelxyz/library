@@ -4,11 +4,11 @@
 
 ## Table of contents
 
-- [Configuring UFW](#Configuring-UFW)
-    - [General firewall rules](#General-firewall-rules)
-    - [IP-specific firewall rules](#IP-specific-firewall-rules)
-    - [Enabling UFW](#Enabling-UFW)
-- [Other security settings](#Other-security-settings)
+- [Configuring UFW](#configuring-ufw)
+    - [General firewall rules](#general-firewall-rules)
+    - [IP-specific firewall rules](#ip-specific-firewall-rules)
+    - [Enabling UFW](#enabling-ufw)
+- [Other security settings](#other-security-settings)
 - [References](#references)
 
 ## Configuring UFW

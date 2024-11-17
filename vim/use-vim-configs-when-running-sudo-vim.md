@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Configure Vim to use the user's configs](#Configure-Vim-to-use-the-users-configs)
-- [References](#References)
+- [Introduction](#introduction)
+- [Configure Vim to use the user's configs](#configure-vim-to-use-the-users-configs)
+- [References](#references)
 
 ## Introduction
 

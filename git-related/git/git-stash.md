@@ -5,13 +5,13 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Pushing changes onto the stack](#Pushing-changes-onto-the-stack)
-    - [Patch adding to the stack](#Patch-adding-to-the-stack)
-- [Listing changes on the stack](#Listing-changes-on-the-stack)
-- [Popping changes off the stack](#Popping-changes-off-the-stack)
-- [Dropping changes from the stack](#Dropping-changes-from-the-stack)
-- [Using "git-stash" with interactive rebases](#Using-git-stash-with-interactive-rebases)
-- [References](#References)
+- [Pushing changes onto the stack](#pushing-changes-onto-the-stack)
+    - [Patch adding to the stack](#patch-adding-to-the-stack)
+- [Listing changes on the stack](#listing-changes-on-the-stack)
+- [Popping changes off the stack](#popping-changes-off-the-stack)
+- [Dropping changes from the stack](#dropping-changes-from-the-stack)
+- [Using "git-stash" with interactive rebases](#using-git-stash-with-interactive-rebases)
+- [References](#references)
 
 ## Introduction
 
@@ -122,7 +122,7 @@ However, just like with `git stash show` (and unlike `git stash pop`), the `--in
 
 ## Using "git-stash" with interactive rebases
 
-`git stash` is a great tool to use in conjunction with `git rebase -i`. For more information, refer to the section on [interactive rebases](interactive-rebase.md#Adding-a-new-commit-to-the-middle-of-the-history).
+`git stash` is a great tool to use in conjunction with `git rebase -i`. For more information, refer to the section on [interactive rebases](interactive-rebase.md#adding-a-new-commit-to-the-middle-of-the-history).
 
 As an example, imagine a situation where a user begins to make changes to their working tree, but only after decides to interactively rebase the changes into an older commit. The user can push the changes to the stack, run `git rebase -i`, and then pop the changes off the stack once working in the interactive rebase environment.
 

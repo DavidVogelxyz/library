@@ -4,11 +4,11 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [General configuration](#General-configuration)
-- [Specific entries](#Specific-entries)
-- [Adding multiple entries for the same host](#Adding-multiple-entries-for-the-same-host)
-- [References](#References)
+- [Introduction](#introduction)
+- [General configuration](#general-configuration)
+- [Specific entries](#specific-entries)
+- [Adding multiple entries for the same host](#adding-multiple-entries-for-the-same-host)
+- [References](#references)
 
 ## Introduction
 
@@ -35,9 +35,9 @@ To explain in more detail:
 - `IdentitiesOnly=yes` directs SSH to only use identities for the entry in which they're found.
     - In other words, without this setting, SSH will try *all* identities for any target machine that *doesn't* have an entry in the `.ssh/config` file.
 - `AddKeysToAgent=yes` directs SSH to add private keys to the `ssh-agent`, if it's running.
-    - For more information, refer to the section on ["ssh-agent"](ssh-agent.md#Adding-identities).
+    - For more information, refer to the section on ["ssh-agent"](ssh-agent.md#adding-identities).
 - `HashKnownHosts=yes` directs SSH to hash the `.ssh/known_hosts` file.
-    - For more information, refer to the section on the ["known_hosts" file](known-hosts.md#Hashing-the-known_hosts-file).
+    - For more information, refer to the section on the ["known_hosts" file](known-hosts.md#hashing-the-known_hosts-file).
 
 ## Specific entries
 

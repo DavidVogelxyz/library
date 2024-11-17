@@ -5,16 +5,16 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Using "git-difftool" to view diffs in a text editor](#Using-git-difftool-to-view-diffs-in-a-text-editor)
-- [Configuring the default tool for "git-difftool"](#Configuring-the-default-tool-for-git-difftool)
-- [Getting text to wrap when using "vimdiff" or "nvimdiff"](#Getting-text-to-wrap-when-using-vimdiff-or-nvimdiff)
-- [References](#References)
+- [Using "git-difftool" to view diffs in a text editor](#using-git-difftool-to-view-diffs-in-a-text-editor)
+- [Configuring the default tool for "git-difftool"](#configuring-the-default-tool-for-git-difftool)
+- [Getting text to wrap when using "vimdiff" or "nvimdiff"](#getting-text-to-wrap-when-using-vimdiff-or-nvimdiff)
+- [References](#references)
 
 ## Introduction
 
-As described in the [section on "git diff"](git-diff.md#Introduction), `git difftool` is often a more effective way of working with diffs.
+As described in the [section on "git diff"](git-diff.md#introduction), `git difftool` is often a more effective way of working with diffs.
 
-Beyond specifying the tool that `git difftool` uses, and configuring a default tool, the switches for `git difftool` are essentially the same as `git diff`. Therefore, refer to the [section on "git diff"](git-diff.md#Using-git-diff-to-view-changes) for information on how to use `git difftool`.
+Beyond specifying the tool that `git difftool` uses, and configuring a default tool, the switches for `git difftool` are essentially the same as `git diff`. Therefore, refer to the [section on "git diff"](git-diff.md#using-git-diff-to-view-changes) for information on how to use `git difftool`.
 
 This section will describe how to use and configure Vim `difftools` (`vimdiff` and `nvimdiff`) with `git difftool`. However, the user can use the same commands to select whichever tool they prefer.
 
@@ -40,7 +40,7 @@ As an example, to view the differences between the working tree and all staged f
 git difftool --staged
 ```
 
-Refer to the [section on "git diff"](git-diff.md#Using-git-diff-to-view-changes) for information on other switches.
+Refer to the [section on "git diff"](git-diff.md#using-git-diff-to-view-changes) for information on other switches.
 
 ## Configuring the default tool for "git-difftool"
 
@@ -64,7 +64,7 @@ Now, when `git difftool` is run, it will automatically know to use `nvimtool`. H
 git config --global difftool.prompt false
 ```
 
-By running `git config --global`, these configs are set in the `~/.gitconfig` file. For more information, refer to the section on ["git-config"](git-config.md#Global-configs-for-git-difftool).
+By running `git config --global`, these configs are set in the `~/.gitconfig` file. For more information, refer to the section on ["git-config"](git-config.md#global-configs-for-git-difftool).
 
 ## Getting text to wrap when using "vimdiff" or "nvimdiff"
 

@@ -82,7 +82,7 @@ man git-add
 
     - [The "user commit counter"](github/user-commit-counter.md)
 
-- [References](#References)
+- [References](#references)
 
 ## References
 

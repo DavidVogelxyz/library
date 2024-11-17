@@ -5,10 +5,10 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Understanding binary search](#Understanding-binary-search)
-- [Using "git-bisect" to find "breaking changes"](#Using-git-bisect-to-find-breaking-changes)
-- [Using "git-bisect" to automate searching for "breaking changes"](#Using-git-bisect-to-automate-searching-for-breaking-changes)
-- [References](#References)
+- [Understanding binary search](#understanding-binary-search)
+- [Using "git-bisect" to find "breaking changes"](#using-git-bisect-to-find-breaking-changes)
+- [Using "git-bisect" to automate searching for "breaking changes"](#using-git-bisect-to-automate-searching-for-breaking-changes)
+- [References](#references)
 
 ## Introduction
 

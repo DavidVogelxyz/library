@@ -10,11 +10,11 @@
 - [git-log-oneline](#git-log-oneline)
 - [git-log-graph](#git-log-graph)
 - [git-log-parents](#git-log-parents)
-- [Showing only a certain number of commits back from HEAD](#Showing-only-a-certain-number-of-commits-back-from-HEAD)
-- [Searching through "git-log"](#Searching-through-git-log)
-- [Reviewing changes with "git-log" and "git-show"](#Reviewing-changes-with-git-log-and-git-show)
-- [Useful aliases for "git-log"](#Useful-aliases-for-git-log)
-- [References](#References)
+- [Showing only a certain number of commits back from HEAD](#showing-only-a-certain-number-of-commits-back-from-head)
+- [Searching through "git-log"](#searching-through-git-log)
+- [Reviewing changes with "git-log" and "git-show"](#reviewing-changes-with-git-log-and-git-show)
+- [Useful aliases for "git-log"](#useful-aliases-for-git-log)
+- [References](#references)
 
 ## Introduction
 
@@ -58,7 +58,7 @@ The `--oneline` switch tells Git to condense each ref into a single line. This c
 
 The switch `--graph` is very useful when a commit history includes merges. This switch tells Git to draw a graphical representation of the commit history's timeline, which can assist with identifying where history diverges, and where it converges again.
 
-As is discussed more in the section on ["git-merge"](git-merge.md#How-to-perform-a-three-way-merge), running `git log --decorate --oneline --graph` would produce an output similar to the following:
+As is discussed more in the section on ["git-merge"](git-merge.md#how-to-perform-a-three-way-merge), running `git log --decorate --oneline --graph` would produce an output similar to the following:
 
 ```
 *   <HASH_MERGE_COMMIT> (HEAD -> prod) Merge branch 'dev' into prod
@@ -95,7 +95,7 @@ When paired with `--graph`, a clear image of the commit history is rendered by `
 git log --decorate --oneline --graph --parents
 ```
 
-As is discussed more in the section on ["git-merge"](git-merge.md#How-to-perform-a-three-way-merge), running `git log --decorate --oneline --graph --parents` would produce an output similar to the following:
+As is discussed more in the section on ["git-merge"](git-merge.md#how-to-perform-a-three-way-merge), running `git log --decorate --oneline --graph --parents` would produce an output similar to the following:
 
 ```
 *   <HASH_MERGE_COMMIT> <HASH_E> <HASH_C> (HEAD -> prod) Merge branch 'dev' into prod
@@ -120,7 +120,7 @@ git log -1
 
 As with other switches for `git log`, this switch can be combined with other switches, such as `git log --oneline -5`.
 
-For more information on `HEAD`, refer to the [section on Git's internal file structure](git-internal-file-structure.md#What-is-HEAD).
+For more information on `HEAD`, refer to the [section on Git's internal file structure](git-internal-file-structure.md#what-is-head).
 
 ## Searching through "git-log"
 
@@ -144,7 +144,7 @@ git log --grep "<KEYWORD>"
 git log -S "<KEYWORD>"
 ```
 
-`git log -S` can be extremely useful -- but, it's searching through the text of the changes, and the user can only view the commit message. To view the text of the changes at the same time, add the `-p` switch to the command. To learn more about `git log -p`, check out the section on [reviewing changes through "git-log"](#Reviewing-changes-through-git-log).
+`git log -S` can be extremely useful -- but, it's searching through the text of the changes, and the user can only view the commit message. To view the text of the changes at the same time, add the `-p` switch to the command. To learn more about `git log -p`, check out the section on [reviewing changes through "git-log"](#reviewing-changes-through-git-log).
 
 ## Reviewing changes with "git-log" and "git-show"
 
@@ -190,7 +190,7 @@ git show <COMMIT_HASH> -- <PATH>
 git log -p --grep "<KEYWORD>"
 ```
 
-As mentioned in the section on [searching through "git-log"](#Searching-through-git-log), `git log -p` can also be combined with the `-S` switch in order to search through the text of the commits. To do this, run the following command:
+As mentioned in the section on [searching through "git-log"](#searching-through-git-log), `git log -p` can also be combined with the `-S` switch in order to search through the text of the commits. To do this, run the following command:
 
 ```
 git log -pS "<KEYWORD>"

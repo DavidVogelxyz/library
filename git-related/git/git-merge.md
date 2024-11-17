@@ -5,10 +5,10 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [How to perform a three way merge](#How-to-perform-a-three-way-merge)
-- [How to perform a fast-forward merge](#How-to-perform-a-fast-forward-merge)
-- [What about rebase?](#What-about-rebase)
-- [References](#References)
+- [How to perform a three way merge](#how-to-perform-a-three-way-merge)
+- [How to perform a fast-forward merge](#how-to-perform-a-fast-forward-merge)
+- [What about rebase?](#what-about-rebase)
+- [References](#references)
 
 ## Introduction
 

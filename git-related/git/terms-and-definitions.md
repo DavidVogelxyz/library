@@ -5,8 +5,8 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Terms, and their definitions](#Terms-and-their-definitions)
-- [References](#References)
+- [Terms, and their definitions](#terms-and-their-definitions)
+- [References](#references)
 
 ## Introduction
 
@@ -32,7 +32,7 @@ This section of the guide is dedicated to listing the terms and definitions that
 
 - **Reference ("ref")**: A pointer to a commit. A "ref" may point to a branch or a tag, but the reference ultimately points to a commit.
 
-- **HEAD**: A specific pointer that points to the tip of a branch. For more information, check out the section on [Git's Internal File Structure](git-internal-file-structure.md#What-is-HEAD).
+- **HEAD**: A specific pointer that points to the tip of a branch. For more information, check out the section on [Git's Internal File Structure](git-internal-file-structure.md#what-is-head).
 
 - **A "remote"**: In the reference frame of any Git repo, a "remote" is the same Git repo that exists at a different path. While this often refers to a version of the repo on GitHub or GitLab, the path can be anywhere that's not the local path. For more information, check out the section on ["git-remote"](git-remote.md).
 

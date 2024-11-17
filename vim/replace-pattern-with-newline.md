@@ -4,8 +4,8 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [References](#References)
+- [Introduction](#introduction)
+- [References](#references)
 
 ## Introduction
 

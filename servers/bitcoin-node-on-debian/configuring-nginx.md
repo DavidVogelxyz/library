@@ -4,8 +4,8 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Installing and configuring "nginx"](#Installing-and-configuring-nginx)
+- [Introduction](#introduction)
+- [Installing and configuring "nginx"](#installing-and-configuring-nginx)
 - [References](#references)
 
 ## Introduction

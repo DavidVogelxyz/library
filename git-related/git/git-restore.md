@@ -5,10 +5,10 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Using "git-restore" to restore the state of the working tree](#Using-git-restore-to-restore-the-state-of-the-working-tree)
-    - [Patch restoring](#Patch-restoring)
-- [Using "git-restore-staged" to unstage a tracked file](#Using-git-restore-staged-to-unstage-a-tracked-file)
-- [References](#References)
+- [Using "git-restore" to restore the state of the working tree](#using-git-restore-to-restore-the-state-of-the-working-tree)
+    - [Patch restoring](#patch-restoring)
+- [Using "git-restore-staged" to unstage a tracked file](#using-git-restore-staged-to-unstage-a-tracked-file)
+- [References](#references)
 
 ## Introduction
 
@@ -32,7 +32,7 @@ When using `git restore -p`, a yes (`y`) will restore a hunk to the state found 
 
 ## Using "git-restore-staged" to unstage a tracked file
 
-Running `git restore` with the `--staged` switch allows a user to unstage a file, while keeping the changes. In this way, `git restore --staged` operates very similarly to `git reset --soft` -- in both cases, Git will remove the changes from the index without restoring the files to the state found in the working tree. In contrast, `git restore` operates similar to `git reset --hard`, where Git will restore the file and remove the changes. For more information on `git reset`, refer to the [section on "git-reset"](git-reset.md#Introduction).
+Running `git restore` with the `--staged` switch allows a user to unstage a file, while keeping the changes. In this way, `git restore --staged` operates very similarly to `git reset --soft` -- in both cases, Git will remove the changes from the index without restoring the files to the state found in the working tree. In contrast, `git restore` operates similar to `git reset --hard`, where Git will restore the file and remove the changes. For more information on `git reset`, refer to the [section on "git-reset"](git-reset.md#introduction).
 
 To unstage a file, run the following command on a staged file:
 
@@ -48,7 +48,7 @@ Note that `git restore --staged` only works on files that already exist in the w
 git rm --cached <PATH>
 ```
 
-For more information on `git rm`, refer to the [section on "git-rm"](git-rm.md#Using-git-rm-cached-to-remove-a-file-only-from-the-working-tree-and-index).
+For more information on `git rm`, refer to the [section on "git-rm"](git-rm.md#using-git-rm-cached-to-remove-a-file-only-from-the-working-tree-and-index).
 
 ## References
 

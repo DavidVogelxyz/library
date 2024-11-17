@@ -4,11 +4,11 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [The concept](#The-concept)
-- [Performing "find and replace", starting inside of Vim](#Performing-find-and-replace-starting-inside-of-Vim)
-- [Performing "find and replace", starting outside of Vim](#Performing-find-and-replace-starting-outside-of-Vim)
-- [References](#References)
+- [Introduction](#introduction)
+- [The concept](#the-concept)
+- [Performing "find and replace", starting inside of Vim](#performing-find-and-replace-starting-inside-of-vim)
+- [Performing "find and replace", starting outside of Vim](#performing-find-and-replace-starting-outside-of-vim)
+- [References](#references)
 
 ## Introduction
 

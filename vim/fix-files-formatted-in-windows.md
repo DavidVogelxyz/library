@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Reformatting files to Unix format](#Reformatting-files-to-Unix-format)
-- [References](#References)
+- [Introduction](#introduction)
+- [Reformatting files to Unix format](#reformatting-files-to-unix-format)
+- [References](#references)
 
 ## Introduction
 

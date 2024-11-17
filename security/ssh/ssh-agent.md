@@ -4,12 +4,12 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Starting the "ssh-agent"](#Starting-the-ssh-agent)
-- [Adding identities](#Adding-identities)
-- [Listing stored identities](#Listing-stored-identities)
-- [Removing identities](#Removing-identities)
-- [References](#References)
+- [Introduction](#introduction)
+- [Starting the "ssh-agent"](#starting-the-ssh-agent)
+- [Adding identities](#adding-identities)
+- [Listing stored identities](#listing-stored-identities)
+- [Removing identities](#removing-identities)
+- [References](#references)
 
 ## Introduction
 
@@ -61,7 +61,7 @@ To list out the identities stored in the `ssh-agent` in a "longhand" format, run
 ssh-add -L
 ```
 
-It's worth noting that, in both the case of `-l` and `-L`, the key's comment shows up next to the pubkey. When the user has multiple keys for multiple target machines, having keys with same `<USER>@<HOSTNAME>` comment doesn't help to discern which identities are loaded into the `ssh-agent`. Consider changing the key's comment with `ssh-keygen -c -f <PATH_TO_PRIVATE_KEYFILE>` in order to better identify keys. For more information on setting and changing comments, refer to the section on [creating SSH keys](create-ssh-keys.md#Creating-a-SSH-key).
+It's worth noting that, in both the case of `-l` and `-L`, the key's comment shows up next to the pubkey. When the user has multiple keys for multiple target machines, having keys with same `<USER>@<HOSTNAME>` comment doesn't help to discern which identities are loaded into the `ssh-agent`. Consider changing the key's comment with `ssh-keygen -c -f <PATH_TO_PRIVATE_KEYFILE>` in order to better identify keys. For more information on setting and changing comments, refer to the section on [creating SSH keys](create-ssh-keys.md#creating-a-ssh-key).
 
 ## Removing identities
 

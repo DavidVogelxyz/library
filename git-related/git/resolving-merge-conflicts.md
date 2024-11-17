@@ -5,17 +5,17 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Conflicts during a merge](#Conflicts-during-a-merge)
-    - [Resolving a conflict when merging](#Resolving-a-conflict-when-merging)
-        - [Rejecting the "incoming change" when merging](#Rejecting-the-incoming-change-when-merging)
-        - [Accepting the "incoming change" when merging](#Accepting-the-incoming-change-when-merging)
-- [Conflicts during a rebase](#Conflicts-during-a-rebase)
-    - [Resolving a conflict when rebasing](#Resolving-a-conflict-when-rebasing)
-        - [Rejecting the "incoming change" when rebasing](#Rejecting-the-incoming-change-when-rebasing)
-        - [Accepting the "incoming change" when rebasing](#Accepting-the-incoming-change-when-rebasing)
-- [Using "git-rerere" to reuse recorded resolutions](#Using-git-rerere-to-reuse-recorded-resolutions)
-- [The concept of "ours and theirs"](#The-concept-of-ours-and-theirs)
-- [References](#References)
+- [Conflicts during a merge](#conflicts-during-a-merge)
+    - [Resolving a conflict when merging](#resolving-a-conflict-when-merging)
+        - [Rejecting the "incoming change" when merging](#rejecting-the-incoming-change-when-merging)
+        - [Accepting the "incoming change" when merging](#accepting-the-incoming-change-when-merging)
+- [Conflicts during a rebase](#conflicts-during-a-rebase)
+    - [Resolving a conflict when rebasing](#resolving-a-conflict-when-rebasing)
+        - [Rejecting the "incoming change" when rebasing](#rejecting-the-incoming-change-when-rebasing)
+        - [Accepting the "incoming change" when rebasing](#accepting-the-incoming-change-when-rebasing)
+- [Using "git-rerere" to reuse recorded resolutions](#using-git-rerere-to-reuse-recorded-resolutions)
+- [The concept of "ours and theirs"](#the-concept-of-ours-and-theirs)
+- [References](#references)
 
 ## Introduction
 
@@ -287,11 +287,11 @@ Put another way:
 - When using `git merge <BRANCH>`, the current branch is `HEAD`, and `<BRANCH>` is the "incoming change".
 - When using `git rebase <BRANCH>`, `<BRANCH>` is `HEAD`, and the current branch is the "incoming change".
 
-This is the concept of "ours and theirs", and is explained more in the section on [the concept of "ours and theirs"](#The-concept-of-ours-and-theirs).
+This is the concept of "ours and theirs", and is explained more in the section on [the concept of "ours and theirs"](#the-concept-of-ours-and-theirs).
 
 As with a merge conflict, the user will choose which changes to keep and which to discard. Once the changes have been chosen, add the file with `git add <FILE>` and then continue the rebase with `git rebase --continue`.
 
-If there are no other conflicts, the rebase will complete successfully. If the user runs `git log` once the rebase completes, they will see no merge commits. As discussed in the section on ["git-rebase"](git-rebase.md#Introduction), this is to be expected, as `git rebase` does not create merge commits.
+If there are no other conflicts, the rebase will complete successfully. If the user runs `git log` once the rebase completes, they will see no merge commits. As discussed in the section on ["git-rebase"](git-rebase.md#introduction), this is to be expected, as `git rebase` does not create merge commits.
 
 #### Rejecting the "incoming change" when rebasing
 
@@ -357,7 +357,7 @@ Changes to be committed:
 
 This is an indication that the "incoming changes" were accepted. Since there is a change, as compared to the working tree of `prod`, then those changed need to be committed.
 
-As mentioned in the section on [conflicts during a rebase](#Conflicts-during-a-rebase), if the "incoming change" is accepted during a rebase, then it's almost a guarantee that any other commits that are played back during the rease process will also encounter the same conflict. This is due to the nature of how `git rebase` works -- by accepting the "incoming change", then other commits played back during the rebase will continue to reconflict, since the conflict exists in those other commits.
+As mentioned in the section on [conflicts during a rebase](#conflicts-during-a-rebase), if the "incoming change" is accepted during a rebase, then it's almost a guarantee that any other commits that are played back during the rease process will also encounter the same conflict. This is due to the nature of how `git rebase` works -- by accepting the "incoming change", then other commits played back during the rebase will continue to reconflict, since the conflict exists in those other commits.
 
 ## Using "git-rerere" to reuse recorded resolutions
 

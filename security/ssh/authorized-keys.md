@@ -4,8 +4,8 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Best practices](#Best-practices)
+- [Introduction](#introduction)
+- [Best practices](#best-practices)
 
 ## Introduction
 

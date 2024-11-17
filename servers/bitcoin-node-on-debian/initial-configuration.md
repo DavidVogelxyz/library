@@ -4,12 +4,12 @@
 
 ## Table of contents
 
-- [First steps](#First-steps)
-- [Preventing laptop lid close from suspending processes](#Preventing-laptop-lid-close-from-suspending-processes)
-- [Configuring zsh](#Configuring-zsh)
+- [First steps](#first-steps)
+- [Preventing laptop lid close from suspending processes](#preventing-laptop-lid-close-from-suspending-processes)
+- [Configuring zsh](#configuring-zsh)
     - [lf](#lf)
-- [Finalizing initial configuration](#Finalizing-initial-configuration)
-- [References](#References)
+- [Finalizing initial configuration](#finalizing-initial-configuration)
+- [References](#references)
 
 ## First steps
 

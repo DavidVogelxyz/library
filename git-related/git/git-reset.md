@@ -5,14 +5,14 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Using "git-reset-soft" to keep changed files in the index](#Using-git-reset-soft-to-keep-changed-files-in-the-index)
-- [Using "git-reset-hard" to drop changes from the index](#Using-git-reset-hard-to-drop-changes-from-the-index)
-- [Using "git-reset" and "git-clean" to roll back commits](#Using-git-reset-and-git-clean-to-roll-back-commits)
-- [References](#References)
+- [Using "git-reset-soft" to keep changed files in the index](#using-git-reset-soft-to-keep-changed-files-in-the-index)
+- [Using "git-reset-hard" to drop changes from the index](#using-git-reset-hard-to-drop-changes-from-the-index)
+- [Using "git-reset" and "git-clean" to roll back commits](#using-git-reset-and-git-clean-to-roll-back-commits)
+- [References](#references)
 
 ## Introduction
 
-As mentioned in the [section on "git restore"](git-restore.md#Using-git-restore-staged-to-unstage-a-tracked-file), `git reset` and `git restore` share some similarities. The best way to explain `git reset` is that it is effectively a branch-wide `git restore`.
+As mentioned in the [section on "git restore"](git-restore.md#using-git-restore-staged-to-unstage-a-tracked-file), `git reset` and `git restore` share some similarities. The best way to explain `git reset` is that it is effectively a branch-wide `git restore`.
 
 ## Using "git-reset-soft" to keep changed files in the index
 
@@ -28,7 +28,7 @@ As with other instances of `<COMMIT_HASH>`, the user can pass a commitish instea
 
 In the case of `git reset --soft HEAD~1`, Git will reset the working tree to the state of the previous commit. Running `git status` will show that the changes from before the reversion still exist, and are currently staged for commit.
 
-As mentioned in the [section on git commit](git-commit.md#Amending-commits-with-git-commit-amend), this is another way to perform a `git commit --amend` in order to amend the contents of a commit. In the case of a `git commit --amend`, the changes to be melded into the previous needed to be staged before running `git commit --amend`. In the case of `git reset --soft HEAD~1`, the user is reset to the previous commit just prior to `git commit`, and they can now add in those changes and stage them before performing another `git commit`.
+As mentioned in the [section on git commit](git-commit.md#amending-commits-with-git-commit-amend), this is another way to perform a `git commit --amend` in order to amend the contents of a commit. In the case of a `git commit --amend`, the changes to be melded into the previous needed to be staged before running `git commit --amend`. In the case of `git reset --soft HEAD~1`, the user is reset to the previous commit just prior to `git commit`, and they can now add in those changes and stage them before performing another `git commit`.
 
 As with other commands such as `git commit --amend` and `git rebase -i`, `git reset` will change the commit history.
 
@@ -47,9 +47,9 @@ A clever perusing of the `.git/objects` directory may be able to reveal the file
 
 While it is far more advisable to use [interactive rebases](interactive-rebase.md) to roll back commits, it is possible to do so with `git reset`.
 
-As explained in the section about [using "git-reset-soft" to keep changed files in the index](#Using-git-reset-soft-to-keep-changed-files-in-the-index), `git reset --soft` can achieve this outcome. It is probably advisable to only use `git reset --soft HEAD~1` for this purpose, so a commit can be adjusted and committed again. But, `git reset --soft` can be used to roll back any number of commits.
+As explained in the section about [using "git-reset-soft" to keep changed files in the index](#using-git-reset-soft-to-keep-changed-files-in-the-index), `git reset --soft` can achieve this outcome. It is probably advisable to only use `git reset --soft HEAD~1` for this purpose, so a commit can be adjusted and committed again. But, `git reset --soft` can be used to roll back any number of commits.
 
-`git reset --hard` can also be used to roll back a commit. But, as was explained in [using "git-reset-hard" to drop changes from the index](#Using-git-reset-hard-to-drop-changes-from-the-index), it is far more destructive. As mentioned in that section, `git reset --hard` may need to be used twice, in the event that there are untracked files in the repo. Alternatively, a user can run `git clean -df` to remove any untracked files and clean up the repo so that it's in the exact same state as the working tree of the commit.
+`git reset --hard` can also be used to roll back a commit. But, as was explained in [using "git-reset-hard" to drop changes from the index](#using-git-reset-hard-to-drop-changes-from-the-index), it is far more destructive. As mentioned in that section, `git reset --hard` may need to be used twice, in the event that there are untracked files in the repo. Alternatively, a user can run `git clean -df` to remove any untracked files and clean up the repo so that it's in the exact same state as the working tree of the commit.
 
 ## References
 

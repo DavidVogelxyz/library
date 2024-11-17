@@ -5,9 +5,9 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [How to perform a rebase](#How-to-perform-a-rebase)
-- [The drawbacks of rebasing](#The-drawbacks-of-rebasing)
-- [References](#References)
+- [How to perform a rebase](#how-to-perform-a-rebase)
+- [The drawbacks of rebasing](#the-drawbacks-of-rebasing)
+- [References](#references)
 
 ## Introduction
 
