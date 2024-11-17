@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Securing the "sshd_config" file](#Securing-the-sshd_config-file)
-- [Testing the configs](#Testing-the-configs)
+- [Introduction](#introduction)
+- [Securing the "sshd_config" file](#securing-the-sshd_config-file)
+- [Testing the configs](#testing-the-configs)
 
 ## Introduction
 

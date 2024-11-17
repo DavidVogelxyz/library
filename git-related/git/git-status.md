@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Using an alias with "git-status"](#Using-an-alias-with-git-status)
-- [References](#References)
+- [Introduction](#introduction)
+- [Using an alias with "git-status"](#using-an-alias-with-git-status)
+- [References](#references)
 
 ## Introduction
 
@@ -14,7 +14,7 @@
 
 ## Using an alias with "git-status"
 
-For how often `git status` is used, it can be useful to set a global alias in the `~/.gitconfig` file to reduce the amount of times the command is typed. For more information on how to set a global alias for `git status`, refer to the section on ["git-config"](git-config.md#Global-configs-for-Git-aliases).
+For how often `git status` is used, it can be useful to set a global alias in the `~/.gitconfig` file to reduce the amount of times the command is typed. For more information on how to set a global alias for `git status`, refer to the section on ["git-config"](git-config.md#global-configs-for-git-aliases).
 
 In short, it's possible to set `s` as an alias for status. Therefore, the user would only need to type `git s` to run the `git status` command.
 
@@ -38,7 +38,7 @@ This will return an output similar to the following:
 
 What this tells the user is that the current branch is 5 commits ahead of `<REMOTE>/<BRANCH>` and 0 commits behind.
 
-While not as verbose as `git status`, this command will allow the user to get this information, which is not possible otherwise (unless the user changes the `remote` being tracked, just to get this information from `git status`). Since it's a decently lengthy command (even if less frequently used), it also benefits from creating a Git alias for it, which is described in the section on ["git-config"](git-config.md#Global-configs-for-Git-aliases).
+While not as verbose as `git status`, this command will allow the user to get this information, which is not possible otherwise (unless the user changes the `remote` being tracked, just to get this information from `git status`). Since it's a decently lengthy command (even if less frequently used), it also benefits from creating a Git alias for it, which is described in the section on ["git-config"](git-config.md#global-configs-for-git-aliases).
 
 ## References
 

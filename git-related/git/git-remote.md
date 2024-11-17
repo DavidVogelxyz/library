@@ -5,23 +5,23 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Remote doesn't have to be remote?](#Remote-doesn't-have-to-be-remote)
-    - [A note on the definition of "remote"](#A-note-on-the-definition-of-remote)
-- [Using "git-clone" to clone the current state of a remote repo](#Using-git-clone-to-clone-the-current-state-of-a-remote-repo)
-- [Using "git-fetch" to grab the current state of a remote repo](#Using-git-fetch-to-grab-the-current-state-of-a-remote-repo)
-- [Using "git-merge" to update the current state of a local branch](#Using-git-merge-to-update-the-current-state-of-a-local-branch)
-- [Using "git-rebase" to update the current state of a local branch](#Using-git-rebase-to-update-the-current-state-of-a-local-branch)
-- [Using "git-pull" to update the current state of a local branch](#Using-git-pull-to-update-the-current-state-of-a-local-branch)
-    - [A note about using "git-pull" with rebase](#A-note-about-using-git-pull-with-rebase)
-- [Using "git-push" to update a remote branch](#Using-git-push-to-update-a-remote-branch)
-    - [A note about errors when using "git-push"](#A-note-about-errors-when-using-git-push)
-- [More information about tracking](#More-information-about-tracking)
-- [Creating a new GitHub repo with an already existing local repo](#Creating-a-new-GitHub-repo-with-an-already-existing-local-repo)
-- [Syncing a local copy of a fork with the upstream project](#Syncing-a-local-copy-of-a-fork-with-the-upstream-project)
-    - [A follow up to working with a fork](#A-follow-up-to-working-with-a-fork)
-- [Pushing to a branch that is currently checked out on the remote](#Pushing-to-a-branch-that-is-currently-checked-out-on-the-remote)
-- [Deleting a remote branch](#Deleting-a-remote-branch)
-- [References](#References)
+- [Remote doesn't have to be remote?](#remote-doesn't-have-to-be-remote)
+    - [A note on the definition of "remote"](#a-note-on-the-definition-of-remote)
+- [Using "git-clone" to clone the current state of a remote repo](#using-git-clone-to-clone-the-current-state-of-a-remote-repo)
+- [Using "git-fetch" to grab the current state of a remote repo](#using-git-fetch-to-grab-the-current-state-of-a-remote-repo)
+- [Using "git-merge" to update the current state of a local branch](#using-git-merge-to-update-the-current-state-of-a-local-branch)
+- [Using "git-rebase" to update the current state of a local branch](#using-git-rebase-to-update-the-current-state-of-a-local-branch)
+- [Using "git-pull" to update the current state of a local branch](#using-git-pull-to-update-the-current-state-of-a-local-branch)
+    - [A note about using "git-pull" with rebase](#a-note-about-using-git-pull-with-rebase)
+- [Using "git-push" to update a remote branch](#using-git-push-to-update-a-remote-branch)
+    - [A note about errors when using "git-push"](#a-note-about-errors-when-using-git-push)
+- [More information about tracking](#more-information-about-tracking)
+- [Creating a new GitHub repo with an already existing local repo](#creating-a-new-github-repo-with-an-already-existing-local-repo)
+- [Syncing a local copy of a fork with the upstream project](#syncing-a-local-copy-of-a-fork-with-the-upstream-project)
+    - [A follow up to working with a fork](#a-follow-up-to-working-with-a-fork)
+- [Pushing to a branch that is currently checked out on the remote](#pushing-to-a-branch-that-is-currently-checked-out-on-the-remote)
+- [Deleting a remote branch](#deleting-a-remote-branch)
+- [References](#references)
 
 ## Introduction
 
@@ -41,7 +41,7 @@ The user would change directory into `~/new-repo`, and run the following command
 git remote add <REMOTE> <PATH>
 ```
 
-In this case, the user would run `git remote add origin ~/original-repo`, or `git remote add origin ../original-repo`. A configuration would be added to the repo's local config, which is located in the `.git/config` file, telling Git that the `remote` repo named `origin` can be found at the path `~/original-repo`, or at the path `../original-repo`. Either path would get Git correctly from the current repo to `remote`. For more information on the `.git/config` file, check out the section on ["git-config"](git-config.md#Example-local-config-file).
+In this case, the user would run `git remote add origin ~/original-repo`, or `git remote add origin ../original-repo`. A configuration would be added to the repo's local config, which is located in the `.git/config` file, telling Git that the `remote` repo named `origin` can be found at the path `~/original-repo`, or at the path `../original-repo`. Either path would get Git correctly from the current repo to `remote`. For more information on the `.git/config` file, check out the section on ["git-config"](git-config.md#example-local-config-file).
 
 This is exactly the same command that is used when an already existing Git project is added to GitHub or GitLab. Those websites direct the user to run this command to add the same config to the project -- however, in the case of GitHub and GitLab, the path is a "URI/URL" pointing to the repo on their website. An example of this would be `git remote add origin https://github.com/DavidVogelxyz/library` -- this version of the command would set the `origin` remote to the path where this Git repo exists on GitHub's website.
 
@@ -69,7 +69,7 @@ Note that `origin` and `upstream` are just naming conventions -- realistically, 
 git clone <URI> <PATH_TO_LOCAL_REPO>
 ```
 
-As is discussed in the section on ["git-config"](git-config.md#Example-local-config-file), the `<URI>` can be any of the following:
+As is discussed in the section on ["git-config"](git-config.md#example-local-config-file), the `<URI>` can be any of the following:
 
 - To clone a repo from:
     - GitHub/GitLab, using HTTPS: `https://github.com/<USER>/<NAME_OF_REPO>`
@@ -77,11 +77,11 @@ As is discussed in the section on ["git-config"](git-config.md#Example-local-con
     - A local directory: `../<NAME_OF_OTHER_REPO>`
     - A remote directory, in `ssh`/`scp` format: `<USER>@<DOMAIN>:/<PATH_TO_REPO>`
 
-Often, when cloning from GitHub or GitLab, the `<NAME_OF_REPO>` will have `.git` appended to it. This is actually a reference to the fact that the repo is initialized on GitHub and GitLab as a bare repo. While the directory's name on the server *is* `<NAME_OF_REPO>.git`, it is not necessary to include the `.git` when specifying the `<URI>` for the repo. For more information on bare repos, refer to the section on ["git-init"](git-init.md#Bare-repositories).
+Often, when cloning from GitHub or GitLab, the `<NAME_OF_REPO>` will have `.git` appended to it. This is actually a reference to the fact that the repo is initialized on GitHub and GitLab as a bare repo. While the directory's name on the server *is* `<NAME_OF_REPO>.git`, it is not necessary to include the `.git` when specifying the `<URI>` for the repo. For more information on bare repos, refer to the section on ["git-init"](git-init.md#bare-repositories).
 
 `<PATH_TO_LOCAL_REPO>` allows the user to path somewhere else, or give the repo a different name on the local machine. This is also not necessary. If the `git clone` command is run without `<PATH_TO_LOCAL_REPO>`, then `git clone` will clone the repo into the current working directory, with the same name as the `remote`. Passing `<PATH_TO_LOCAL_REPO>` is most often used when the local path is not going to be within the current working directory, or when the user wants to change the name of the directory being created locally.
 
-It is also possible to run `git clone` with the `--bare` switch, thus making the clone a bare repo. For more information on bare repos, refer to the section on ["git-init"](git-init.md#Bare-repositories).
+It is also possible to run `git clone` with the `--bare` switch, thus making the clone a bare repo. For more information on bare repos, refer to the section on ["git-init"](git-init.md#bare-repositories).
 
 ## Using "git-fetch" to grab the current state of a remote repo
 
@@ -93,7 +93,7 @@ This is important to note: if a branch is from a remote, it will contain the nam
 
 Another important note: if no remote is specified, `git fetch` will use the `origin` remote by default, unless there is an `upstream` remote set **for the current branch**.
 
-As is described in the section on ["git-branch"](git-branch.md#Listing-branches), to view a list of all the branches for which `git fetch` has grabbed information, run the following command:
+As is described in the section on ["git-branch"](git-branch.md#listing-branches), to view a list of all the branches for which `git fetch` has grabbed information, run the following command:
 
 ```
 git branch -a
@@ -105,7 +105,7 @@ This command will return a list of all branches associated with the repo, includ
 
 Now that `git fetch` has grabbed all the information about the state of the remote branch, how does a user update their local branch?
 
-As was discussed in the section on ["git-merge"](git-merge.md#How-to-perform-a-fast-forward-merge), the command `git merge` can be used to update the point for the current branch to point to the same commit as the remote branch. Run the following command:
+As was discussed in the section on ["git-merge"](git-merge.md#how-to-perform-a-fast-forward-merge), the command `git merge` can be used to update the point for the current branch to point to the same commit as the remote branch. Run the following command:
 
 ```
 git merge origin/<BRANCH>
@@ -117,7 +117,7 @@ While it may appear that nothing happened, running `git log` will reveal that th
 
 Imagine a slightly different example: a user has made some commits on their local branch, and now they want to use `git fetch` and `git merge` in order to update their current branch. This user is going to run into a problem: the new commits on `origin` don't have the user's new commits in their history.
 
-When the history diverges, what can the user do? As was discussed in the section on ["git-rebase"](git-rebase.md#How-to-perform-a-rebase), they can run `git rebase`!
+When the history diverges, what can the user do? As was discussed in the section on ["git-rebase"](git-rebase.md#how-to-perform-a-rebase), they can run `git rebase`!
 
 ```
 git rebase origin/<BRANCH>
@@ -153,7 +153,7 @@ The user can also run the `git pull` command with the `-u` switch (short for `--
 git pull -u <REMOTE> <BRANCH>
 ```
 
-As was the case when setting a path to a remote repo, this configuration will also be added to the local Git config, located at the path `.git/config`. Now, every time that the user wants to use `git pull` on branch `<BRANCH>`, Git will know to use `origin/<BRANCH>` as the remote. For more information on the `.git/config` file, check out the section on ["git-config"](git-config.md#Example-local-config-file).
+As was the case when setting a path to a remote repo, this configuration will also be added to the local Git config, located at the path `.git/config`. Now, every time that the user wants to use `git pull` on branch `<BRANCH>`, Git will know to use `origin/<BRANCH>` as the remote. For more information on the `.git/config` file, check out the section on ["git-config"](git-config.md#example-local-config-file).
 
 Additional notes:
 
@@ -326,9 +326,9 @@ When the `remote`:
 
 When all of the above are true, it may make sense to use `git push` to push a branch that is currently checkout out on the `remote`.
 
-As mentioned in the error message, the relevant config key is `receive.denyCurrentBranch`, and it should be **set on the remote** to `ignore` or `warn` in order to allow these pushes. As explained in the section on ["git-config"](git-config.md#Other-configs), either set the value in the `.git/config` file (local) or the `~/.gitconfig` file (global). Alternatively, use `git config receive.denyCurrentBranch ignore` to achieve the same outcome. Note that, considering how this config works, it is more likely to be set at the local level than at the global level.
+As mentioned in the error message, the relevant config key is `receive.denyCurrentBranch`, and it should be **set on the remote** to `ignore` or `warn` in order to allow these pushes. As explained in the section on ["git-config"](git-config.md#other-configs), either set the value in the `.git/config` file (local) or the `~/.gitconfig` file (global). Alternatively, use `git config receive.denyCurrentBranch ignore` to achieve the same outcome. Note that, considering how this config works, it is more likely to be set at the local level than at the global level.
 
-As mentioned, this config should only be used in certain circumstances. For a "Git server", or when using a `remote` as a backup, then the user would be advised to use "bare repos". For more information, refer to the section on [git-init](git-init.md#Bare-repositories).
+As mentioned, this config should only be used in certain circumstances. For a "Git server", or when using a `remote` as a backup, then the user would be advised to use "bare repos". For more information, refer to the section on [git-init](git-init.md#bare-repositories).
 
 ## Deleting a remote branch
 
@@ -342,7 +342,7 @@ To do this, the user would run the following command:
 git push <REMOTE> --delete <BRANCH>
 ```
 
-As discussed in the section [using "git-push" to update a remote branch](#Using-git-push-to-update-a-remote-branch), this command is equivalent to `git push <REMOTE> :<DESTINATION_BRANCH>`. However, `git push <REMOTE> --delete <BRANCH>` is much simpler to remember, and use correctly.
+As discussed in the section [using "git-push" to update a remote branch](#using-git-push-to-update-a-remote-branch), this command is equivalent to `git push <REMOTE> :<DESTINATION_BRANCH>`. However, `git push <REMOTE> --delete <BRANCH>` is much simpler to remember, and use correctly.
 
 Note that `git push <REMOTE> --delete <BRANCH>` works with any version of Git from `v1.7.0` onward. For users running Git `v2.8.0` or newer, the following syntax will also work:
 
@@ -350,7 +350,7 @@ Note that `git push <REMOTE> --delete <BRANCH>` works with any version of Git fr
 git push <REMOTE> -d <BRANCH>
 ```
 
-To delete the local branch after deleting the remote branch, follow the steps in the section on [deleting branches](git-branch.md#Deleting-branches).
+To delete the local branch after deleting the remote branch, follow the steps in the section on [deleting branches](git-branch.md#deleting-branches).
 
 ## References
 

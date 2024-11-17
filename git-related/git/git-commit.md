@@ -5,11 +5,11 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Writing commits in a text editor](#Writing-commits-in-a-text-editor)
-- [Setting the date with "git-commit-date"](#Setting-the-date-with-git-commit-date)
-    - [A note on setting the date](#A-note-on-setting-the-date)
-- [Amending commits with "git-commit-amend"](#Amending-commits-with-git-commit-amend)
-- [Patch committing](#Patch-committing)
+- [Writing commits in a text editor](#writing-commits-in-a-text-editor)
+- [Setting the date with "git-commit-date"](#setting-the-date-with-git-commit-date)
+    - [A note on setting the date](#a-note-on-setting-the-date)
+- [Amending commits with "git-commit-amend"](#amending-commits-with-git-commit-amend)
+- [Patch committing](#patch-committing)
 
 ## Introduction
 
@@ -43,7 +43,7 @@ On a site like GitHub, the date that displays with a commit is known as the "aut
 
 However, it *is* possible to change the "author date" to be the same as the "committer date" -- it just requires the user run `git rebase --committer-date-is-author-date -i <HASH_OF_PREVIOUS_COMMIT>`. Note that `<HASH_OF_PREVIOUS_COMMIT>` will refer to the commit before the one for which the user wants to adjust the author date.
 
-When `git rebase -i` operates on the commit, it will have its "author date" changed to the "committer date". For more information, check out the section on [interactive rebases](interactive-rebase.md#An-early-note-on-dates-when-rebasing-interactively).
+When `git rebase -i` operates on the commit, it will have its "author date" changed to the "committer date". For more information, check out the section on [interactive rebases](interactive-rebase.md#an-early-note-on-dates-when-rebasing-interactively).
 
 ## Amending commits with "git-commit-amend"
 
@@ -57,9 +57,9 @@ There's a bunch worth noting about `git commit --amend`:
 - If a message is passed with `git commit --amend -m`, then `git commit` will accept that message as the new commit message.
     - Otherwise, without the `-m` switch, the command will open an interactive session in the system terminal.
 
-There are also switches such as `--no-edit` that allow the user to skip editing the commit message. This is useful in a situation where the user wants to edit the author date of the commit, but not the message itself. In that case, the user would run `git commit --amend --no-edit --date`, and then specify the date (as explained in [setting the date with "git-commit-date"](#Setting-the-date-with-git-commit-date)). However, it may be advisable in this situation to run `git commit --amend --date`, as the interactive editor session can be closed without editing, and it allows an opportunity for the user to confirm that the date was set correctly.
+There are also switches such as `--no-edit` that allow the user to skip editing the commit message. This is useful in a situation where the user wants to edit the author date of the commit, but not the message itself. In that case, the user would run `git commit --amend --no-edit --date`, and then specify the date (as explained in [setting the date with "git-commit-date"](#setting-the-date-with-git-commit-date)). However, it may be advisable in this situation to run `git commit --amend --date`, as the interactive editor session can be closed without editing, and it allows an opportunity for the user to confirm that the date was set correctly.
 
-Editing commits that are further back in history requires the use of an interactive rebase (`git rebase -i`). For more information on rewording commit messages, check out this section on [interactive rebases](interactive-rebase.md#Rewording-a-commit-message); for more information on editing commits, check out this other section on [interactive rebases](interactive-rebase.md#Editing-the-contents-of-a-commit).
+Editing commits that are further back in history requires the use of an interactive rebase (`git rebase -i`). For more information on rewording commit messages, check out this section on [interactive rebases](interactive-rebase.md#rewording-a-commit-message); for more information on editing commits, check out this other section on [interactive rebases](interactive-rebase.md#editing-the-contents-of-a-commit).
 
 ## Patch committing
 

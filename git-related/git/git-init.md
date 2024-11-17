@@ -4,15 +4,15 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Using "git-init" to initialize a new Git repository](#Using-git-init-to-initialize-a-new-Git-repository)
-- [Bare repositories](#Bare-repositories)
+- [Introduction](#introduction)
+- [Using "git-init" to initialize a new Git repository](#using-git-init-to-initialize-a-new-git-repository)
+- [Bare repositories](#bare-repositories)
 
 ## Introduction
 
 `git init` is a command that allows the user to make any directory into a Git repo. Under the hood, `git init` works by creating a `.git` subdirectory, converting into a Git repo the directory on which `git init` operates.
 
-As was discussed in [git-config](git-config.md#Viewing-the-config-files), and will be discussed further in [Git's internal file structure](git-internal-file-structure.md#Introduction), the `.git` directory is where all of the Git files for a given repo are stored. Any directory can become a Git repo by creating a `.git` directory with `git init`.
+As was discussed in [git-config](git-config.md#viewing-the-config-files), and will be discussed further in [Git's internal file structure](git-internal-file-structure.md#introduction), the `.git` directory is where all of the Git files for a given repo are stored. Any directory can become a Git repo by creating a `.git` directory with `git init`.
 
 `git init` is a relatively simple command, but there are some key facts to note.
 

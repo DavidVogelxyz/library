@@ -5,8 +5,8 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Using "git-revert" to remove a previous commit](#Using-git-revert-to-remove-a-previous-commit)
-- [References](#References)
+- [Using "git-revert" to remove a previous commit](#using-git-revert-to-remove-a-previous-commit)
+- [References](#references)
 
 ## Introduction
 

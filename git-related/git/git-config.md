@@ -4,24 +4,24 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Setting up a new Git environment](#Setting-up-a-new-Git-environment)
-- [Viewing Git configurations](#Viewing-Git-configurations)
-    - [Using "git-config-get" to get the value of a configuration](#Using-git-config-get-to-get-the-value-of-a-configuration)
-    - [Viewing the config files](#Viewing-the-config-files)
-    - [Using "git-config-list" to list all the configuration values](#Using-git-config-list-to-list-all-the-configuration-values)
-- [Editing Git configurations](#Editing-Git-configurations)
-    - [Using "git-config-edit" to edit Git configurations](#Using-git-config-edit-to-edit-Git-configurations)
-    - [Editing the config file](#Editing-the-config-file)
-- [A key can have multiple values](#A-key-can-have-multiple-values)
-- [Signing commits with GPG keys](#Signing-commits-with-GPG-keys)
-- [Example configurations in the Git config files](#Example-configurations-in-the-Git-config-files)
-    - [Example global config file](#Example-global-config-file)
-        - [Global configs for "git-difftool"](#Global-configs-for-git-difftool)
-        - [Global configs for Git aliases](#Global-configs-for-Git-aliases)
-    - [Example local config file](#Example-local-config-file)
-    - [Other configs](#Other-configs)
-- [References](#References)
+- [Introduction](#introduction)
+- [Setting up a new Git environment](#setting-up-a-new-git-environment)
+- [Viewing Git configurations](#viewing-git-configurations)
+    - [Using "git-config-get" to get the value of a configuration](#using-git-config-get-to-get-the-value-of-a-configuration)
+    - [Viewing the config files](#viewing-the-config-files)
+    - [Using "git-config-list" to list all the configuration values](#using-git-config-list-to-list-all-the-configuration-values)
+- [Editing Git configurations](#editing-git-configurations)
+    - [Using "git-config-edit" to edit Git configurations](#using-git-config-edit-to-edit-git-configurations)
+    - [Editing the config file](#editing-the-config-file)
+- [A key can have multiple values](#a-key-can-have-multiple-values)
+- [Signing commits with GPG keys](#signing-commits-with-gpg-keys)
+- [Example configurations in the Git config files](#example-configurations-in-the-git-config-files)
+    - [Example global config file](#example-global-config-file)
+        - [Global configs for "git-difftool"](#global-configs-for-git-difftool)
+        - [Global configs for Git aliases](#global-configs-for-git-aliases)
+    - [Example local config file](#example-local-config-file)
+    - [Other configs](#other-configs)
+- [References](#references)
 
 ## Introduction
 
@@ -244,7 +244,7 @@ As explained in previous sections, it is often a good idea to have a global `nam
 
 #### Global configs for "git-difftool"
 
-As described in the [section on "git difftool"](git-difftool.md#Configuring-the-default-tool-for-git-difftool), the user may also want to specify global defaults for `git difftool`:
+As described in the [section on "git difftool"](git-difftool.md#configuring-the-default-tool-for-git-difftool), the user may also want to specify global defaults for `git difftool`:
 
 ```
 [diff]
@@ -255,7 +255,7 @@ As described in the [section on "git difftool"](git-difftool.md#Configuring-the-
     prompt = false
 ```
 
-For more information on the function of these configs, refer to the section on ["git-difftool"](git-difftool.md#Configuring-the-default-tool-for-git-difftool).
+For more information on the function of these configs, refer to the section on ["git-difftool"](git-difftool.md#configuring-the-default-tool-for-git-difftool).
 
 #### Global configs for Git aliases
 
@@ -273,9 +273,9 @@ In addition, the global `~/.gitconfig` file is the best place to specify any Git
 
 This is an example of a few Git aliases, which are explained in more detail in the proper sections:
 
-- ["git-log"](git-log.md#Useful-aliases-for-git-log)
-- ["Interactive rebase"](interactive-rebase.md#An-early-note-on-dates-when-rebasing-interactively)
-- ["git-status" and "git-rev-list"](git-status.md#Using-an-alias-with-git-status)
+- ["git-log"](git-log.md#useful-aliases-for-git-log)
+- ["Interactive rebase"](interactive-rebase.md#an-early-note-on-dates-when-rebasing-interactively)
+- ["git-status" and "git-rev-list"](git-status.md#using-an-alias-with-git-status)
 
 ### Example local config file
 
@@ -307,12 +307,12 @@ To explain the above:
         - A path to a local directory: `../<NAME_OF_OTHER_REPO>`
         - A path to a remote directory, in `ssh`/`scp` format: `<USER>@<DOMAIN>:/<PATH_TO_REPO>`
     - The `remote` also has a value for `fetch`, which points to the "path to the refs" for that remote (ex. `refs/remotes/origin`).
-    - For more information, refer to the section on [working with remote repositories in Git](git-remote.md#Remote-doesn't-have-to-be-remote).
+    - For more information, refer to the section on [working with remote repositories in Git](git-remote.md#remote-doesn't-have-to-be-remote).
 - When working with `remotes`, the different branches will be configured in this file. They also follow a specific format:
     - The branch name is specified.
     - The branch has a value for `remote`, which tells Git which `remote` to use when running `git push` and `git pull`.
     - The branch also has a value for `merge`, which tells Git which ref to use.
-    - For more information, refer to the section on [working with remote repositories in Git](git-remote.md#Using-git-pull-to-update-the-current-state-of-a-local-branch).
+    - For more information, refer to the section on [working with remote repositories in Git](git-remote.md#using-git-pull-to-update-the-current-state-of-a-local-branch).
 
 ### Other configs
 
@@ -323,7 +323,7 @@ Another config worth noting is the following:
     denyCurrentBranch = ignore
 ```
 
-A user cannot `git push` a branch to a remote that has the same branch currently checked out. This option ignores that default, and will allow users to `git push` a branch, even if it is the current branch on the `remote`. For more information, refer to the section on [working with remote repositories in Git](git-remote.md#Pushing-to-a-branch-that-is-currently-checked-out-on-the-remote).
+A user cannot `git push` a branch to a remote that has the same branch currently checked out. This option ignores that default, and will allow users to `git push` a branch, even if it is the current branch on the `remote`. For more information, refer to the section on [working with remote repositories in Git](git-remote.md#pushing-to-a-branch-that-is-currently-checked-out-on-the-remote).
 
 ## References
 

@@ -5,8 +5,8 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Using "git-rm" to completely remove a file](#Using-git-rm-to-completely-remove-a-file)
-- [Using "git-rm-cached" to remove a file only from the working tree and index](#Using-git-rm-cached-to-remove-a-file-only-from-the-working-tree-and-index)
+- [Using "git-rm" to completely remove a file](#using-git-rm-to-completely-remove-a-file)
+- [Using "git-rm-cached" to remove a file only from the working tree and index](#using-git-rm-cached-to-remove-a-file-only-from-the-working-tree-and-index)
 
 ## Introduction
 
@@ -42,4 +42,4 @@ git rm --cached <PATH>
 
 When a new file is created and added to the index using `git add <PATH>`, but then needs to be removed from the index, `git rm --cached` is the best method to remove the file from the index while leaving the file intact.
 
-`git rm --cached` can be particularly useful in a situation where a file is added and committed, but shouldn't have been. If the user wants to preserve the file and its contents, while also removing the file from the commit, then an interactive rebase (`git rebase -i`) in combination with `git rm --cached <PATH>` is the best way to achieve those results. For more information on interactive rebases, refer to the [section on "git rebase -i"](interactive-rebase.md#Editing-the-contents-of-a-commit).
+`git rm --cached` can be particularly useful in a situation where a file is added and committed, but shouldn't have been. If the user wants to preserve the file and its contents, while also removing the file from the commit, then an interactive rebase (`git rebase -i`) in combination with `git rm --cached <PATH>` is the best way to achieve those results. For more information on interactive rebases, refer to the [section on "git rebase -i"](interactive-rebase.md#editing-the-contents-of-a-commit).

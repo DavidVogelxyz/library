@@ -8,8 +8,8 @@ This guide will go through some of the basics for working with SSH. In addition,
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Terms and Definitions](#Terms-and-Definitions)
+- [Introduction](#introduction)
+- [Terms and Definitions](#terms-and-definitions)
 - [Creating SSH Keys](create-ssh-keys.md)
 - [Uploading the Public Key to Another Machine](upload-public-key-to-another-machine.md)
 - [Restricting SSH Connections to Only Users with Registered Private Keys](restrict-connections-to-only-users-with-private-keys.md)

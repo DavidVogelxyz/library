@@ -4,8 +4,8 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Installing and configuring Tor](#Installing-and-configuring-Tor)
+- [Introduction](#introduction)
+- [Installing and configuring Tor](#installing-and-configuring-tor)
     - [Adding a hidden service](#adding-a-hidden-service)
 - [References](#references)
 

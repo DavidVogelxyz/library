@@ -4,13 +4,13 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Installing Mempool](#Installing-Mempool)
-- [Configuring Mempool](#Configuring-Mempool)
-    - [Configuring the Mempool backend](#Configuring-the-Mempool-backend)
-    - [Configuring the Mempool frontend](#Configuring-the-Mempool-frontend)
-    - [Finalizing the Mempool configuration](#Finalizing-the-Mempool-configuration)
-- [Adding a hidden service for Mempool](#Adding-a-hidden-service-for-Mempool)
+- [Introduction](#introduction)
+- [Installing Mempool](#installing-mempool)
+- [Configuring Mempool](#configuring-mempool)
+    - [Configuring the Mempool backend](#configuring-the-mempool-backend)
+    - [Configuring the Mempool frontend](#configuring-the-mempool-frontend)
+    - [Finalizing the Mempool configuration](#finalizing-the-mempool-configuration)
+- [Adding a hidden service for Mempool](#adding-a-hidden-service-for-mempool)
 - [References](#references)
 
 ## Introduction

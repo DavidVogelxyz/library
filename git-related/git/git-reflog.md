@@ -5,12 +5,12 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [The basics of git-reflog](#The-basics-of-git-reflog)
-- [Using "git-reflog" and "git-cat-file" to recover lost history](#Using-git-reflog-and-git-cat-file-to-recover-lost-history)
-- [Using "git-reflog" and "git-merge" to recover lost history](#Using-git-reflog-and-git-merge-to-recover-lost-history)
-- [Using "git-reflog" and "git-checkout" to recover lost history](#Using-git-reflog-and-git-checkout-to-recover-lost-history)
-- [Using "git-reflog" and "git-cherry-pick" to recover lost history](#Using-git-reflog-and-git-cherry-pick-to-recover-lost-history)
-- [References](#References)
+- [The basics of git-reflog](#the-basics-of-git-reflog)
+- [Using "git-reflog" and "git-cat-file" to recover lost history](#using-git-reflog-and-git-cat-file-to-recover-lost-history)
+- [Using "git-reflog" and "git-merge" to recover lost history](#using-git-reflog-and-git-merge-to-recover-lost-history)
+- [Using "git-reflog" and "git-checkout" to recover lost history](#using-git-reflog-and-git-checkout-to-recover-lost-history)
+- [Using "git-reflog" and "git-cherry-pick" to recover lost history](#using-git-reflog-and-git-cherry-pick-to-recover-lost-history)
+- [References](#references)
 
 ## Introduction
 
@@ -46,13 +46,13 @@ However, this user knows about Git's internals, and understands how to use `git 
 <HASH_A> (HEAD -> prod) HEAD@{2}: checkout: moving from prod to dev
 ```
 
-This would allow them to reference the SHA of commit `B`. As described in [Git's internal file structure](git-internal-file-structure.md#The-files-are-in-the-computer), the user can run `git cat-file -p` in combination with this hash to walk the tree back to the files that were changed in this commit. Then, again using `git cat-file -p`, they can return the entire contents of the file(s) that were deleted. The user is now able to recover all their lost work!
+This would allow them to reference the SHA of commit `B`. As described in [Git's internal file structure](git-internal-file-structure.md#the-files-are-in-the-computer), the user can run `git cat-file -p` in combination with this hash to walk the tree back to the files that were changed in this commit. Then, again using `git cat-file -p`, they can return the entire contents of the file(s) that were deleted. The user is now able to recover all their lost work!
 
 ## Using "git-reflog" and "git-merge" to recover lost history
 
 Another way to perform this same outcome is to use `git reflog` in combination with `git merge`.
 
-As described in [recovering lost history with git-reflog and git-cat-file](#Recovering-lost-history-with-git-reflog-and-git-cat-file), the user would get the SHA value for commit `B` by using `git reflog`. The user can this perform a `git merge` on that hash, as shown below:
+As described in [recovering lost history with git-reflog and git-cat-file](#recovering-lost-history-with-git-reflog-and-git-cat-file), the user would get the SHA value for commit `B` by using `git reflog`. The user can this perform a `git merge` on that hash, as shown below:
 
 ```
 git merge <HASH_B>
@@ -83,8 +83,8 @@ There are a few different ways to accomplish this.
 
 For more information, refer to the following section:
 
-- ["git-checkout"](git-branch.md#Creating-and-switching-to-new-branches)
-- ["Interactive rebasing"](interactive-rebase.md#The-basics-of-an-interactive-rebase)
+- ["git-checkout"](git-branch.md#creating-and-switching-to-new-branches)
+- ["Interactive rebasing"](interactive-rebase.md#the-basics-of-an-interactive-rebase)
 
 ## Using "git-reflog" and "git-cherry-pick" to recover lost history
 

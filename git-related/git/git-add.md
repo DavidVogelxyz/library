@@ -5,9 +5,9 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Staging changes with "git-add"](#Staging-changes-with-git-add)
-- [Patch adding](#Patch-adding)
-- [References](#References)
+- [Staging changes with "git-add"](#staging-changes-with-git-add)
+- [Patch adding](#patch-adding)
+- [References](#references)
 
 ## Introduction
 

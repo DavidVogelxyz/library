@@ -4,8 +4,8 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Installing Fulcrum](#Installing-Fulcrum)
+- [Introduction](#introduction)
+- [Installing Fulcrum](#installing-fulcrum)
     - [Configuring zram-swap](#configuring-zram-swap)
     - [Configuring Fulcrum](#configuring-fulcrum)
     - [Re-configuring Fulcrum after the initial sync](#re-configuring-fulcrum-after-the-initial-sync)

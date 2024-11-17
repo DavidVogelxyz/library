@@ -5,19 +5,19 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [The basics of an interactive rebase](#The-basics-of-an-interactive-rebase)
-    - [An early note on dates when rebasing interactively](#An-early-note-on-dates-when-rebasing-interactively)
-- [Squashing multiple commits into one commit](#Squashing-multiple-commits-into-one-commit)
-- [Dropping a commit from the history](#Dropping-a-commit-from-the-history)
-- [Rewording a commit message](#Rewording-a-commit-message)
-- [Editing the contents of a commit](#Editing-the-contents-of-a-commit)
-- [Reordering commits](#Reordering-commits)
-- [Adding a new commit to the middle of the history](#Adding-a-new-commit-to-the-middle-of-the-history)
-- [Changing the date of a previous commit](#Changing-the-date-of-a-previous-commit)
-    - [Changing the "committer date" of a previous commit](#Changing-the-committer-date-of-a-previous-commit)
-    - [Changing the "author date" of a previous commit](#Changing-the-author-date-of-a-previous-commit)
-- [Interactively rebasing the first commit of the history](#Interactively-rebasing-the-first-commit-of-the-history)
-- [References](#References)
+- [The basics of an interactive rebase](#the-basics-of-an-interactive-rebase)
+    - [An early note on dates when rebasing interactively](#an-early-note-on-dates-when-rebasing-interactively)
+- [Squashing multiple commits into one commit](#squashing-multiple-commits-into-one-commit)
+- [Dropping a commit from the history](#dropping-a-commit-from-the-history)
+- [Rewording a commit message](#rewording-a-commit-message)
+- [Editing the contents of a commit](#editing-the-contents-of-a-commit)
+- [Reordering commits](#reordering-commits)
+- [Adding a new commit to the middle of the history](#adding-a-new-commit-to-the-middle-of-the-history)
+- [Changing the date of a previous commit](#changing-the-date-of-a-previous-commit)
+    - [Changing the "committer date" of a previous commit](#changing-the-committer-date-of-a-previous-commit)
+    - [Changing the "author date" of a previous commit](#changing-the-author-date-of-a-previous-commit)
+- [Interactively rebasing the first commit of the history](#interactively-rebasing-the-first-commit-of-the-history)
+- [References](#references)
 
 ## Introduction
 
@@ -51,7 +51,7 @@ Note that `<COMMIT_HASH>` can also be a reference to `HEAD` -- if the user wants
 A --- B --- C --- D
 ```
 
-If the tip of the branch is commit `D`, and the user wants to edit the contents of commit `C` and reword the message of commit `D`, the user would run `git rebase -i` and pass the commit hash for commit `B`. This is because `B` is the "last good commit". For more information on how to interactively rebase `A`, refer to the section on [interactively rebasing the first commit of the history](#Interactively-rebasing-the-first-commit-of-the-history).
+If the tip of the branch is commit `D`, and the user wants to edit the contents of commit `C` and reword the message of commit `D`, the user would run `git rebase -i` and pass the commit hash for commit `B`. This is because `B` is the "last good commit". For more information on how to interactively rebase `A`, refer to the section on [interactively rebasing the first commit of the history](#interactively-rebasing-the-first-commit-of-the-history).
 
 Once `git rebase -i <COMMIT_HASH>` is run, an interactive window will open in the system's text editor, where the user will see a list of all commits that come after the "last good commit". Put another way, this list of commits is the list of commits that will be replayed during the interactive rebase. From here, the user can pick a variety of options for manipulating those commits. This guide will detail those options and how they work. For now, all the user needs to know is that `pick` means "take the commit as it is".
 
@@ -63,7 +63,7 @@ If an error ever occurs during an interactive rebase, and the user is unable to 
 
 ### An early note on dates when rebasing interactively
 
-As discussed in the [section on "git commit"](git-commit.md#A-note-on-setting-the-date), Git keeps track of two separate date values: "committer date" and "author date".
+As discussed in the [section on "git commit"](git-commit.md#a-note-on-setting-the-date), Git keeps track of two separate date values: "committer date" and "author date".
 
 Imagine a repo that has a `remote` on GitHub. A user interactively rebases some commits, and checks their work with `git log`. The user would see that the dates of the commits haven't changed from the original "committer dates". However, when the user pushes the changes to GitHub, the dates that GitHub shows are not the dates that `git log` shows. This is because `git log` shows the "committer date", while GitHub shows the "author date".
 
@@ -231,7 +231,7 @@ Just like with a `reword`, `edit` will change the commit hash of the edited comm
 
 Interactive rebases also allow a use to reorder commits. Reordering commits is not often used, but it's good to know that it's possible.
 
-An example of a legitimate use case for reordering is the following: imagine the user from [squashing multiple commits into one commit](#Squashing-multiple-commits-into-one-commit) has a bunch of commits they want to squash. However, the user would prefer to squash `6`, `7`, and `8` into `1` (along with `2`, `3`, and `4`). This may be because `6`, `7`, and `8` are relevant to `1`, and commit `5` is irrelevant to the other `7` commits. The user could reorder these commits for replay, such that `2`, `3`, `4`, `6`, `7`, and `8` can all be squashed into `1`.
+An example of a legitimate use case for reordering is the following: imagine the user from [squashing multiple commits into one commit](#squashing-multiple-commits-into-one-commit) has a bunch of commits they want to squash. However, the user would prefer to squash `6`, `7`, and `8` into `1` (along with `2`, `3`, and `4`). This may be because `6`, `7`, and `8` are relevant to `1`, and commit `5` is irrelevant to the other `7` commits. The user could reorder these commits for replay, such that `2`, `3`, `4`, `6`, `7`, and `8` can all be squashed into `1`.
 
 So, while choosing which commits to squash, the user would reorder the replay list, as shown below:
 
@@ -266,7 +266,7 @@ pick commit #2
 pick commit #1
 ```
 
-The only thing to note is that these commits will retain their "committer dates", while having different "author dates". Therefore, the commit dates shown in `git log` will now be out of order. If this is necessary, then the user may want to consider revising the "committer dates", as explained in [changing the date of a previous commit](#Changing-the-date-of-a-previous-commit).
+The only thing to note is that these commits will retain their "committer dates", while having different "author dates". Therefore, the commit dates shown in `git log` will now be out of order. If this is necessary, then the user may want to consider revising the "committer dates", as explained in [changing the date of a previous commit](#changing-the-date-of-a-previous-commit).
 
 ## Adding a new commit to the middle of the history
 
@@ -290,7 +290,7 @@ As with `reword` and `edit`, changing the date of a commit (both for "committer 
 
 To change the "committer date" of a commit, the user will want to `edit` the commit for which the date will be changed.
 
-Once back on the command line, the user will run `git commit --amend --date="MMM D HH:MM:SS YYYY"`. As described in the section on ["git-commit"](git-commit.md#Setting-the-date-with-git-commit-date), the date specified with this command will become the new "committer date". While the `--no-edit` switch can be passed with this command, running the command without it will allow the user to verify during the commit message rewording state that the date is what the user set. Once verified, the user can exit the editor without making changes to the commit message, and can verify the change again with `git log`.
+Once back on the command line, the user will run `git commit --amend --date="MMM D HH:MM:SS YYYY"`. As described in the section on ["git-commit"](git-commit.md#setting-the-date-with-git-commit-date), the date specified with this command will become the new "committer date". While the `--no-edit` switch can be passed with this command, running the command without it will allow the user to verify during the commit message rewording state that the date is what the user set. Once verified, the user can exit the editor without making changes to the commit message, and can verify the change again with `git log`.
 
 However, for the purposes of pushing to GitHub (etc.), the user will also want to make sure that the commit's "author date" is also updated to reflect the committer date.
 
@@ -300,7 +300,7 @@ To change the "author date" of a commit, the user will want to run `git rebase -
 
 When selecting the options for the replay list, the user can leave all commits as `pick`. So long as `git rebase` replays the "commit in question", it will adjust the commit so that the "committer date" is the same as the "author date".
 
-As mentioned before in [an early note on dates when rebasing interactively](#An-early-note-on-dates-when-rebasing-interactively), the effects of changing the "author date" are most apparent on a site like GitHub, where the date displayed alongside a commit is the "author date".
+As mentioned before in [an early note on dates when rebasing interactively](#an-early-note-on-dates-when-rebasing-interactively), the effects of changing the "author date" are most apparent on a site like GitHub, where the date displayed alongside a commit is the "author date".
 
 ## Interactively rebasing the first commit of the history
 

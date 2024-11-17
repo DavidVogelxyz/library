@@ -4,18 +4,18 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [What's in a PR?](#What's-in-a-PR)
-- [Creating a PR](#Creating-a-PR)
-    - [Creating a fork](#Creating-a-fork)
-    - [Preparing commits to be submitted as a PR](#Preparing-commits-to-be-submitted-as-a-PR)
-    - [Submitting a PR for review](#Submitting-a-PR-for-review)
-- [Finalizing a PR](#Finalizing-a-PR)
-    - [Limiting merge commits](#Limiting-merge-commits)
-    - [Preserving GPG signatures](#Preserving-GPG-signatures)
-    - [How to both limit merge commits and preserve GPG signatures](#How-to-both-limit-merge-commits-and-preserve-GPG-signatures)
-- [Making changes during the PR review process](#Making-changes-during-the-PR-review-process)
-- [References](#References)
+- [Introduction](#introduction)
+- [What's in a PR?](#what's-in-a-pr)
+- [Creating a PR](#creating-a-pr)
+    - [Creating a fork](#creating-a-fork)
+    - [Preparing commits to be submitted as a PR](#preparing-commits-to-be-submitted-as-a-pr)
+    - [Submitting a PR for review](#submitting-a-pr-for-review)
+- [Finalizing a PR](#finalizing-a-pr)
+    - [Limiting merge commits](#limiting-merge-commits)
+    - [Preserving GPG signatures](#preserving-gpg-signatures)
+    - [How to both limit merge commits and preserve GPG signatures](#how-to-both-limit-merge-commits-and-preserve-gpg-signatures)
+- [Making changes during the PR review process](#making-changes-during-the-pr-review-process)
+- [References](#references)
 
 ## Introduction
 
@@ -55,7 +55,7 @@ Once the fork has been created and cloned, the process is relatively straightfor
 
 The user can make changes directly to the branch to which they want to submit the PR. However, in many cases, the user will opt to create a development branch to create the commits to be submitted.
 
-One tactic that's worth mentioning is the idea of "committing small changes often". This allows the user to save their work and prevent loss. However, when it comes time to push the branch back to GitHub and submit the PR, it is advisable to squash those commits into a single commit. This makes the reviewer's lives easier, as they won't have to sift through a bunch of smaller commits, and can more easily see what's changed between their repo and the PR. For more information, refer to the section on [squashing multiple commits](../git/interactive-rebase.md#Squashing-multiple-commits-into-one-commit).
+One tactic that's worth mentioning is the idea of "committing small changes often". This allows the user to save their work and prevent loss. However, when it comes time to push the branch back to GitHub and submit the PR, it is advisable to squash those commits into a single commit. This makes the reviewer's lives easier, as they won't have to sift through a bunch of smaller commits, and can more easily see what's changed between their repo and the PR. For more information, refer to the section on [squashing multiple commits](../git/interactive-rebase.md#squashing-multiple-commits-into-one-commit).
 
 Whether or not the commits are squashed, they will then be pushed to GitHub. At this point, the changes are ready to be submitted as a PR.
 
@@ -113,7 +113,7 @@ When a PR is under review, and the submitted branch falls behind the target bran
 
 Therefore, a user can wait until after their submitted branch has received a sufficient number of approvals to rebase. Then, *before* merging the PR into the target branch, the user can run `git rebase <TARGET_BRANCH>`.
 
-At this point, if the user runs `git rebase <TARGET_BRANCH>` while their submitted branch is checked out, the current tip of the target branch will be checked out and the PR's commits will be played back on top. Assuming that there are no merge conflicts, the submitted branch will be up-to-date with the target branch, and the PR will not lose its approvals. If there are merge conflicts, then the user must accept the changes from the target branch ("ours"); otherwise, divergence will occur, and the submitted branch *will* lose its approvals. For more information, refer to the section on ["ours" and "theirs"](../git/resolving-merge-conflicts.md#The-concept-of-ours-and-theirs).
+At this point, if the user runs `git rebase <TARGET_BRANCH>` while their submitted branch is checked out, the current tip of the target branch will be checked out and the PR's commits will be played back on top. Assuming that there are no merge conflicts, the submitted branch will be up-to-date with the target branch, and the PR will not lose its approvals. If there are merge conflicts, then the user must accept the changes from the target branch ("ours"); otherwise, divergence will occur, and the submitted branch *will* lose its approvals. For more information, refer to the section on ["ours" and "theirs"](../git/resolving-merge-conflicts.md#the-concept-of-ours-and-theirs).
 
 Obviously, if the submitted branch is changed locally, it must be force pushed onto the `remote` (GitHub) for the changes to show up. However, as already stated, the force push will **not** affect approvals, so long as the content of the PR's commits haven't changed.
 
@@ -121,9 +121,9 @@ Obviously, if the submitted branch is changed locally, it must be force pushed o
 
 During the PR review process, a user may be requested to make supplemental changes to their PR before it can be approved. Some "best practices" are detailed below.
 
-As already mentioned in the section on [limiting merge commits and preserving GPG signatures](#How-to-both-limit-merge-commits-and-preserve-GPG-signatures), a user can make changes to their submitted branch and then force push those changes. So, the user can easily go back to the local version of their submitted branch, create a new commit to address the requested changes, and then push them to GitHub.
+As already mentioned in the section on [limiting merge commits and preserving GPG signatures](#how-to-both-limit-merge-commits-and-preserve-gpg-signatures), a user can make changes to their submitted branch and then force push those changes. So, the user can easily go back to the local version of their submitted branch, create a new commit to address the requested changes, and then push them to GitHub.
 
-It can also be a good idea to create the new commit, and then squash it into the originally submitted commit. Since both are going to change the contents of the PR, both will dismiss (reset) the current approvals. However, some teams may want the additional changes in a separate commit, in order to more easily identify what changes were made against the original submission. However, every new commit will be added to the repo's commit history upon merging, so use discretion when deciding whether or not to squash the new commit. For more information, refer to the section on [squashing multiple commits](../git/interactive-rebase.md#Squashing-multiple-commits-into-one-commit).
+It can also be a good idea to create the new commit, and then squash it into the originally submitted commit. Since both are going to change the contents of the PR, both will dismiss (reset) the current approvals. However, some teams may want the additional changes in a separate commit, in order to more easily identify what changes were made against the original submission. However, every new commit will be added to the repo's commit history upon merging, so use discretion when deciding whether or not to squash the new commit. For more information, refer to the section on [squashing multiple commits](../git/interactive-rebase.md#squashing-multiple-commits-into-one-commit).
 
 ## References
 

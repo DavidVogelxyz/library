@@ -5,11 +5,11 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Adding a tag to a commit](#Adding-a-tag-to-a-commit)
-- [Listing tags](#Listing-tags)
-- [Deleting a tag](#Deleting-a-tag)
-- [Syncing tags with a remote](#Syncing-tags-with-a-remote)
-- [References](#References)
+- [Adding a tag to a commit](#adding-a-tag-to-a-commit)
+- [Listing tags](#listing-tags)
+- [Deleting a tag](#deleting-a-tag)
+- [Syncing tags with a remote](#syncing-tags-with-a-remote)
+- [References](#references)
 
 ## Introduction
 

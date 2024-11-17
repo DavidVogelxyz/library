@@ -5,8 +5,8 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Using "git-cherry-pick" to apply a commit from one branch to another branch](#Using-git-cherry-pick-to-apply-a-commit-from-one-branch-to-another-branch)
-- [References](#References)
+- [Using "git-cherry-pick" to apply a commit from one branch to another branch](#using-git-cherry-pick-to-apply-a-commit-from-one-branch-to-another-branch)
+- [References](#references)
 
 ## Introduction
 

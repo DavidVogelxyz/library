@@ -4,8 +4,8 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Bitcoin Core](#Bitcoin-Core)
+- [Introduction](#introduction)
+- [Bitcoin Core](#bitcoin-core)
     - [Configuring Bitcoin Core](#configuring-bitcoin-core)
     - [Checking on Bitcoin Core during the intial sync](#checking-on-bitcoin-core-during-the-intial-sync)
     - [Re-configuring Bitcoin Core after the initial sync](#re-configuring-bitcoin-core-after-the-initial-sync)

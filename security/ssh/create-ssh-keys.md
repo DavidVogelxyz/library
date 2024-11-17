@@ -4,11 +4,11 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Creating a SSH key](#Creating-a-SSH-key)
-    - [Ed25519](#Ed25519)
-    - [RSA](#RSA)
-- [References](#References)
+- [Introduction](#introduction)
+- [Creating a SSH key](#creating-a-ssh-key)
+    - [Ed25519](#ed25519)
+    - [RSA](#rsa)
+- [References](#references)
 
 ## Introduction
 
@@ -43,7 +43,7 @@ In addition, the key's comment can also be specified during key creation. To do 
 ssh-keygen -t <ALGORITHM> -C "<COMMENT>"
 ```
 
-By default, the comment takes the form of `<USER>@<HOSTNAME>`, and is especially relevant for the server receiving the pubkey for authentication. When multiple pubkeys have been appended to the `authorized_keys` file, the comment allows the server an easy way to identify which key came from which user. However, as explained in the section on [listing identities stored in the "ssh-agent"](ssh-agent.md#Listing-stored-identities), a user may want to change the comment for easier identification of their own keys. Just like with passphrases, comments can be changed at any time with the `ssh-keygen -c -f <PATH_TO_PRIVATE_KEY>` command.
+By default, the comment takes the form of `<USER>@<HOSTNAME>`, and is especially relevant for the server receiving the pubkey for authentication. When multiple pubkeys have been appended to the `authorized_keys` file, the comment allows the server an easy way to identify which key came from which user. However, as explained in the section on [listing identities stored in the "ssh-agent"](ssh-agent.md#listing-stored-identities), a user may want to change the comment for easier identification of their own keys. Just like with passphrases, comments can be changed at any time with the `ssh-keygen -c -f <PATH_TO_PRIVATE_KEY>` command.
 
 ### Ed25519
 

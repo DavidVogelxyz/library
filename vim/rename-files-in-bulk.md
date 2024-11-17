@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Bulk renaming files](#Bulk-renaming-files)
-- [References](#References)
+- [Introduction](#introduction)
+- [Bulk renaming files](#bulk-renaming-files)
+- [References](#references)
 
 ## Introduction
 

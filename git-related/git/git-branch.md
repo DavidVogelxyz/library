@@ -5,14 +5,14 @@
 ## Table of contents
 
 - [Introduction](#introduction)
-- [Creating, and switching, to new branches](#Creating-and-switching-to-new-branches)
-- [Listing branches](#Listing-branches)
-- [What is the current branch?](#What-is-the-current-branch)
-- [Where is the branch information in the Git directory?](#Where-is-the-branch-information-in-the-Git-directory?)
-- [Deleting branches](#Deleting-branches)
-- [Renaming branches](#Renaming-branches)
-- [What to do with a branch full of new commits](#What-to-do-with-a-branch-full-of-new-commits)
-- [References](#References)
+- [Creating, and switching, to new branches](#creating-and-switching-to-new-branches)
+- [Listing branches](#listing-branches)
+- [What is the current branch?](#what-is-the-current-branch)
+- [Where is the branch information in the Git directory?](#where-is-the-branch-information-in-the-git-directory?)
+- [Deleting branches](#deleting-branches)
+- [Renaming branches](#renaming-branches)
+- [What to do with a branch full of new commits](#what-to-do-with-a-branch-full-of-new-commits)
+- [References](#references)
 
 ## Introduction
 
@@ -60,7 +60,7 @@ Note that `git branch` will only show the branches that are local to the repo. I
 git branch -a
 ```
 
-For more information on remote repos, check out the section on [working with remote repos in Git](git-remote.md#Using-git-fetch-to-grab-the-current-state-of-a-remote-repo).
+For more information on remote repos, check out the section on [working with remote repos in Git](git-remote.md#using-git-fetch-to-grab-the-current-state-of-a-remote-repo).
 
 ## What is the current branch?
 

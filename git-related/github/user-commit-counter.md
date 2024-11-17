@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Removing the "additional commits"](#Removing-the-additional-commits)
-    - [How to remove the "additional commits"](#How-to-remove-the-additional-commits)
+- [Introduction](#introduction)
+- [Removing the "additional commits"](#removing-the-additional-commits)
+    - [How to remove the "additional commits"](#how-to-remove-the-additional-commits)
 
 ## Introduction
 
@@ -38,4 +38,4 @@ This process will essentially keep the entire repo intact, without affecting the
 
 For any user that have a local version of the commit history from before the "clean up", a `git fetch` will show that the local branch is both "ahead of" and "behind" the `remote`. In order to resolve this, the user can run `git rebase <REMOTE>/<BRANCH>` to rebase the new version of `<REMOTE>/<BRANCH>` into their current branch. Depending on the changes made during the interactive rebase, some merge conflicts may occur.
 
-If the user experiences merge conflicts, and is looking for their branch to be "in-line" with what exists on GitHub, then the user can easily resolve this with the command `git checkout --ours .`. This is because `<REMOTE>/<BRANCH>` is checked out during the rebase, and the commits from `<BRANCH>` are being played back on top of the tip of `<REMOTE>/<BRANCH>`. Therefore, `<REMOTE>/<BRANCH>` contains the "ours" changes, and `<BRANCH>` contains the "theirs" changes. For more information, refer to the section on [resolving merge conflicts](../git/resolving-merge-conflicts.md), specifically the section on ["ours" and "theirs"](../git/resolving-merge-conflicts.md#The-concept-of-ours-and-theirs).
+If the user experiences merge conflicts, and is looking for their branch to be "in-line" with what exists on GitHub, then the user can easily resolve this with the command `git checkout --ours .`. This is because `<REMOTE>/<BRANCH>` is checked out during the rebase, and the commits from `<BRANCH>` are being played back on top of the tip of `<REMOTE>/<BRANCH>`. Therefore, `<REMOTE>/<BRANCH>` contains the "ours" changes, and `<BRANCH>` contains the "theirs" changes. For more information, refer to the section on [resolving merge conflicts](../git/resolving-merge-conflicts.md), specifically the section on ["ours" and "theirs"](../git/resolving-merge-conflicts.md#the-concept-of-ours-and-theirs).

@@ -4,11 +4,11 @@
 
 ## Table of contents
 
-- [Introduction](#Introduction)
-- [Hashing the "known_hosts" file](#Hashing-the-known_hosts-file)
-- [Searching a "known_hosts" file](#Searching-a-known_hosts-file)
-- [Removing entries from a "known_hosts" file](#Removing-entries-from-a-known_hosts-file)
-- [References](#References)
+- [Introduction](#introduction)
+- [Hashing the "known_hosts" file](#hashing-the-known_hosts-file)
+- [Searching a "known_hosts" file](#searching-a-known_hosts-file)
+- [Removing entries from a "known_hosts" file](#removing-entries-from-a-known_hosts-file)
+- [References](#references)
 
 ## Introduction
 
@@ -48,7 +48,7 @@ Host *
     HashKnownHosts=no
 ```
 
-For more information, refer to the section on the ["ssh_config" file](ssh-config.md#General-configuration).
+For more information, refer to the section on the ["ssh_config" file](ssh-config.md#general-configuration).
 
 ## Searching a "known_hosts" file
 
