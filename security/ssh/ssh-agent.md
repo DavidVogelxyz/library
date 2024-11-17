@@ -9,6 +9,7 @@
 - [Adding identities](#adding-identities)
 - [Listing stored identities](#listing-stored-identities)
 - [Removing identities](#removing-identities)
+- [Starting the "ssh-agent" on a non-DWM system](#starting-the-ssh-agent-on-a-non-dwm-system)
 - [References](#references)
 
 ## Introduction
@@ -77,6 +78,34 @@ To remove all identities from the `ssh-agent`, run the following command:
 ssh-add -D
 ```
 
+## Starting the "ssh-agent" on a non-DWM system
+
+Add the following to either the `.bashrc` or `.zshrc` file:
+
+```
+env=~/.ssh/agent.env
+
+agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+
+agent_start () {
+    (umask 077; ssh-agent >| "$env")
+    . "$env" >| /dev/null ; }
+
+agent_load_env
+
+# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
+agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
+
+if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+    agent_start
+    ssh-add
+elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+    ssh-add
+fi
+
+unset env
+```
+
 ## References
 
 - [Arch Wiki - SSH keys - SSH agents](https://wiki.archlinux.org/title/SSH_keys#SSH_agents)
@@ -91,3 +120,5 @@ ssh-add -D
     - Another reference for running the `ssh-agent` automatically
 - [StackOverflow - Start ssh-agent on login](https://stackoverflow.com/questions/18880024/start-ssh-agent-on-login)
     - Another reference for running the `ssh-agent` automatically
+- [GitHub docs - Auto-launching ssh-agent on Git for Windows](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases#auto-launching-ssh-agent-on-git-for-windows)
+    - Reference for the code snippet for the `~/.ssh/agent.env` file
