@@ -49,6 +49,7 @@ My guides for different installs and customizations, etc.
     - [Configuring a server running Alpine Linux](servers/configuring-alpine-server.md)
     - [Configuring a server running Debian](servers/configuring-debian-server.md)
     - [DNS server using dnsmasq, running on Alpine Linux](servers/dnsmasq-server-on-alpine.md)
+    - [Forgejo (Git) server, running on Debian](servers/forgejo-on-debian.md)
     - [Looping a video file on a display, using a mini-PC running Alpine Linux](servers/looped-video-display-on-alpine.md)
     - [Nextcloud cloud storage, running on Alpine Linux](servers/nextcloud-on-alpine.md)
     - [OpenVPN server, running on Debian](servers/openvpn-server-on-debian.md)
