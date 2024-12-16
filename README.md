@@ -35,6 +35,7 @@ My guides for different installs and customizations, etc.
     - [Tips for PCIe (GPU) passthrough on Proxmox](proxmox/proxmox-gpu-passthrough.md)
     - [Tips for setting up a Linux VM in Proxmox](proxmox/proxmox-create-linux.md)
     - [Tips for setting up a Windows VM in Proxmox](proxmox/proxmox-create-windows.md)
+    - [How to migrate an existing Proxmox server to a new VLAN](proxmox/migrate-existing-proxmox-to-new-vlan.md)
 - [QEMU](qemu/)
     - [Connecting a QEMU VM to the local network](qemu/connect-qemu-vm-to-local-network.md)
     - [Installing QEMU on Arch Linux](qemu/install-qemu-arch.md)
