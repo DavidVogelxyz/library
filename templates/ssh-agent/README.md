@@ -1,6 +1,6 @@
 # Template - SSH agent
 
-[Back](../README.md)
+[Back to "Templates"](../README.md)
 
 This is for a system that doesn't have a simpler way of initializing the `ssh-agent` (example: dwm).
 

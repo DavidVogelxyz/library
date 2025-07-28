@@ -1,6 +1,6 @@
 # Bitcoin node, running on Debian
 
-[Back](../../README.md)
+[Back to "Docs and guides"](../../README.md)
 
 ## Introduction
 

@@ -1,6 +1,6 @@
 # Templates
 
-[Back](../README.md)
+[Back to root](../README.md)
 
 ## Sections
 

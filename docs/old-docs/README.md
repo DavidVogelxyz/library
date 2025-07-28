@@ -1,6 +1,6 @@
 # library
 
-[Back](../README.md)
+[Back to "Docs and guides"](../README.md)
 
 My guides for different installs and customizations, etc.
 

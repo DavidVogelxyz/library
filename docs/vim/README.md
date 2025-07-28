@@ -1,6 +1,6 @@
 # Vim guide
 
-[Back](../README.md)
+[Back to "Docs and guides"](../README.md)
 
 ## Introduction
 

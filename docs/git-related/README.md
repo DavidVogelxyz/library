@@ -1,6 +1,6 @@
 # Git Good at Git
 
-[Back](../README.md)
+[Back to "Docs and guides"](../README.md)
 
 ## Introduction
 

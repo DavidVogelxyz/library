@@ -1,5 +1,5 @@
 # Service manager related templates
 
-[Back](../README.md)
+[Back to "Templates"](../README.md)
 
 [OpenRC related templates](openrc/README.md)

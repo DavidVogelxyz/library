@@ -1,6 +1,6 @@
 # Docs and guides
 
-[Back](../README.md)
+[Back to root](../README.md)
 
 [Old docs](old-docs/README.md)
 
