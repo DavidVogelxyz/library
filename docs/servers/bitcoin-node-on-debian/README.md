@@ -1,5 +1,7 @@
 # Bitcoin node, running on Debian
 
+[Back](../../README.md)
+
 ## Introduction
 
 The purpose and scope of this guide is to assist in the creation and configuration of a Bitcoin node.
