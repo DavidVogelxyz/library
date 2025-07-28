@@ -73,7 +73,7 @@ pidfile="/run/$SVCNAME.pid"
 command_background="yes"
 
 depend() {
-        need localmount
+    need localmount
 }
 ```
 
