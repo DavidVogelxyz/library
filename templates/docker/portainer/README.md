@@ -2,6 +2,22 @@
 
 [Back](../README.md)
 
+## Table of contents
+
+- [Pre-configuration](#pre-configuration)
+- [Commands](#commands)
+    - [One-line command](#one-line-command)
+    - [Multi-line command](#multi-line-command)
+- [Docker Compose](#docker-compose)
+
+## Pre-configuration
+
+Create a Docker volume to store Portainer data:
+
+```
+docker volume create portainer_data
+```
+
 ## Commands
 
 ### One-line command

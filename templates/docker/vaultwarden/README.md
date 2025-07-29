@@ -2,6 +2,22 @@
 
 [Back](../README.md)
 
+## Table of contents
+
+- [Pre-configuration](#pre-configuration)
+- [Commands](#commands)
+    - [One-line command](#one-line-command)
+    - [Multi-line command](#multi-line-command)
+- [Docker Compose](#docker-compose)
+
+## Pre-configuration
+
+Create a Docker volume to store Vaultwarden data:
+
+```
+docker volume create vaultwarden_data
+```
+
 ## Introduction
 
 🚨 **The user must create `vaultwarden-docker.crt` and `vaultwarden-docker.key` and place them at the specified paths!** 🚨
