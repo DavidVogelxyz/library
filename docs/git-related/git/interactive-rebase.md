@@ -1,8 +1,10 @@
-# Interactive rebases - Editing Commit History
+Interactive rebases - Editing Commit History
+============================================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [The basics of an interactive rebase](#the-basics-of-an-interactive-rebase)
@@ -19,7 +21,8 @@
 - [Interactively rebasing the first commit of the history](#interactively-rebasing-the-first-commit-of-the-history)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 The [previous section](resolving-merge-conflicts.md) described how to resolve merge conflicts. With that explained, it is time to explain what an "interactive rebase" is, and what the use cases are.
 
@@ -35,13 +38,14 @@ An interactive rebase can be called with the command `git rebase -i`, and it all
 
 While some of the above examples are completely benign, some could be used to "fake" history. It is up to the user's discretion to know when it's proper to use these tools.
 
-## The basics of an interactive rebase
+The basics of an interactive rebase
+-----------------------------------
 
 Anyone who has resolved a conflict when using `git rebase` has already experienced an interactive rebase. Therefore, the basics will be nearly identical.
 
 To initiate an interactive rebase, run the following command:
 
-```
+```bash
 git rebase -i <COMMIT_HASH>
 ```
 
@@ -69,7 +73,7 @@ Imagine a repo that has a `remote` on GitHub. A user interactively rebases some 
 
 To address this, and preserve the committer's timestamps, use the following command in place of `git rebase -i`:
 
-```
+```bash
 git rebase --committer-date-is-author-date -i
 ```
 
@@ -84,7 +88,8 @@ Because the situation with "committer dates" and "author dates" occurs every tim
 
 With this configuration added, the user can run `git rebase-int <COMMIT_HASH>`, and Git will instead run `git rebase --committer-date-is-author-date -i <COMMIT_HASH>`.
 
-## Squashing multiple commits into one commit
+Squashing multiple commits into one commit
+------------------------------------------
 
 One of the options available to a user during an interactive rebase is `squash`, which allows a user to take a commit marked `squash` and meld it into the previous commit. Essentially, for any `n` of commits that are sequentially marked `squash`, the user will end up with `n - 1` commits.
 
@@ -122,7 +127,8 @@ Note that squashing commits should **never** result in a conflict, as `git rebas
 
 Squashing is an effective tool that allows a user to make many small commits while working, saving changes and preventing lost work. Then, when the user is ready, they can squash all those small commits into one large commit, which keeps the history clean and makes it easy for another person to read through the history. When squashing, a good habit is to title the commits with `SQUASHME: <MESSAGE>`. This way, it's easy during an interactive rebase to know which commits should be squashed.
 
-## Dropping a commit from the history
+Dropping a commit from the history
+----------------------------------
 
 Another useful option when rebasing interactively is `drop`. `drop` allows the user to completly remove a commit from the history.
 
@@ -163,7 +169,8 @@ pick commit #3
 
 All three of these methods will remove the commit from the replay list, resulting in an altered history where that commit doesn't exist. There are limited use cases for a `drop`; but, a user should know the option exists.
 
-## Rewording a commit message
+Rewording a commit message
+--------------------------
 
 Interactive rebases also allow a user to `reword` the commit message of any prior commit, no matter how far back in the history. This is in stark contrast to `git commit --amend`, which only works when the commit to be reworded is the previous commit.
 
@@ -199,7 +206,8 @@ When the replay gets to commit `2`, the system's text editor will open a session
 
 Rewording a commit message is useful in a few use cases. One example is a user that notices a typo in a commit message. If the user cannot abide this error, they can use `reword` to change the commit message. However, as noted earlier, doing so will change the commit hash of the reworded commit, and the hashes of all future commits. For a repo that exists on a `remote` such as GitHub, a `git push -f` ("force push") will be required to sync the changes to the `remote`.
 
-## Editing the contents of a commit
+Editing the contents of a commit
+--------------------------------
 
 Another feature of interactive rebasing is the ability to `edit` the changes present in a commit.
 
@@ -227,7 +235,8 @@ In a situation such as this, the user would likely benefit from adding `secretfi
 
 Just like with a `reword`, `edit` will change the commit hash of the edited commit, as well the hashes of all future commits. Therefore, a `git push -f` ("force push") would be necessary to sync the changes to any `remote` that has the unaltered commits in their history.
 
-## Reordering commits
+Reordering commits
+------------------
 
 Interactive rebases also allow a use to reorder commits. Reordering commits is not often used, but it's good to know that it's possible.
 
@@ -268,7 +277,8 @@ pick commit #1
 
 The only thing to note is that these commits will retain their "committer dates", while having different "author dates". Therefore, the commit dates shown in `git log` will now be out of order. If this is necessary, then the user may want to consider revising the "committer dates", as explained in [changing the date of a previous commit](#changing-the-date-of-a-previous-commit).
 
-## Adding a new commit to the middle of the history
+Adding a new commit to the middle of the history
+------------------------------------------------
 
 It is also possible with interactive rebasing to add a new commit to the middle of a history.
 
@@ -280,7 +290,8 @@ Another way is to `edit` the commit before the spot where the new commit should 
 
 In both cases, it is likely that the commit will need to have its date changed, so that the history occurs in chronological order.
 
-## Changing the date of a previous commit
+Changing the date of a previous commit
+--------------------------------------
 
 A user can also use interactive rebasing to change the date of a commit. Which date the user wants to change will dictate the process.
 
@@ -302,19 +313,21 @@ When selecting the options for the replay list, the user can leave all commits a
 
 As mentioned before in [an early note on dates when rebasing interactively](#an-early-note-on-dates-when-rebasing-interactively), the effects of changing the "author date" are most apparent on a site like GitHub, where the date displayed alongside a commit is the "author date".
 
-## Interactively rebasing the first commit of the history
+Interactively rebasing the first commit of the history
+------------------------------------------------------
 
 As mentioned repeatedly in previous sections, to interactively rebase any commit, `git rebase -i` should be the "last good commit" before the commit to be changed. But, what if the user wants to `reword` or `edit` the first commit of a branch?
 
 To do this, the `--root` switch will need to be passed to the `git rebase -i` command, such as in the following example:
 
-```
+```bash
 git rebase --committer-date-is-author-date --root -i
 ```
 
 In this specific case, no `<COMMIT_HASH>` is required, as `--root` tells `git rebase -i` to operate starting from before the first commit. Once the user is viewing the replay list, they can select whatever option to interactively rebase the first commit.
 
-## References
+References
+----------
 
 - [thePrimeagen - Everything You'll Need to Know About Git - Rebasing is Complicated](https://theprimeagen.github.io/fem-git/lessons/going-remote/more-rebasing-and-merging)
     - Short section at the end of this reference that discusses "interactive rebases" and "squashing"

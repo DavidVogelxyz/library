@@ -1,8 +1,10 @@
-# git-merge - Bringing Changes Over to Other Branches
+git-merge - Bringing Changes Over to Other Branches
+===================================================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [How to perform a three way merge](#how-to-perform-a-three-way-merge)
@@ -10,7 +12,8 @@
 - [What about rebase?](#what-about-rebase)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 As discussed in the section on ["git-branch"](git-branch.md), sometimes a user will want to bring changes from one branch over to another.
 
@@ -26,13 +29,14 @@ What can the user do to get the commits in `dev` over to `prod`? One way to acco
 
 A "merge" is an attempt to combine two commit histories together that share a common ancestor, and have since diverged. This "common ancestor" is sometimes known as the "merge base" -- the "best common ancestor" is simply the most recent of the common ancestors. By merging, Git will take the tip of `dev` (`C`) and the tip of `prod` (`E`), and create a new commit that brings the two tips together. The branch on which this new commit exists is known as the branch that is "being merged into".
 
-## How to perform a three way merge
+How to perform a three way merge
+--------------------------------
 
 Using `git merge` is very simple. But, it's important to understand the fundamentals of how merging works.
 
 A three way merge is a type of merge that produces a merge commit. Referencing the above example, to merge `dev` into `prod`, the user should have `prod` checked out (in other words, `prod` should be the active branch). Then, the user would run the following command:
 
-```
+```bash
 git merge dev
 ```
 
@@ -55,7 +59,8 @@ Notice that, in the first line, `<HASH_MERGE_COMMIT>` is directly followed by `<
 
 This type of merge is commonly referred to as a "three way merge" -- this is reference having "two paths" in the past, and "one path" into the future.
 
-## How to perform a fast-forward merge
+How to perform a fast-forward merge
+-----------------------------------
 
 Instead of the above example, imagine that the project history looks like the following:
 
@@ -79,13 +84,15 @@ This is known as a "fast-forward merge".
 
 Note the differences in this instance. First, there is no merge commit. Because the parent of `X` was `E`, instead of `A`, there is no diverging history, and thus no need for a merge commit. Instead, the user has "linear history". Also, the tips of both `prod` and `dev` now point to `Y`. In the case of a "three way merge" with a merge commit, the tip of `prod` would point to the merge commit (`E`), while the tip of `dev` remains pointing at `C`.
 
-## What about rebase?
+What about rebase?
+------------------
 
 With an understanding of "three way merges" and "fast-forward merges", a user can get commits that are on one branch over to another branch. In the case of a "three way merge", a merge commit is created, documenting the converging of two different branches of commit history. In contrast, a "fast-forward merge" has no need to create a merge commit, and can instead create linear history, because there was never any divergence.
 
 So, what's the point of `git rebase`? Find out in the [next section](git-rebase.md)!
 
-## References
+References
+----------
 
 - [thePrimeagen - Everything You'll Need to Know About Git - Merge and Rebase](https://theprimeagen.github.io/fem-git/lessons/branches-merges-and-more/merge-and-rebase)
     - A deep dive into `git merge`, with examples and "practice problems"

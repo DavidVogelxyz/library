@@ -1,8 +1,10 @@
-# Git Good at Git
+Git Good at Git
+===============
 
 [Back to "Docs and guides"](../README.md)
 
-## Introduction
+Introduction
+------------
 
 Git is a version control system (VCS), also known as a source-control management (SCM) system. Knowing how to use `git` properly is essential to being a developer and IT professional. This guide will summarize how to perform many useful tasks in Git.
 
@@ -10,17 +12,18 @@ This guide assumes that the user has some basic understanding of 7 basic Git com
 
 An important note: there are man pages for `git`, as well as for all Git commands. The man page for `git` can be accessed by running the following:
 
-```
+```bash
 man git
 ```
 
 The syntax for pulling up the man page for any Git command is as follows:
 
-```
+```bash
 man git-add
 ```
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 
@@ -86,7 +89,8 @@ man git-add
 
 - [References](#references)
 
-## References
+References
+----------
 
 - [Frontend Masters - thePrimeagen - Everything You'll Need to Know About Git](https://frontendmasters.com/courses/everything-git)
     - An excellent video course on Frontend Masters taught by thePrimeagen

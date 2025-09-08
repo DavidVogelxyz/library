@@ -1,29 +1,34 @@
-# git-add - Staging Changes to be Committed
+git-add - Staging Changes to be Committed
+=========================================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Staging changes with "git-add"](#staging-changes-with-git-add)
 - [Patch adding](#patch-adding)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 To add changes to a repo so they can be committed, run `git add`. While `git add` is a very simple command, there are a few tricks to be aware of that can enhance its use.
 
-## Staging changes with "git-add"
+Staging changes with "git-add"
+------------------------------
 
 The basic syntax for `git add` is as follows:
 
-```
+```bash
 git add <PATH>
 ```
 
 Most users are aware that substituting `<PATH>` with `.` will add all files in the current working directory (and its subdirectories). However, `<PATH>` can also be a path to a file, a directory, or a pattern -- `git add` will add to the index every matching file that can be staged.
 
-## Patch adding
+Patch adding
+------------
 
 A very useful switch for `git add` is `-p`, which represents "patch". `git add -p` allows a user to make decisions on *what parts* of a file should be staged.
 
@@ -37,7 +42,8 @@ Another available option is `d`, representing "drop". In some situations, a file
 
 Yet another option available is `q`, representing "quit". The difference between `q` and `d` is quite subtle, and involves other options that allow the user to skip a hunk until later. `q` will quit `git add`, and will drop everything, including skipped hunks; `d` drops any hunk that comes after the dropped hunk, returning to any skipped hunks.
 
-## References
+References
+----------
 
 - [YouTube - ChaelCodes - Stop Using git add .](https://www.youtube.com/watch?v=u3NG1966zso)
     - Reference for `git add -p`

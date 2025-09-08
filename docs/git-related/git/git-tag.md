@@ -1,8 +1,10 @@
-# git-tag - Creating Tags
+git-tag - Creating Tags
+=======================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Adding a tag to a commit](#adding-a-tag-to-a-commit)
@@ -11,7 +13,8 @@
 - [Syncing tags with a remote](#syncing-tags-with-a-remote)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 Tags are a useful way to mark a commit with an identifier.
 
@@ -21,33 +24,37 @@ In these situations, a user can use `git tag` to add a name to a commit, which c
 
 Note that a tag essentially acts as a branch that cannot be changed. Therefore, to remove a tag, it must be deleted.
 
-## Adding a tag to a commit
+Adding a tag to a commit
+------------------------
 
 To add a tag to a commit, run the following command:
 
-```
+```bash
 git tag <TAG>
 ```
 
 This will apply `<TAG>` to whichever commit is currently `HEAD`. To apply a tag to a commit that occurs at some point in history, that commit must first be checked out.
 
-## Listing tags
+Listing tags
+------------
 
 To view all tags, run the following command:
 
-```
+```bash
 git tag
 ```
 
-## Deleting a tag
+Deleting a tag
+--------------
 
 To delete a tag, run the following command:
 
-```
+```bash
 git tag -d <TAG>
 ```
 
-## Syncing tags with a remote
+Syncing tags with a remote
+--------------------------
 
 Tags, by default, do not sync with a `remote` when running `git push`, and don't syn with the local version when running `git pull`.
 
@@ -55,19 +62,20 @@ This is similar to a branch, in that only the active branch is "pushed" or "pull
 
 In order to push tags to a remote, run the following command:
 
-```
+```bash
 git push --tags
 ```
 
 To pull tags from a remote, run the following command:
 
-```
+```bash
 git pull --tags
 ```
 
 Note that the `--tags` switch directs `git push` or `git pull` to grab tags *in addition to* branches.
 
-## References
+References
+----------
 
 - [thePrimeagen - Everything You'll Need to Know About Git - Tags](https://theprimeagen.github.io/fem-git/lessons/git-gud/tags)
     - A quick summary of how to use `git tag`

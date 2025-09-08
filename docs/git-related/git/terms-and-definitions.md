@@ -1,18 +1,22 @@
-# Terms and Definitions
+Terms and Definitions
+=====================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Terms, and their definitions](#terms-and-their-definitions)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 This section of the guide is dedicated to listing the terms and definitions that get used throughout this guide.
 
-## Terms, and their definitions
+Terms, and their definitions
+----------------------------
 
 - **Repository ("repo")**: A project tracked by Git.
 
@@ -36,7 +40,8 @@ This section of the guide is dedicated to listing the terms and definitions that
 
 - **A "remote"**: In the reference frame of any Git repo, a "remote" is the same Git repo that exists at a different path. While this often refers to a version of the repo on GitHub or GitLab, the path can be anywhere that's not the local path. For more information, check out the section on ["git-remote"](git-remote.md).
 
-## References
+References
+----------
 
 - [thePrimeagen - Everything You'll Need to Know About Git - Introduction to Git](https://theprimeagen.github.io/fem-git/lessons/intro/intro)
     - Basic Git introduction

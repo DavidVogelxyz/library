@@ -1,8 +1,10 @@
-# Working with Remote Repositories in Git
+Working with Remote Repositories in Git
+=======================================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Remote doesn't have to be remote?](#remote-doesn't-have-to-be-remote)
@@ -23,13 +25,15 @@
 - [Deleting a remote branch](#deleting-a-remote-branch)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 A "remote repository" is, very simply, a copy of the repo that is *somewhere else*.
 
 The most common example of a "remote repo" is a user's Git repo on GitHub or GitLab, though it doesn't have to be. In fact, the remote repo doesn't have to be online, nor does it need to be on another computer. The only requirement is that the remote repo exists at a path that is different that the "local" version.
 
-## Remote doesn't have to be remote?
+Remote doesn't have to be remote?
+---------------------------------
 
 Consider the following example: a user has a Git project in their home directory, located at the path `~/original-repo`. The user then creates an empty directory in their home directory, and calls it `~/new-repo`. This user then runs `cd new-repo` and `git init`, initializing the new directory as a Git repo. The user can now associate `original-repo` and `new-repo` together, and it would work the exact same way as if the user had used their GitHub account to create a copy of the repo online.
 
@@ -37,7 +41,7 @@ Of course, there's a bit more to it than that. How would Git know that `original
 
 The user would change directory into `~/new-repo`, and run the following command:
 
-```
+```bash
 git remote add <REMOTE> <PATH>
 ```
 
@@ -47,7 +51,7 @@ This is exactly the same command that is used when an already existing Git proje
 
 To list out all the `remote` repos that are associated with the current project, run the following command:
 
-```
+```bash
 git remote -v
 ```
 
@@ -61,11 +65,12 @@ But, what if a user forks a GitHub repo, and then clones the fork onto their loc
 
 Note that `origin` and `upstream` are just naming conventions -- realistically, a user could choose any `<REMOTE>` when creating these configs. However, `origin` and `upstream` are the standard naming conventions.
 
-## Using "git-clone" to clone the current state of a remote repo
+Using "git-clone" to clone the current state of a remote repo
+-------------------------------------------------------------
 
 `git clone` is a very simple command that allows the user to take the current state of a "remote" repo and initialize it "locally". The syntax for `git clone` is as follows:
 
-```
+```bash
 git clone <URI> <PATH_TO_LOCAL_REPO>
 ```
 
@@ -83,7 +88,8 @@ Often, when cloning from GitHub or GitLab, the `<NAME_OF_REPO>` will have `.git`
 
 It is also possible to run `git clone` with the `--bare` switch, thus making the clone a bare repo. For more information on bare repos, refer to the section on ["git-init"](git-init.md#bare-repositories).
 
-## Using "git-fetch" to grab the current state of a remote repo
+Using "git-fetch" to grab the current state of a remote repo
+------------------------------------------------------------
 
 The command `git fetch` can be used to grab information about the state of Git from the remote repo. This is often used in the context of fetching commits from a GitHub or GitLab repo. But, as discussed in the example from earlier, a user can run `git fetch` from within `~/new-repo`, and it will fetch the state of `original-repo`. Note that `git fetch` does not update or change the state of `new-repo`, but solely grabs the information about the current state of `original-repo`.
 
@@ -95,37 +101,40 @@ Another important note: if no remote is specified, `git fetch` will use the `ori
 
 As is described in the section on ["git-branch"](git-branch.md#listing-branches), to view a list of all the branches for which `git fetch` has grabbed information, run the following command:
 
-```
+```bash
 git branch -a
 ```
 
 This command will return a list of all branches associated with the repo, including those that exist only remotely.
 
-## Using "git-merge" to update the current state of a local branch
+Using "git-merge" to update the current state of a local branch
+---------------------------------------------------------------
 
 Now that `git fetch` has grabbed all the information about the state of the remote branch, how does a user update their local branch?
 
 As was discussed in the section on ["git-merge"](git-merge.md#how-to-perform-a-fast-forward-merge), the command `git merge` can be used to update the point for the current branch to point to the same commit as the remote branch. Run the following command:
 
-```
+```bash
 git merge origin/<BRANCH>
 ```
 
 While it may appear that nothing happened, running `git log` will reveal that the tip of `<BRANCH>` now points to the same commit as `origin/<BRANCH>`.
 
-## Using "git-rebase" to update the current state of a local branch
+Using "git-rebase" to update the current state of a local branch
+----------------------------------------------------------------
 
 Imagine a slightly different example: a user has made some commits on their local branch, and now they want to use `git fetch` and `git merge` in order to update their current branch. This user is going to run into a problem: the new commits on `origin` don't have the user's new commits in their history.
 
 When the history diverges, what can the user do? As was discussed in the section on ["git-rebase"](git-rebase.md#how-to-perform-a-rebase), they can run `git rebase`!
 
-```
+```bash
 git rebase origin/<BRANCH>
 ```
 
 By rebasing, Git checks out the latest commit on `origin/<BRANCH>`, and then plays all the new commits from `<BRANCH>` on top. As with `git merge`, it may not appear as if anything happened, but running `git log` will reveal that the base of `<BRANCH>` has been updated to the tip of `origin/<BRANCH>`.
 
-## Using "git-pull" to update the current state of a local branch
+Using "git-pull" to update the current state of a local branch
+--------------------------------------------------------------
 
 The command `git pull` is essentially a combination of `git fetch` and `git merge origin/<BRANCH>` -- the command will grab all of the branch information from the `origin` remote, and then will *pull* the changes into the current branch.
 
@@ -135,7 +144,7 @@ There are two ways to navigate the situation.
 
 One method is to specify which branch to pull from, as is shown below:
 
-```
+```bash
 git pull <REMOTE> <BRANCH>
 ```
 
@@ -143,13 +152,13 @@ So, the user could run `git pull origin <BRANCH>`, and Git would then pull `orig
 
 Another method is to set the tracking information, such that Git can automatically and conveniently perform pulls and pushes based on those configs. To do this, the user would run the following:
 
-```
+```bash
 git branch --set-upstream-to=origin/<BRANCH> <BRANCH>
 ```
 
 The user can also run the `git pull` command with the `-u` switch (short for `--set-upstream`), and it will both perform the pull *and* set the upstream with the information provided, all in one command. The full syntax for that command follows:
 
-```
+```bash
 git pull -u <REMOTE> <BRANCH>
 ```
 
@@ -174,11 +183,12 @@ One method is to run `git pull --rebase`.
 
 The other method is to set "pulling with rebase" as a configuration. To do this, run the following command:
 
-```
+```bash
 git config pull.rebase true
 ```
 
-## Using "git-push" to update a remote branch
+Using "git-push" to update a remote branch
+------------------------------------------
 
 What is `git push`?
 
@@ -204,13 +214,15 @@ This makes sense when thinking about the example of `original-repo` and `new-rep
 
 In order to resolve this error, `original-repo` would check out any branch that's not `<BRANCH>`. This would allow `new-repo` to push `<BRANCH>` to `original-repo/<BRANCH>`.
 
-## More information about tracking
+More information about tracking
+-------------------------------
 
 It can be useful to know that, when a local branch is tracking a single `remote`, and the user creates a new branch in the local repo that already exists on the `remote`, Git will automatically set up tracking for `<BRANCH>` to `<REMOTE>/<BRANCH>`. This can be demonstrated with the following example.
 
 Imagine that the user from earlier in this section has branches `prod` and `dev` in `original-repo`, but only has branch `prod` in `new-repo`. The user doesn't have to create branch `dev` in `new-repo` -- if the user runs `git checkout dev`, they will switch to new branch `dev` with tracking already set to `origin/dev` (which is the `dev` from `original-repo`).
 
-## Creating a new GitHub repo with an already existing local repo
+Creating a new GitHub repo with an already existing local repo
+--------------------------------------------------------------
 
 Any user who has ever created a local repo (that eventually was pushed to GitHub/GitLab) has run these next few commands before. Hopefully, the commands now make sense on a more fundamental level.
 
@@ -218,25 +230,26 @@ Once it comes time for a local repo to make its way to GitHub/GitLab, the user w
 
 First, the user is directed to add the `origin` remote to their repo with the following command:
 
-```
+```bash
 git remote add origin <URI>
 ```
 
 Next, GitHub/GitLab directs the user to rename the current branch to the same name as the branch that exists on the website by running the following:
 
-```
+```bash
 git branch -m <BRANCH>
 ```
 
 Last, GitHub/GitLab directs the user to push the state of the repo to the website with the following command:
 
-```
+```bash
 git push -u origin <BRANCH>
 ```
 
 Now, the local copy of the repo is associated with the GitHub/GitLab remote version. Anytime a user wants to push to GitHub/GitLab in the future, they need only run `git push`. In addition, `git pull` now has the correct tracking information to know how to pull changes from `origin/<BRANCH>` into the local branch `<BRANCH>`.
 
-## Syncing a local copy of a fork with the upstream project
+Syncing a local copy of a fork with the upstream project
+--------------------------------------------------------
 
 After having reviewed how to use `git merge` and `git fetch` to update a repo with remote information, the following should make sense.
 
@@ -253,19 +266,19 @@ Therefore, syncing a local copy of a fork with `upstream` is nearly identical. H
 
 First, the user will checkout the branch they want to sync with the the upstream project:
 
-```
+```bash
 git checkout <BRANCH>
 ```
 
 Then, the user will run `git fetch <REMOTE>` to grab the information about the branches from `<REMOTE>`:
 
-```
+```bash
 git fetch upstream
 ```
 
 Next, the user will run either `git merge upstream/<BRANCH>` or `git rebase upstream/<BRANCH>` to bring those changes onto their local copy of `<BRANCH>`. Assuming that the user has some commits on their local branch, they would run the following:
 
-```
+```bash
 git rebase upstream/<BRANCH>
 ```
 
@@ -279,7 +292,8 @@ Checking the `.git/config` of a local copy of a forked repo can be revealing.
 
 A user who runs `git clone` on a GitHub fork is likely to see that both `origin` and `upstream` are defined within `.git/config`. `origin` will point to GitHub's version of the fork, and `upstream` will point to GitHub's version of the original project. However, all branches will be configured to point to `origin`, as opposed to `upstream`. This makes sense -- when a user runs `git push`, they almost certainly want to push to their fork, and not the `upstream`. Therefore, when it comes time to sync the fork to the `upstream`, then the `git fetch` command needs to specify to fetch the changes on the `upstream`.
 
-## Pushing to a branch that is currently checked out on the remote
+Pushing to a branch that is currently checked out on the remote
+---------------------------------------------------------------
 
 If a user ever attempts to push to a branch that is currently checked out on the `remote`, they will likely see a message very similar to the following:
 
@@ -330,7 +344,8 @@ As mentioned in the error message, the relevant config key is `receive.denyCurre
 
 As mentioned, this config should only be used in certain circumstances. For a "Git server", or when using a `remote` as a backup, then the user would be advised to use "bare repos". For more information, refer to the section on [git-init](git-init.md#bare-repositories).
 
-## Deleting a remote branch
+Deleting a remote branch
+------------------------
 
 It is possible to delete a remote branch directly from the command line -- this includes deleting a branch from GitHub.
 
@@ -338,7 +353,7 @@ A simple use case for this is the following: imagine a user who creates a fork o
 
 To do this, the user would run the following command:
 
-```
+```bash
 git push <REMOTE> --delete <BRANCH>
 ```
 
@@ -346,13 +361,14 @@ As discussed in the section [using "git-push" to update a remote branch](#using-
 
 Note that `git push <REMOTE> --delete <BRANCH>` works with any version of Git from `v1.7.0` onward. For users running Git `v2.8.0` or newer, the following syntax will also work:
 
-```
+```bash
 git push <REMOTE> -d <BRANCH>
 ```
 
 To delete the local branch after deleting the remote branch, follow the steps in the section on [deleting branches](git-branch.md#deleting-branches).
 
-## References
+References
+----------
 
 - [thePrimeagen - Everything You'll Need to Know About Git - Remote Git](https://theprimeagen.github.io/fem-git/lessons/going-remote/remote-git)
     - Information on how remote repositories works

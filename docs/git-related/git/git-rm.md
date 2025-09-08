@@ -1,24 +1,28 @@
-# git-rm - Removing Files from the Working Tree and Index
+git-rm - Removing Files from the Working Tree and Index
+=======================================================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Using "git-rm" to completely remove a file](#using-git-rm-to-completely-remove-a-file)
 - [Using "git-rm-cached" to remove a file only from the working tree and index](#using-git-rm-cached-to-remove-a-file-only-from-the-working-tree-and-index)
 
-## Introduction
+Introduction
+------------
 
 `git rm` is a command that allows the user to remove a file. Depending on the usage, `git rm` will operate in different ways.
 
 As with `git restore`, `git rm` is a command that should be used with caution, as a misuse of the command may result in an untracked file being deleted.
 
-## Using "git-rm" to completely remove a file
+Using "git-rm" to completely remove a file
+------------------------------------------
 
 To remove a path that is currently being tracked by Git **AND** remove the path from the Git repo entirely (aka, delete the path), run the following command:
 
-```
+```bash
 git rm <PATH>
 ```
 
@@ -30,13 +34,14 @@ As with `git restore`, `git rm` can be used on any path that is passed as an arg
 1. Run `git rm --cached <PATH>` to keep the file in the directory, but to direct Git to stop tracking the file.
 1. Run `git rm -f <PATH>` to force the removal of the file from the working tree.
 
-## Using "git-rm-cached" to remove a file only from the working tree and index
+Using "git-rm-cached" to remove a file only from the working tree and index
+---------------------------------------------------------------------------
 
 While `git rm` removes files, both from the working tree (and index) **AND** the actual file, `git rm --cached` will remove the file *only* from the working tree and index.
 
 To remove a path **only** from the working tree and index, run the following command:
 
-```
+```bash
 git rm --cached <PATH>
 ```
 

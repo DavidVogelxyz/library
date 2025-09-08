@@ -1,14 +1,17 @@
-# git-init - Initializing a New Git Repository
+git-init - Initializing a New Git Repository
+============================================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Using "git-init" to initialize a new Git repository](#using-git-init-to-initialize-a-new-git-repository)
 - [Bare repositories](#bare-repositories)
 
-## Introduction
+Introduction
+------------
 
 `git init` is a command that allows the user to make any directory into a Git repo. Under the hood, `git init` works by creating a `.git` subdirectory, converting into a Git repo the directory on which `git init` operates.
 
@@ -16,7 +19,8 @@ As was discussed in [git-config](git-config.md#viewing-the-config-files), and wi
 
 `git init` is a relatively simple command, but there are some key facts to note.
 
-## Using "git-init" to initialize a new Git repository
+Using "git-init" to initialize a new Git repository
+---------------------------------------------------
 
 There are two primary ways to use `git init`:
 
@@ -27,7 +31,8 @@ Most users will change directory (`cd`) into the directory, and then run `git in
 
 Note that, in either case, the directory has to exist *prior* to running the `git init` command.
 
-## Bare repositories
+Bare repositories
+-----------------
 
 Bare repositories are Git repos that do not store any of the "actual files"; rather, bare repos only store the Git files. Put another way, a bare repository is a repo where there is no `.git` directory -- instead, the contents of the `.git` directory are found in the repo's root directory.
 
@@ -35,7 +40,7 @@ Bare repositories are very useful, in certain situations. Obviously, if the file
 
 To initialize a directory as a bare repository, the user will use the `--bare` switch with the command, as in the following example:
 
-```
+```bash
 git init --bare
 ```
 

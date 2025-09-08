@@ -1,8 +1,10 @@
-# git-commit - Saving Changes to a Repo
+git-commit - Saving Changes to a Repo
+=====================================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Writing commits in a text editor](#writing-commits-in-a-text-editor)
@@ -11,23 +13,26 @@
 - [Amending commits with "git-commit-amend"](#amending-commits-with-git-commit-amend)
 - [Patch committing](#patch-committing)
 
-## Introduction
+Introduction
+------------
 
 Once changes have been added to the index with `git add`, they can be committed to the repo with `git commit`. Git commits must have some sort of a message to go along with the commit, and this is usually incorporated by running `git commit -m "<COMMIT_MESSAGE>"`. However, just like with `git add`, there are a handful of additional tricks to `git commit` that increase its usefulness.
 
-## Writing commits in a text editor
+Writing commits in a text editor
+--------------------------------
 
 Git commits are required to have a message. But, instead of running `git commit -m`, what happens if a user runs just `git commit`?
 
 Without the `-m` switch, `git commit` will open up an interactive session in the system's default text editor so the user can create the commit message. `git commit` will open up whatever program is defined by `$EDITOR` -- for example, a user may have Vim or Neovim set as their system's text editor. Depending on the length and content of a commit message, this is often a far easier way to write and format a commit message, rather than trying to format the message within the command line.
 
-## Setting the date with "git-commit-date"
+Setting the date with "git-commit-date"
+---------------------------------------
 
 When using `git commit`, the timestamp associated with the commit is the "timestamp at the moment that the message is applied to the commit". However, there are options that allow the user to set the date as they please.
 
 To do this, run the following command:
 
-```
+```bash
 git commit --date="Apr 20 16:20:42 2024"
 ```
 
@@ -45,7 +50,8 @@ However, it *is* possible to change the "author date" to be the same as the "com
 
 When `git rebase -i` operates on the commit, it will have its "author date" changed to the "committer date". For more information, check out the section on [interactive rebases](interactive-rebase.md#an-early-note-on-dates-when-rebasing-interactively).
 
-## Amending commits with "git-commit-amend"
+Amending commits with "git-commit-amend"
+----------------------------------------
 
 Sometimes, after making a commit, a user will notice an error. Fortunately, there is a way to edit the previous commit through the use of `git commit --amend`.
 
@@ -61,7 +67,8 @@ There are also switches such as `--no-edit` that allow the user to skip editing 
 
 Editing commits that are further back in history requires the use of an interactive rebase (`git rebase -i`). For more information on rewording commit messages, check out this section on [interactive rebases](interactive-rebase.md#rewording-a-commit-message); for more information on editing commits, check out this other section on [interactive rebases](interactive-rebase.md#editing-the-contents-of-a-commit).
 
-## Patch committing
+Patch committing
+----------------
 
 Just like with `git add`, `git commit` can be used with the `-p` switch. In both cases, `-p` represents patch, and allows the user to select what changes will be committed.
 

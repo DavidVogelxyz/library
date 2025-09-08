@@ -1,8 +1,10 @@
-# Pull requests (PRs)
+Pull requests (PRs)
+===================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [What's in a PR?](#what's-in-a-pr)
@@ -17,7 +19,8 @@
 - [Making changes during the PR review process](#making-changes-during-the-pr-review-process)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 Pull requests (PRs) are an important utility for a GitHub user, and they are one of the few features that don't exist in Git. PRs allow a user to submit changes to a repo they don't own or control.
 
@@ -27,7 +30,8 @@ The PR will then go through a review process. The process is different for every
 
 This section of the guide will highlight some of these steps, in order to provide clarity and additional details.
 
-## What's in a PR?
+What's in a PR?
+---------------
 
 Most people believe that a PR is a commit being submitted to another branch with suggested changes. While this is partially true, it doesn't capture the complete picture.
 
@@ -35,7 +39,8 @@ This is most easily demonstrated with a PR that includes multiple commits. Most 
 
 A PR is actually the entire branch that's being submitted. This is an important distinction, because it will explain a few peculiarities about how GitHub handles certain manipulations of a PR during the review process.
 
-## Creating a PR
+Creating a PR
+-------------
 
 The first step to creating and submitting a PR is to create a fork of the repo and clone it.
 
@@ -65,7 +70,8 @@ Once the changes have been committed and pushed to GitHub, the user will navigat
 
 When ready, the user will select "Submit", and the PR will be availble for review!
 
-## Finalizing a PR
+Finalizing a PR
+---------------
 
 Once the PR has been reviewed and accepted, the user has the ability to merge in their PR. There are a few different ways the user can accomplish this:
 
@@ -117,7 +123,8 @@ At this point, if the user runs `git rebase <TARGET_BRANCH>` while their submitt
 
 Obviously, if the submitted branch is changed locally, it must be force pushed onto the `remote` (GitHub) for the changes to show up. However, as already stated, the force push will **not** affect approvals, so long as the content of the PR's commits haven't changed.
 
-## Making changes during the PR review process
+Making changes during the PR review process
+-------------------------------------------
 
 During the PR review process, a user may be requested to make supplemental changes to their PR before it can be approved. Some "best practices" are detailed below.
 
@@ -125,7 +132,8 @@ As already mentioned in the section on [limiting merge commits and preserving GP
 
 It can also be a good idea to create the new commit, and then squash it into the originally submitted commit. Since both are going to change the contents of the PR, both will dismiss (reset) the current approvals. However, some teams may want the additional changes in a separate commit, in order to more easily identify what changes were made against the original submission. However, every new commit will be added to the repo's commit history upon merging, so use discretion when deciding whether or not to squash the new commit. For more information, refer to the section on [squashing multiple commits](../git/interactive-rebase.md#squashing-multiple-commits-into-one-commit).
 
-## References
+References
+----------
 
 - [Medium - GitHub -> Forks and Pull Requests](https://medium.com/swlh/forks-and-pull-requests-how-to-contribute-to-github-repos-8843fac34ce8)
     - Reference for creating forks and submitting pull requests

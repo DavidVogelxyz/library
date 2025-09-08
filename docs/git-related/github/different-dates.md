@@ -1,14 +1,17 @@
-# When dates differ between GitHub's commit history and "git-log"
+When dates differ between GitHub's commit history and "git-log"
+===============================================================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [How to revise an author date](#how-to-revise-an-author-date)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 When using tools such as ["git-commit-date"](../git/git-commit.md#setting-the-date-with-git-commit-date) or [interactive rebases](../git/interactive-rebase.md), and pushing those changes to a GitHub or GitLab repo, a user may encounter a situation where the date shown by `git log` is not the same as the date shown in GitHub's commit history.
 
@@ -16,7 +19,8 @@ Discussed more in [this section](../git/git-commit.md#a-note-on-setting-the-date
 
 This distinction can present issues when a user attempts to change the committer date in an effort to change the date displayed on GitHub.
 
-## How to revise an author date
+How to revise an author date
+----------------------------
 
 The best way to revise an author date on GitHub is to perform the following steps:
 
@@ -24,7 +28,8 @@ The best way to revise an author date on GitHub is to perform the following step
     - In order to amend a commit that is not the previous commit, an interactive rebase is required.
 - Next, change the author date to the committer date by running `git rebase --committer-date-is-author-date -i`, as described in [this section](../git/interactive-rebase.md#an-early-note-on-dates-when-rebasing-interactively).
 
-## References
+References
+----------
 
 - [YouTube - The Modern Coder - Learn how to rewrite Git history - Amend, Reword, Delete, Reorder, Squash and Split](https://www.youtube.com/watch?v=ElRzTuYln0M)
     - Reference for using `git rebase -i`

@@ -1,8 +1,10 @@
-# git-reflog - Recovering Lost History
+git-reflog - Recovering Lost History
+====================================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [The basics of git-reflog](#the-basics-of-git-reflog)
@@ -12,11 +14,13 @@
 - [Using "git-reflog" and "git-cherry-pick" to recover lost history](#using-git-reflog-and-git-cherry-pick-to-recover-lost-history)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 As discussed in the section on [Git's internal file structure](git-internal-file-structure.md), a user with understanding of how Git works is able to navigate through Git's internal plumbing to find the files that reference commits, trees (directories), blobs (files), refs (references), and more. But, this knowledge can also allow the user to do some extraordinary feats, such as recovering information that was previously committed to a repo, but then deleted.
 
-## The basics of git-reflog
+The basics of git-reflog
+------------------------
 
 By default, running `git reflog` on its own will produce a history, similar to a `git log --oneline`. "Reflog" is simply a "log of references", and specifically refers to the ref `HEAD`. The history returned by `git reflog` is a log of where `HEAD` has pointed. In other words, `git reflog` allows the user to see the history of every `git checkout` that has been performed, along with other activity that has resulted in changes to `HEAD`.
 
@@ -26,7 +30,8 @@ As with everything else in Git, this information is stored within the `.git` dir
 
 This is great to know -- but, what's the practical application? How can this information be used to recover a deleted commit?
 
-## Using "git-reflog" and "git-cat-file" to recover lost history
+Using "git-reflog" and "git-cat-file" to recover lost history
+-------------------------------------------------------------
 
 Consider an example repo with two branches, `prod` and `dev`. Perhaps, it has a history that looks similar to the following:
 
@@ -48,13 +53,14 @@ However, this user knows about Git's internals, and understands how to use `git 
 
 This would allow them to reference the SHA of commit `B`. As described in [Git's internal file structure](git-internal-file-structure.md#the-files-are-in-the-computer), the user can run `git cat-file -p` in combination with this hash to walk the tree back to the files that were changed in this commit. Then, again using `git cat-file -p`, they can return the entire contents of the file(s) that were deleted. The user is now able to recover all their lost work!
 
-## Using "git-reflog" and "git-merge" to recover lost history
+Using "git-reflog" and "git-merge" to recover lost history
+----------------------------------------------------------
 
 Another way to perform this same outcome is to use `git reflog` in combination with `git merge`.
 
 As described in [recovering lost history with git-reflog and git-cat-file](#recovering-lost-history-with-git-reflog-and-git-cat-file), the user would get the SHA value for commit `B` by using `git reflog`. The user can this perform a `git merge` on that hash, as shown below:
 
-```
+```bash
 git merge <HASH_B>
 ```
 
@@ -70,7 +76,8 @@ A               prod
 
 If the command `git merge <HASH_C>` was used while branch `prod` was checked out, then both `B` and `C` would be merged onto `prod`.
 
-## Using "git-reflog" and "git-checkout" to recover lost history
+Using "git-reflog" and "git-checkout" to recover lost history
+-------------------------------------------------------------
 
 In a different situation, it may be necessary to recover lost history with a combination of `git reflog` and `git checkout`.
 
@@ -86,7 +93,8 @@ For more information, refer to the following section:
 - ["git-checkout"](git-branch.md#creating-and-switching-to-new-branches)
 - ["Interactive rebasing"](interactive-rebase.md#the-basics-of-an-interactive-rebase)
 
-## Using "git-reflog" and "git-cherry-pick" to recover lost history
+Using "git-reflog" and "git-cherry-pick" to recover lost history
+----------------------------------------------------------------
 
 What happens in a situation where a user doesn't want to apply all commits between the current tip and another tip?
 
@@ -102,7 +110,8 @@ If the user is on branch `prod` (at commit `A`), and only wants to apply commit 
 
 In this case, a user's preferred tool will be `git cherry-pick`. For more information, refer to the section on ["git-cherry-pick"](git-cherry-pick.md).
 
-## References
+References
+----------
 
 - [thePrimeagen - Everything You'll Need to Know About Git - HEAD](https://theprimeagen.github.io/fem-git/lessons/branches-merges-and-more/head)
     - Information on how `git reflog` works

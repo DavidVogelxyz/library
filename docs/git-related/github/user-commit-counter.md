@@ -1,14 +1,17 @@
-# The "user commit counter"
+The "user commit counter"
+=========================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Removing the "additional commits"](#removing-the-additional-commits)
     - [How to remove the "additional commits"](#how-to-remove-the-additional-commits)
 
-## Introduction
+Introduction
+------------
 
 When a user interactively rebases commits on a public repo and then performs a force push, GitHub will register every new commit hash as a "new commit".
 
@@ -18,7 +21,8 @@ When using interactive rebases frequently, or making changes to commits that are
 
 The user may not want this, as they may want the "user commit counter" to reflect the true number of commits created, instead of an inflated value.
 
-## Removing the "additional commits"
+Removing the "additional commits"
+---------------------------------
 
 One way to clean up the "user commit counter" is to delete the repo and replace it. Depending on how many other active users are making use of the repo, this can have bad consequences. If the user that owns the repo is careful, these consequences can be mitigated relatively easily.
 

@@ -1,8 +1,10 @@
-# git-bisect - Testing to Find a "Breaking Change" in a Branch
+git-bisect - Testing to Find a "Breaking Change" in a Branch
+============================================================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Understanding binary search](#understanding-binary-search)
@@ -10,7 +12,8 @@
 - [Using "git-bisect" to automate searching for "breaking changes"](#using-git-bisect-to-automate-searching-for-breaking-changes)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 Sometimes, a user will discover that some code they're working on is breaking. There are times when the change was introduced in a recent commit, so it's easy to address. In other cases, it may be possible using `git log` and its switches to find the commit where the "breaking change" occurred. But, what if the snippet of code was committed at an unknown time, in an unknown commit, and the history is hundreds of commits long?
 
@@ -37,7 +40,8 @@ But, if any (or all) of the following are true:
 
 Then, it may be advisable to run `git bisect` to find the "breaking change".
 
-## Understanding binary search
+Understanding binary search
+---------------------------
 
 `git bisect` operates based on two assumptions:
 
@@ -85,23 +89,24 @@ COMMITS     =   SEARCHES
 512         =   9
 ```
 
-## Using "git-bisect" to find "breaking changes"
+Using "git-bisect" to find "breaking changes"
+---------------------------------------------
 
 To start `git bisect`, run the following command:
 
-```
+```bash
 git bisect start
 ```
 
 Set the current commit as a "bad" commit with the following command:
 
-```
+```bash
 git bisect bad
 ```
 
 Set the "last known good commit" with the following command:
 
-```
+```bash
 git bisect good <COMMIT_HASH>
 ```
 
@@ -109,13 +114,13 @@ Now, the user is in `git bisect` mode. At this point, the user would run the tes
 
 If the test passes, tell Git with the following command:
 
-```
+```bash
 git bisect good
 ```
 
 Or, if the test fails:
 
-```
+```bash
 git bisect bad
 ```
 
@@ -127,17 +132,18 @@ This process continues until `git bisect` arrives at the commit where the "break
 
 Once `git bisect` completes, the user will run the following command to exit `git bisect` mode:
 
-```
+```bash
 git bisect reset
 ```
 
-## Using "git-bisect" to automate searching for "breaking changes"
+Using "git-bisect" to automate searching for "breaking changes"
+---------------------------------------------------------------
 
 While `git bisect` is a great tool, manually running the test for each search is a bit laborious. Fortunately, `git bisect` can be automated!
 
 The user will begin the same way:
 
-```
+```bash
 git bisect start
 git bisect bad
 git bisect good <COMMIT_HASH>
@@ -145,7 +151,7 @@ git bisect good <COMMIT_HASH>
 
 At this point, the user can run the following command:
 
-```
+```bash
 git bisect run <TEST_COMMAND>
 ```
 
@@ -153,7 +159,8 @@ For a Bash script, this command may appear as `git bisect run ./test.sh`. For Ja
 
 Regardless of the `<TEST_COMMAND>`, `git bisect` will run the test and arrive at the "first bad commit" as it did before!
 
-## References
+References
+----------
 
 - [thePrimeagen - Everything You'll Need to Know About Git - git bisect](https://theprimeagen.github.io/fem-git/lessons/git-gud/bisect)
     - A comprehensive overview of how to use `git bisect`

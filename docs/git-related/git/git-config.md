@@ -1,8 +1,10 @@
-# git-config - Setting Up a New Git Environment
+git-config - Setting Up a New Git Environment
+=============================================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Setting up a new Git environment](#setting-up-a-new-git-environment)
@@ -23,7 +25,8 @@
     - [Other configs](#other-configs)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 Git configurations can be set for different locations, such as global and local. Global configs affect all repositories on a computer, and local configs affect only the current repo. If a configuration is set at both the global and the local level, the local level will override the global level -- this allows for project specific configurations to be set. There are also other levels, such as "system" and "worktree". However, this guide will focus on "global" and "local".
 
@@ -33,25 +36,27 @@ NB: For any `git config` command, omitting the location (`--global` or `--local`
 
 NB: For any `git config` command, switches can be passed in any order. As an example, in the command `git config --get --global`, `--get --global` works equally as well as `--global --get`.
 
-## Setting up a new Git environment
+Setting up a new Git environment
+--------------------------------
 
 When setting up a new Git environment, it is absolutely necessary to set the name and e-mail of the Git user -- Git will not allow a commit to be made until these two configurations are set.
 
 To set the user's name system-wide, run the following command:
 
-```
+```bash
 git config --global user.name <NAME>
 ```
 
 To set the user's e-mail system-wide, run the following command:
 
-```
+```bash
 git config --global user.email <E-MAIL_ADDRESS>
 ```
 
 With these two configurations set, a user can now make commits to a repo, so long as the key is set within that repo.
 
-## Viewing Git configurations
+Viewing Git configurations
+--------------------------
 
 There are a few different ways to check the values of keys.
 
@@ -59,7 +64,7 @@ There are a few different ways to check the values of keys.
 
 One way to confirm that the config has been set is to run `git config --get`, like in the following example:
 
-```
+```bash
 git config --get user.name
 ```
 
@@ -67,7 +72,7 @@ This command will return only one value -- the highest level value of the key `u
 
 As an example, if both global and local values are set for the key `user.name`, return the global value with:
 
-```
+```bash
 git config --get --global user.name
 ```
 
@@ -79,13 +84,13 @@ By opening up this file in a text editor, it's possible to view all of the keys 
 
 As an example, assuming the user's current working directory is the root of the project, the following command will output the contents of the `.git/config` file to the terminal's `STDOUT`:
 
-```
+```bash
 cat .git/config
 ```
 
 The global configs are also stored in a file, but that file (`.gitconfig`) is found in the user's home directory. Similarly, this file can also be displayed in the terminal with the following command:
 
-```
+```bash
 cat ~/.gitconfig
 ```
 
@@ -93,7 +98,7 @@ cat ~/.gitconfig
 
 Another way to view Git configurations is to run the following command:
 
-```
+```bash
 git config --list
 ```
 
@@ -101,19 +106,20 @@ git config --list
 
 In addition, as is true for other Git commands, `git config --list` can be piped into `cat`, in order to send the output to `STDOUT`. This can be achieved with the following command:
 
-```
+```bash
 git config --list | cat
 ```
 
 An additional switch worth noting is `--show-origin`, which allows the user to see in which file a configuration is set. To see a view of where each config value is set, run the following command:
 
-```
+```bash
 git config --list --show-origin
 ```
 
 Note that the `git config --list --show-origin` command does not require a `--global` or `--local` switch, as that would be redundant. The command works by showing all active configs, and where each is set. So, all the global configs will appear, unless there is a local override.
 
-## Editing Git configurations
+Editing Git configurations
+--------------------------
 
 Viewing the Git configs is one thing, but what are some ways to edit them besides directly setting the values with `git config`?
 
@@ -121,7 +127,7 @@ Viewing the Git configs is one thing, but what are some ways to edit them beside
 
 To quickly edit Git's config files, run `git config --edit`, like in the following example:
 
-```
+```bash
 git config --edit
 ```
 
@@ -129,7 +135,7 @@ This command will open up a concatenated file in the system's default editor, sh
 
 NB: Use the following command to see what editor is set by the system:
 
-```
+```bash
 echo $EDITOR
 ```
 
@@ -139,42 +145,43 @@ However, the files can also be opened manually using a text editor and edited in
 
 To open the config file local to a repo (`.git/config`), run the following command in the root directory of the project:
 
-```
+```bash
 vim .git/config
 ```
 
 The same works for the global file (`~/.gitconfig`) -- run the following command to open the file containing the global configs:
 
-```
+```bash
 vim ~/.gitconfig
 ```
 
 Saving changes in these files will update the keys and values that are shown using the `git config --list` command.
 
-## A key can have multiple values
+A key can have multiple values
+------------------------------
 
 In the same way that a key can have a global value and a local value, a key can have multiple values within a location. A value can be added to the same key without overwriting the first value by running `git config --add <SECTION>.<KEYNAME> <VALUE>`. See the following example:
 
-```
+```bash
 git config --add user.email user1@example.com
 git config --add user.email user2@example.com
 ```
 
 To see all the values for `user.email`, run the following command:
 
-```
+```bash
 git config --get-regexp email
 ```
 
 Another way to get the same values, though less optimal, is to use:
 
-```
+```bash
 git config --list | grep email
 ```
 
 If a user adds a new value with `git config --add user.email user3@example.com`, and then runs `git config --get user.email`, only `user3@example.com` would return. But, checking the `.git/config` file with `git config --list` shows that all 3 user e-mails are set as values for the same key. Another way to show all the keys for a value is to run the following command:
 
-```
+```bash
 git config --get-all user.email
 ```
 
@@ -193,7 +200,8 @@ Key values are grabbed in a specific order:
 
 For this reason, it may be advisable to work on configs by directly editing the files, using either `git config --edit` or `vim .git/config`. Editing configs this way allows a more comprehensive view of the states of all sections and keys, and can make it easier to navigate and modify configs.
 
-## Signing commits with GPG keys
+Signing commits with GPG keys
+-----------------------------
 
 As seen above, it's very easy to set the user's name and e-mail to any value. What stops a user from impersonating another and sharing commits, as if they were someone else?
 
@@ -201,7 +209,7 @@ Many users like signing their commits with a GPG key, in order to provide a leve
 
 In order to set up GPG signing for Git commits, some steps must be taken. First, Git needs to be aware that the user wants to sign commits with a GPG key. This can be achieved with the following command:
 
-```
+```bash
 git config --global commit.gpgsign true
 ```
 
@@ -211,19 +219,20 @@ There are a few ways to direct Git to the right key. One way is to tell Git to u
 
 To direct Git to check the keyring based on the value of `user.email`, run the following command:
 
-```
+```bash
 git config --global user.signing key
 ```
 
 To specify a unique key to Git, run the following command:
 
-```
+```bash
 git config --global user.signingkey <KEY_ID>
 ```
 
 When specifying a key ID, both short and long key IDs will work, so long as it's unique (as compared to other keys in the keyring).
 
-## Example configurations in the Git config files
+Example configurations in the Git config files
+----------------------------------------------
 
 The following are some examples of useful configurations for both the `~/.gitconfig` (global) and `.git/config` (local) files.
 
@@ -325,7 +334,8 @@ Another config worth noting is the following:
 
 A user cannot `git push` a branch to a remote that has the same branch currently checked out. This option ignores that default, and will allow users to `git push` a branch, even if it is the current branch on the `remote`. For more information, refer to the section on [working with remote repositories in Git](git-remote.md#pushing-to-a-branch-that-is-currently-checked-out-on-the-remote).
 
-## References
+References
+----------
 
 - [thePrimeagen - Everything You'll Need to Know About Git - Your First Git Repo](https://theprimeagen.github.io/fem-git/lessons/intro/your-first-git-repo)
     - Basic Git config review, and `user.name` and `user.email`

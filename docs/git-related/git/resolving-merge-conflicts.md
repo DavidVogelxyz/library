@@ -1,8 +1,10 @@
-# Resolving Merge Conflicts
+Resolving Merge Conflicts
+=========================
 
 [Back to the home page](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Conflicts during a merge](#conflicts-during-a-merge)
@@ -17,7 +19,8 @@
 - [The concept of "ours and theirs"](#the-concept-of-ours-and-theirs)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 Whether it be through merging two branches together, rebasing a branch, or the use of interactive rebases, every user will eventually run into merge conflicts. Understanding what they mean, and how to resolve them, is a crucial skill to anyone working with Git.
 
@@ -25,7 +28,8 @@ Merge conflicts occur when there are changes in both the "local" branch and the 
 
 Note that conflicts can happen when merging or rebasing branches, as well as when using `git pull` to merge or rebase with a `remote`.
 
-## Conflicts during a merge
+Conflicts during a merge
+------------------------
 
 When a conflict occurs during a merge, the user will be greeted with a message, such as the following:
 
@@ -52,7 +56,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 Note that it's possible to abort the merge and go back to the previous state by running the following command:
 
-```
+```bash
 git merge --abort
 ```
 
@@ -152,7 +156,8 @@ Changes to be committed:
 
 This is an indication that the "incoming changes" were accepted. Since there is a change, as compared to the working tree of `prod`, then those changed need to be committed.
 
-## Conflicts during a rebase
+Conflicts during a rebase
+-------------------------
 
 In contrast to a merge conflict, a conflict that occurs when rebasing can present with more challenges.
 
@@ -233,7 +238,7 @@ As shown by `git status`, `<FILE_2>` is ready to be committed, because it contai
 
 Note that it's possible to abort the rebase and go back to the previous state by running the following command:
 
-```
+```bash
 git rebase --abort
 ```
 
@@ -359,7 +364,8 @@ This is an indication that the "incoming changes" were accepted. Since there is 
 
 As mentioned in the section on [conflicts during a rebase](#conflicts-during-a-rebase), if the "incoming change" is accepted during a rebase, then it's almost a guarantee that any other commits that are played back during the rease process will also encounter the same conflict. This is due to the nature of how `git rebase` works -- by accepting the "incoming change", then other commits played back during the rebase will continue to reconflict, since the conflict exists in those other commits.
 
-## Using "git-rerere" to reuse recorded resolutions
+Using "git-rerere" to reuse recorded resolutions
+------------------------------------------------
 
 [The Git documentation](https://git-scm.com/book/en/v2/Git-Tools-Rerere) explains the following about `git rerere`:
 
@@ -367,13 +373,14 @@ As mentioned in the section on [conflicts during a rebase](#conflicts-during-a-r
 
 This configuration can be set with the following command:
 
-```
+```bash
 git config rerere.enabled true
 ```
 
 `git rerere` can be a double-edged sword. In the case of a `git rebase` where a bunch of commits will continue to conflict because an "incoming change" was accepted, it can be a great benefit. But, consider a situation where a bad resolution is recorded. In this case, it may be unfortunate that Git remembers the resolution. Of course, `git rerere` can be disabled, and there are also commands to delete a "recorded resolution".
 
-## The concept of "ours and theirs"
+The concept of "ours and theirs"
+--------------------------------
 
 Sometimes, when resolving conflicts, the user may want to accept all the changes from one side. In these situations, an understanding of the concept of "ours and theirs" can save the user a lot of headache.
 
@@ -396,19 +403,20 @@ Put another way:
 
 When resolving a conflict, it is possible to choose the changes from "ours" by running the following command:
 
-```
+```bash
 git checkout --ours <PATH>
 ```
 
 Or, to accept the changes from "theirs":
 
-```
+```bash
 git checkout --theirs <PATH>
 ```
 
 Note that `<PATH>` can be anything from a "file in conflict" to `.` (the entire current working directory).
 
-## References
+References
+----------
 
 - [thePrimeagen - Everything You'll Need to Know About Git - Rebasing is Complicated](https://theprimeagen.github.io/fem-git/lessons/going-remote/more-rebasing-and-merging)
     - A deep dive into resolving merge conflicts, both when merging and rebasing
