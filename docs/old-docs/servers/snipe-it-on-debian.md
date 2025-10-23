@@ -1,14 +1,17 @@
-# How to set up Snipe-IT on Debian
+How to set up Snipe-IT on Debian
+================================
 
 NB: this guide references the IP address `127.0.0.1`. Obviously, this is a reference to the hostname `localhost`. Either can be used in place of the other; however, using the IP address itself avoids both the "host file lookup", as well as the potential for trying the IPv6 entry for `localhost`.
 
-## Introduction
+Introduction
+------------
 
 [Snipe-IT](https://github.com/snipe/snipe-it) is a self-hostable inventory management tool, written in PHP.
 
 This guide assumes that Snipe-IT is being installed on a Debian server, with `nala` already installed. Also, it is assumed that the user installing Snipe-IT has certain aliases set up, such that commands like `nala` and `systemctl` can be run without `sudo` in front of the commands.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Initial configuration](#initial-configuration)
@@ -17,7 +20,8 @@ This guide assumes that Snipe-IT is being installed on a Debian server, with `na
 - [Installing Snipe-IT](#installing-snipe-it)
 - [References](#references)
 
-## Initial configuration
+Initial configuration
+---------------------
 
 For notes on pre-configuration, refer to the guide on [configuring a server running Debian](configuring-debian-server.md).
 
@@ -60,7 +64,8 @@ cd ~/.dotfiles && stow .
 sed -i "s/'~\/.config\/lf\/scope/'~\/.config\/lf\/scope-debian/g" ~/.config/lf/lfrc
 ```
 
-## Preparing the server for Snipe-IT
+Preparing the server for Snipe-IT
+---------------------------------
 
 Download `php` dependencies (taken from YOURLS guide):
 
@@ -80,7 +85,8 @@ Start `nginx`:
 systemctl enable nginx && systemctl start nginx
 ```
 
-## Configuring database
+Configuring database
+--------------------
 
 Start `mariadb`:
 
@@ -109,7 +115,8 @@ FLUSH PRIVILEGES;
 exit;
 ```
 
-## Installing Snipe-IT
+Installing Snipe-IT
+-------------------
 
 Clone the `snipe-it` repo:
 
@@ -421,7 +428,8 @@ php upgrade.php
 php artisan migrate
 ```
 
-## References
+References
+----------
 
 - [Snipe-IT - Installation](https://snipe-it.readme.io/docs/installation)
 - [Snipe-IT - Using Nginx and PHP-FPM](https://snipe-it.readme.io/docs/linuxosx#using-nginx-and-php-fpm)

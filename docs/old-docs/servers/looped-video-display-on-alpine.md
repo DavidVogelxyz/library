@@ -1,4 +1,5 @@
-# Looping a video file on a display, using a mini-PC running Alpine Linux
+Looping a video file on a display, using a mini-PC running Alpine Linux
+=======================================================================
 
 NB:
 
@@ -8,7 +9,8 @@ NB:
     - Both commands will add the `$SERVICE` to the "default" run level.
 - When using a tty on Alpine Linux, "Ctrl-Alt-Del" reboots the computer.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Making changes to the BIOS of the mini-PC](#making-changes-to-the-bios-of-the-mini-pc)
 - [Installing Alpine Linux](#installing-alpine-linux)
@@ -16,7 +18,8 @@ NB:
 - [Configuring the video loop](#configuring-the-video-loop)
 - [References](#references)
 
-## Making changes to the BIOS of the mini-PC
+Making changes to the BIOS of the mini-PC
+-----------------------------------------
 
 In order to get the mini-PC to work properly as a full-time TV display, some changes need to be made to BIOS settings.
 
@@ -37,15 +40,18 @@ Once these changes are made, save and exit the BIOS. Reboot the mini-PC with the
 
 Now, boot from the USB, and enter the Alpine Linux live USB environment.
 
-## Installing Alpine Linux
+Installing Alpine Linux
+-----------------------
 
 This step should not require much explanation. Install Alpine Linux onto the mini-PC using `setup-alpine` from within the live USB environment. Consult the [Alpine Linux documentation](https://docs.alpinelinux.org/user-handbook/0.1a/Installing/setup_alpine.html) regarding `setup-alpine` if instruction is needed.
 
-## Initial configuration
+Initial configuration
+---------------------
 
 Follow this guide on [configuring a server running Alpine Linux](/servers/configuring-alpine-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
 
-## Configuring the video loop
+Configuring the video loop
+--------------------------
 
 With `ssh` secured, the next step is to install some packages required to make the video loop and display properly.
 
@@ -131,6 +137,7 @@ Also, remember to add the service to the default runlevel, so the video will loo
 rc-update add videoloop
 ```
 
-## References
+References
+----------
 
 - [Alpine Linux documentation - setup-alpine](https://docs.alpinelinux.org/user-handbook/0.1a/Installing/setup_alpine.html)

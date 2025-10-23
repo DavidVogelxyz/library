@@ -1,19 +1,23 @@
-# Extending Windows VM Disk Image
+Extending Windows VM Disk Image
+===============================
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [How-to](#how-to)
 - [Clean up](#clean-up)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 This guide will assist the user in extending a Windows partition.
 
 Normally, this can easily be done using the "Disk Management" utility. However, if the "Windows recovery partition" is "in the way", then it will not be as easy to extend the partition with the root file system.
 
-## How-to
+How-to
+------
 
 Start with `diskpart`:
 
@@ -41,7 +45,8 @@ reagentc /setreimage /path N:\Recovery\WindowsRE
 reagentc /enable
 ```
 
-## Clean up
+Clean up
+--------
 
 To get rid of the leftover stuff, run `diskpart` again:
 
@@ -65,7 +70,8 @@ DISKPART> select volume O
 DISKPART> delete partition override
 ```
 
-## References
+References
+----------
 
 - [SuperUser - How to expand the Windows partition when the Recovery one is in the way?](https://superuser.com/questions/1354574/how-to-expand-the-windows-partition-when-the-recovery-one-is-in-the-way/1825572#1825572)
     - Somewhat helpful

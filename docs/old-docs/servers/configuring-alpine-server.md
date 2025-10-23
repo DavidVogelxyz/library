@@ -1,4 +1,5 @@
-# Configuring a server running Alpine Linux
+Configuring a server running Alpine Linux
+=========================================
 
 NB:
 
@@ -7,11 +8,13 @@ NB:
     - Both commands will add the `$SERVICE` to the "default" run level.
 - When using a tty on Alpine Linux, "Ctrl-Alt-Del" reboots the computer.
 
-## Introduction
+Introduction
+------------
 
 This guide will assist with perform basic server tasks on Alpine Linux, such as creating a new user, securing the SSH connection and adding some configuration files for quality-of-life adjustments.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Updating packages](#updating-packages)
@@ -24,7 +27,8 @@ This guide will assist with perform basic server tasks on Alpine Linux, such as 
     - [Adding configuration files to root user](#adding-configuration-files-to-root-user)
 - [Checking user access logs](#checking-user-access-logs)
 
-## Updating packages
+Updating packages
+-----------------
 
 To begin, log in to the server. Next, update the package repositories and install some immediate essentials:
 
@@ -32,7 +36,8 @@ To begin, log in to the server. Next, update the package repositories and instal
 apk update && apk add openssh-server shadow sudo vim
 ```
 
-## Enabling SSH
+Enabling SSH
+------------
 
 At this point, the guide splits depending on whether Alpine Linux is being installed using a Proxmox Alpine container or a VM from a cloud service provider (CSP). This is because Proxmox Alpine containers do not have SSH enabled by default, while VMs from CSPs do. For a Proxmox container, start at [SSH on a Proxmox container](#ssh-on-a-proxmox-container); for a VM from a CSP, start at [creating a new user](#creating-a-new-user).
 
@@ -60,7 +65,8 @@ ip a
 
 Now, log in to the Alpine Linux server as the root user, using SSH.
 
-## Creating a new user
+Creating a new user
+-------------------
 
 If the root user was used to log into the server, the next step is to create a new user to administer and manager the server. It is highly advisable that the root user is not used for this purpose.
 
@@ -94,7 +100,8 @@ sed -i "s/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g" /etc/sudoers
 
 Now, log out, and log back in using the new user account using SSH. Once logged in as the new user, it's time to secure the SSH connection.
 
-## Securing SSH
+Securing SSH
+------------
 
 A crucial step in the setup process is to properly configure SSH login. There are two main components to this:
 
@@ -169,7 +176,8 @@ sudo passwd root
 
 It is also worth checking the "/etc/hostname" and "/etc/hosts" files at this point. Confirm that the hostname is correct for the server, and confirm that it is found in "/etc/hosts" under a loopback address. If any adjustments were made to the "/etc/hostname" file, it is advisable to restart the server after and then to log back in.
 
-## Adding configuration files
+Adding configuration files
+--------------------------
 
 First, update packages repositiories again, upgrade installed packages, and install some additional packages:
 
@@ -237,7 +245,8 @@ echo -e "\nsource ~/.ashrc" >> /etc/profile && source /etc/profile
 
 Since the `sed` command was run using `sudo`, and already modified the "/etc/profile" for all users, it is not necessary to run this command again. However, if using the above code block for the new user as well (or, if "new user creation" was skipped entirely), do remember to run the `sed` at this time (no `sudo` required).
 
-## Checking user access logs
+Checking user access logs
+-------------------------
 
 While the configurations have all been pushed, and the server should be largely secured (sans `ufw`), it is also useful to know how to verify that no unintended logins have occurred while performing the initial configuration.
 

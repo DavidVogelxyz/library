@@ -1,8 +1,10 @@
-# Cryptsetup
+Cryptsetup
+==========
 
 This guide serves the purpose of explaining how to manage an encrypted Linux partition after being configured during the initial OS install process.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Changing the passphrase to an encrypted partition](#changing-the-passphrase-to-an-encrypted-partition)
 - [Managing key slots](#managing-key-slots)
@@ -15,7 +17,8 @@ This guide serves the purpose of explaining how to manage an encrypted Linux par
 - [What to do if an encryption passphrase has been forgotten](#what-to-do-if-an-encryption-passphrase-has-been-forgotten)
 - [Dumping the master keys to an encrypted volume](#dumping-the-master-keys-to-an-encrypted-volume)
 
-## Changing the passphrase to an encrypted partition
+Changing the passphrase to an encrypted partition
+-------------------------------------------------
 
 In order to change the passphrase to a LUKS encrypted partition, use the following command:
 
@@ -25,7 +28,8 @@ sudo cryptsetup luksChangeKey $PATH_TO_ENCRYPTED_VOLUME
 
 The variable `$PATH_TO_ENCRYPTED_VOLUME` will look something like `/dev/sda2`, `/dev/nvme0n1p2`, or `/dev/mapper/$ENCRYPTED_VOLUME`. This is obviously dependent on how the encrypted partition was set up.
 
-## Managing key slots
+Managing key slots
+------------------
 
 The `cryptsetup` package allows for multiple keys to be configured for an encrypted partition. To manage the different key slots, use the following instructions to do so.
 
@@ -81,7 +85,8 @@ To remove a key from a specific key slot, use the following command:
 sudo cryptsetup luksKillSlot $PATH_TO_ENCRYPTED_VOLUME $SLOT_NUMBER
 ```
 
-## What to do if an encryption passphrase has been forgotten
+What to do if an encryption passphrase has been forgotten
+---------------------------------------------------------
 
 In most cases, if the encryption passphrase has been forgotten, the user is "SOL".
 
@@ -123,7 +128,8 @@ In the same way as the above, the following command should allow the user to mod
 sudo cryptsetup luksChangeKey $PATH_TO_ENCRYPTED_VOLUME --master-key-file <(cat lukskey.bin)
 ```
 
-## Dumping the master keys to an encrypted volume
+Dumping the master keys to an encrypted volume
+----------------------------------------------
 
 If, for whatever reason, the user wants to dump the master keys of an encrypted volume into a file, the user can perform the following command to do so:
 

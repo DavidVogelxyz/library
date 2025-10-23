@@ -1,6 +1,8 @@
-# Connecting a QEMU VM to the local network
+Connecting a QEMU VM to the local network
+=========================================
 
-## Introduction
+Introduction
+------------
 
 This guide will assist the user in connecting a QEMU VM to the local network.
 
@@ -23,7 +25,8 @@ Additional notes:
         - if all goes well, the bridge should come up without needing to run `sudo ip link set br0 up`
 - then, set all wired interfaces to disable `automatically connect`
 
-## How-to
+How-to
+------
 
 Show connections in `nmcli`:
 

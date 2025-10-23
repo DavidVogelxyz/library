@@ -1,14 +1,17 @@
-# YOURLS link shortener, running on Debian
+YOURLS link shortener, running on Debian
+========================================
 
 NB: this guide references the IP address `127.0.0.1`. Obviously, this is a reference to the hostname `localhost`. Either can be used in place of the other; however, using the IP address itself avoids both the "host file lookup", as well as the potential for trying the IPv6 entry for `localhost`.
 
-## Introduction
+Introduction
+------------
 
 [YOURLS (Your Own URL Shortener)](https://github.com/YOURLS/YOURLS) is a self-hostable URL shortener, written in PHP.
 
 This guide assumes that YOURLS is being installed on a Debian server, with `nala` already installed. Also, it is assumed that the user installing YOURLS has certain aliases set up, such that commands like `nala` and `systemctl` can be run without `sudo` in front of the commands.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Initial configuration](#initial-configuration)
@@ -17,11 +20,13 @@ This guide assumes that YOURLS is being installed on a Debian server, with `nala
 - [Installing YOURLS](#installing-yourls)
 - [References](#references)
 
-## Initial configuration
+Initial configuration
+---------------------
 
 Follow this guide on [configuring a server running Debian](/servers/configuring-debian-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
 
-## Preparing the server for YOURLS
+Preparing the server for YOURLS
+-------------------------------
 
 Update package repositories:
 
@@ -55,7 +60,8 @@ Also, enable and start `mariadb`.
 systemctl enable mariadb && systemctl start mariadb
 ```
 
-## Configuring database
+Configuring database
+--------------------
 
 Secure the new `mysql` installation:
 
@@ -78,7 +84,8 @@ FLUSH PRIVILEGES;
 exit;
 ```
 
-## Installing YOURLS
+Installing YOURLS
+-----------------
 
 Clone the YOURLS `git` repo:
 
@@ -166,7 +173,8 @@ sudo ln -s /etc/nginx/sites-available/yourls.conf /etc/nginx/sites-enabled/ && s
 
 Navigate to `http://yourls.local/admin` or `http://$IPADDRESS/admin` and install YOURLS via the web interface. Only one of the two will work, and that's the one that was entered into "/var/www/YOURLS/user/config.php"
 
-## References
+References
+----------
 
 - [YOURLS official documentation](https://yourls.org/docs)
 - [YouTube - anthonywritescode - don't use localhost (intermediate) anthony explains #534](https://www.youtube.com/watch?v=98SYTvNw1kw)

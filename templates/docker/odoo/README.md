@@ -1,12 +1,15 @@
-# Templates - Docker - Odoo
+Templates - Docker - Odoo
+=========================
 
 [Back](../README.md)
 
-## Introduction
+Introduction
+------------
 
 🚨 **Change the passwords from the defaults!** 🚨
 
-## Docker Compose
+Docker Compose
+--------------
 
 Create a new directory, `odoo`, and a new file within named `docker-compose.yaml`:
 

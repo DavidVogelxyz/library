@@ -1,15 +1,18 @@
-# Uploading the Public Key to Another Machine
+Uploading the Public Key to Another Machine
+===========================================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Linux client machines](#linux-client-machines)
 - [Windows client machines](#windows-client-machines)
 - [Logging in with a private key](#logging-in-with-a-private-key)
 
-## Introduction
+Introduction
+------------
 
 Once a public/private keypair has been created, the next step is to get the pubkey onto the target machine.
 
@@ -17,7 +20,8 @@ A simple way to do this that works with all types of client and target machines 
 
 The commands differ depending on whether the client machine is a Linux or a Windows machine. The following instructions explain how to upload the pubkey on each type of client machine.
 
-## Linux client machines
+Linux client machines
+---------------------
 
 To get a pubkey onto a target machine, a Linux user would run the following command:
 
@@ -31,7 +35,8 @@ Even though the command will accept the private key's path, the corresponding pu
 
 Note that the variable `<DOMAIN>` can either be the hostname, the domain, or the IP address of the machine.
 
-## Windows client machines
+Windows client machines
+-----------------------
 
 To get a pubkey onto a target machine, a Windows user would run the following command:
 
@@ -41,7 +46,8 @@ type $env:<USERPROFILE>\<PATH_TO_PUBLIC_KEYFILE> | ssh <USER>@<DOMAIN> "cat >> .
 
 Note that, as with a Linux client, the variable `<DOMAIN>` can either be the hostname, the domain, or the IP address of the machine.
 
-## Logging in with a private key
+Logging in with a private key
+-----------------------------
 
 To test that the pubkey copied correctly, attempt to log in using the private key:
 

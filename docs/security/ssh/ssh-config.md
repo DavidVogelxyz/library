@@ -1,8 +1,10 @@
-# Utilizing a SSH Config File to Simplify the Login Process
+Utilizing a SSH Config File to Simplify the Login Process
+=========================================================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [General configuration](#general-configuration)
@@ -10,7 +12,8 @@
 - [Adding multiple entries for the same host](#adding-multiple-entries-for-the-same-host)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 Once a user starts using key-based authentication, they may build a collection of various keypairs to different target machines. At some point, it may become cumbersome to type `ssh -i <PATH_TO_PRIVATE_KEYFILE> <USER>@<DOMAIN>` each time the user wants to login. One creative solution is to create aliases for each connection -- but, in its own way, this can become annoying to maintain.
 
@@ -18,7 +21,8 @@ Fortunately, SSH has a convenient solution for managing identities and connectio
 
 Using a `.ssh/config` file, a user can create entries and direct SSH on how to handle different connections. While the `.ssh/config` doesn't exist in the `.ssh` directory by default, it's trivially simple to create the file and begin adding entries.
 
-## General configuration
+General configuration
+---------------------
 
 It is best practice to add the following three lines to the beginning of the `.ssh/config` file:
 
@@ -39,7 +43,8 @@ To explain in more detail:
 - `HashKnownHosts=yes` directs SSH to hash the `.ssh/known_hosts` file.
     - For more information, refer to the section on the ["known_hosts" file](known-hosts.md#hashing-the-known_hosts-file).
 
-## Specific entries
+Specific entries
+----------------
 
 When a user wants to add a new entry to the `.ssh/config` file, they can use the following format to create a standard entry:
 
@@ -79,7 +84,8 @@ With this entry, the user could run either `ssh github` or `ssh github.com` to o
 
 In addition, it is no longer necessary to specify the `<USER>` during the connection, as the entry contains a `<USER>` value (`git`). Therefore, SSH is directed to make the connection to `git@github.com`.
 
-## Adding multiple entries for the same host
+Adding multiple entries for the same host
+-----------------------------------------
 
 What happens when a user has two user accounts on the same target machine?
 
@@ -106,7 +112,8 @@ Therefore, the user now has two entries for two user accounts on the same server
 - Running `ssh user_server` logs the user into `user@192.168.1.10`.
 - Running `ssh other_server` logs the user into `other@192.168.1.10`.
 
-## References
+References
+----------
 
 - [SuperUser - How do I configure SSH so it doesn't try all the identity files automatically?](https://superuser.com/questions/268776/how-do-i-configure-ssh-so-it-doesnt-try-all-the-identity-files-automatically/268777#268777)
     - Reference for the `IdentitiesOnly=yes` option

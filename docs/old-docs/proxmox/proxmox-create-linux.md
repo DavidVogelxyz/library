@@ -1,6 +1,8 @@
-# Tips for setting up a Linux VM in Proxmox
+Tips for setting up a Linux VM in Proxmox
+=========================================
 
-## Base Linux VM
+Base Linux VM
+-------------
 
 - Graphics: Spice (qxl) (default)
 - Machine: Default (i440fx)
@@ -20,6 +22,7 @@ BIOS: OVMF (UEFI)
 
 UEFI has a slightly different first boot. As [this article](https://wiki.archlinux.org/title/Proxmox/Install_Arch_Linux_as_a_guest) from the Arch wiki describes, go into BIOS at start (press ESC) and disable secure boot, then boot from CD drive manually.
 
-## References
+References
+----------
 
 - [Arch Linux wiki - Proxmox/Install Arch Linux as a guest](https://wiki.archlinux.org/title/Proxmox/Install_Arch_Linux_as_a_guest)

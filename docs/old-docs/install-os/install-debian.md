@@ -1,6 +1,8 @@
-# Installing Debian / Ubuntu, fast edition
+Installing Debian / Ubuntu, fast edition
+========================================
 
-## Introduction
+Introduction
+------------
 
 This guide uses the `debootstrap` command to install a clean Debian/Ubuntu OS image. This guide can and should be followed regardless of whether the install is for a desktop or server installation. Any differences between the Debian and Ubuntu installs will be specified.
 
@@ -12,7 +14,8 @@ Why?
     - it is possible to scroll output in the terminal.
     - commands from the guide can be pasted into the terminal.
 
-## Table of Contents
+Table of Contents
+-----------------
 
 - [Introduction](#introduction)
 - [Partitioning the storage drive](#partitioning-the-storage-drive)
@@ -44,7 +47,8 @@ Why?
     - [Update GRUB](#update-grub)
 - [References](#references)
 
-## Partitioning the storage drive
+Partitioning the storage drive
+------------------------------
 
 Identify whether the computer is UEFI-compatible or not using the following commands.
 
@@ -106,7 +110,8 @@ The following commands are useful in the order that they appear.
 
 Use `lsblk` to confirm the changes made with `fdisk`.
 
-## Encrypting the root partition
+Encrypting the root partition
+-----------------------------
 
 This step may be referred to in other parts of the guide as full disk encryption (FDE).
 
@@ -128,7 +133,8 @@ Use `lsblk` to confirm the changes made with `cryptsetup`. Also, use `ls /dev/ma
 ls /dev/mapper
 ```
 
-## Creating file systems
+Creating file systems
+---------------------
 
 ### Swap partitions
 
@@ -193,7 +199,8 @@ If a swap partition was created, create a file system for it using the following
 mkswap /dev/mapper/vgdebian-swap_1
 ```
 
-## Mounting file systems
+Mounting file systems
+---------------------
 
 First, mount the root partition to the `/mnt` directory. This partition should have the same path as the partition on which the ext4 file system was made.
 
@@ -213,7 +220,8 @@ After creating the directory, mount the boot partition to that directory:
 mount /dev/$sdx1 /mnt/boot
 ```
 
-## Installing the operating system
+Installing the operating system
+-------------------------------
 
 To install an operating system to the drive: update packages, and then install both `debootstrap` and a text editor of choice (ex. `vim`).
 
@@ -269,7 +277,8 @@ NB: Remember to remove the `CD-ROM` line, and add a line for `jammy-backports` (
 vim /mnt/etc/apt/sources.list
 ```
 
-## Setting up the *chroot* environment
+Setting up the *chroot* environment
+-----------------------------------
 
 Change into the *chroot* environment:
 
@@ -303,7 +312,8 @@ Then, using `nala`, install `vim`. If on Debian, also install the `locales` pack
 nala upgrade && nala install -y vim locales
 ```
 
-## Making some necessary adjustments
+Making some necessary adjustments
+---------------------------------
 
 ### Time zone
 
@@ -496,7 +506,8 @@ While it's not a requirement on Debian-based systems, it's good practice to conf
 vim /etc/sudoers
 ```
 
-## Kernel initialization
+Kernel initialization
+---------------------
 
 On a system using FDE, it is a requirement to update the `/etc/crypttab` file, so the system knows to request a password to unlock the encrypted root drive:
 
@@ -512,7 +523,8 @@ Whether using FDE or not, update the inital RAM file system with the following c
 update-initramfs -u -k all
 ```
 
-## Bootloader
+Bootloader
+----------
 
 ### Bootloader - BIOS
 
@@ -544,7 +556,8 @@ update-grub
 
 Congrats on installing an Debian-based Linux system!
 
-## References
+References
+----------
 
 - [Youtube - Animortis Fortress - Ubuntu 22.10 Debootstrap Installation](https://www.youtube.com/watch?v=UumkGuoy0tk)
     - The YouTube video the demonstrated how to install Debian using `debootstrap`

@@ -1,4 +1,5 @@
-# Downloading video files using ffmpeg
+Downloading video files using ffmpeg
+====================================
 
 While `yt-dlp` is the go-to program on Linux for downloading YouTube video and audio, sometimes video files aren't hosted on YouTube (or a similar video platform).
 
@@ -32,7 +33,8 @@ In a situation where the audio and video have been split into separate files, th
 ffmpeg -i "$video_URL" -i "$audio_URL" -c copy $FILE_NAME.mp4
 ```
 
-## References
+References
+----------
 
 - [Reddit - Is there any way to download view only videos from sharepoint?](https://www.reddit.com/r/sharepoint/comments/nuk8q0/is_there_any_way_to_download_view_only_videos/)
     - The original Reddit post where the solution was found.

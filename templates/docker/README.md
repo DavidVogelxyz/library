@@ -1,19 +1,23 @@
-# Docker related templates
+Docker related templates
+========================
 
 [Back to "Templates"](../README.md)
 
-## Introduction
+Introduction
+------------
 
 These documents and files are meant to assist with the installation and management of various Docker containers.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Table of containers](#table-of-containers)
 - [References](#references)
 
-## Installation
+Installation
+------------
 
 🚨 **NB: Remember to enable the `docker` service after installation!** 🚨
 
@@ -28,7 +32,8 @@ In addition, if using [these dotfiles](https://github.com/DavidVogelxyz/dotfiles
 
 **All documents and files within this tree will display Docker commands as if the user is `root`. It is up to the reader to prefix commands with `sudo` where necessary.**
 
-## Table of containers
+Table of containers
+-------------------
 
 The following table lists the containers in this tree and their methods of deployment. All `✅` are linked to the relevant information.
 
@@ -45,7 +50,8 @@ The following table lists the containers in this tree and their methods of deplo
 | Snipe-IT      | ❌                                          | [✅ - here](snipe-it/README.md#docker-compose)    |
 | Vaultwarden   | [✅ - here](vaultwarden/README.md#commands) | [✅ - here](vaultwarden/README.md#docker-compose) |
 
-## References
+References
+----------
 
 - [YouTube - NetworkChuck - Portainer](https://www.youtube.com/watch?v=iX0HbrfRyvc)
     - Original reference from 2023.

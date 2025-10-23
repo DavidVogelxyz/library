@@ -1,4 +1,5 @@
-# Library
+Library
+=======
 
 [Docs and guides](docs/README.md)
 

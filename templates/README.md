@@ -1,8 +1,10 @@
-# Templates
+Templates
+=========
 
 [Back to root](../README.md)
 
-## Sections
+Sections
+--------
 
 - [Docker related templates](docker/README.md)
 - [Service manager related templates](service-managers/README.md)

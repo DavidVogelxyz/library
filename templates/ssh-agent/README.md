@@ -1,4 +1,5 @@
-# Template - SSH agent
+Template - SSH agent
+====================
 
 [Back to "Templates"](../README.md)
 

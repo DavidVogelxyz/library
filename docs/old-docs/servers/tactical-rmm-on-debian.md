@@ -1,6 +1,8 @@
-# Tactical RMM server, running on Debian
+Tactical RMM server, running on Debian
+======================================
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Initial configuration](#initial-configuration)
 - [Installing Tactical RMM](#installing-tactical-rmm)
@@ -16,15 +18,18 @@
     - [Updating Tactical RMM breaks agent installers](#updating-tactical-rmm-breaks-agent-installers)
 - [References](#references)
 
-## Initial configuration
+Initial configuration
+---------------------
 
 Follow this guide on [configuring a server running Debian](/servers/configuring-debian-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
 
-## Installing Tactical RMM
+Installing Tactical RMM
+-----------------------
 
 Use [the guide](https://docs.tacticalrmm.com/install_server/) provided by the Tactical RMM team. However, be sure to read the remainder of this guide ***before*** attempting the install, as it will prevent what seem to be "common errors."
 
-## Troubleshooting a local deployment
+Troubleshooting a local deployment
+----------------------------------
 
 There are handful of things that should be done in order to have everything work correctly in a local deployment.
 
@@ -171,7 +176,8 @@ As of current testing, this has always resolved the problem.
 
 Congrats on getting the Tactical RMM server deployed!
 
-## References
+References
+----------
 
 - [Tactical RMM's official guide on installing a Tactical RMM server](https://docs.tacticalrmm.com/install_server/)
 - [GitHub - Tactical RMM Issue #1114 - Unable to download the mesh agent from the RMM](https://github.com/amidaware/tacticalrmm/discussions/1114)

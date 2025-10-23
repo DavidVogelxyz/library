@@ -1,12 +1,15 @@
-# Sorting Lines
+Sorting Lines
+=============
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 
-## Introduction
+Introduction
+------------
 
 To sort a file, run the following command:
 

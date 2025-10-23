@@ -1,8 +1,10 @@
-# Installing QEMU on Arch Linux
+Installing QEMU on Arch Linux
+=============================
 
 Obviously, this works for Artix Linux too. Currently written with a focus on Runit.
 
-## Instructions
+Instructions
+------------
 
 Run:
 
@@ -43,6 +45,7 @@ sudo sv restart libvirtd
 sv status libvirtd
 ```
 
-## References
+References
+----------
 
 - [YouTube - MentalOutlaw - Ditch Virtualbox, Get QEMU/Virt Manager](https://www.youtube.com/watch?v=wxxP39cNJOs)

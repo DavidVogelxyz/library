@@ -1,8 +1,10 @@
-# Travel Router using a Raspberry Pi and OpenWrt
+Travel Router using a Raspberry Pi and OpenWrt
+==============================================
 
 #### **NB: For me, this guide is now broken. Due to a update to the `mt7601u-firmware` driver package on 2023 May 15, the USB wireless antenna I have for my travel routers no longer work. However, the previous version of the package (from 2022) works fine. Therefore, I recreate my travel routers from a backup image I made. This guide probably still works for other driver/antenna pairings.**
 
-## Menu
+Menu
+----
 
 - [Start up](#start-up)
 - [Edit config files, part 1/2](#edit-config-files-part-1)
@@ -22,7 +24,8 @@
   - [Troubleshooting](#troubleshooting)
 - [References](#references)
 
-## Start up
+Start up
+--------
 
 After installing OpenWrt onto a SD card, and turning on the Raspberry Pi, connect using Ethernet and make the client's static IP `192.168.1.20` so it can talk to gateway `192.168.1.1`.
 
@@ -36,7 +39,8 @@ Change password for root account.
 passwd
 ```
 
-## Edit config files, part 1
+Edit config files, part 1
+-------------------------
 
 ```
 cd /etc/config
@@ -106,7 +110,8 @@ Reboot the router with:
 reboot now
 ```
 
-## Edit config files, part 2
+Edit config files, part 2
+-------------------------
 
 Change Ethernet adapter settings back to DHCP so it can be assigned an IP address by the gateway under the new IP scheme.
 
@@ -257,7 +262,8 @@ uci commit wireless
 wifi
 ```
 
-## VPN connection
+VPN connection
+--------------
 
 This is how to set up the VPN.
 
@@ -343,7 +349,8 @@ Zones > LAN > edit
 
 Go down to `Allow forward *to* destination zones` and check the WAN zone. Save. Save & apply.
 
-## Using the Travel Router
+Using the Travel Router
+-----------------------
 
 ### Troubleshooting
 
@@ -355,7 +362,8 @@ In addition, when configuring the travel router to work as a VPN client to a VPN
 auth-user-pass /etc/openvpn/client.auth
 ```
 
-## References
+References
+----------
 
 - [YouTube - NetworkChuck - Super Secure Raspberry Pi Router (Wireless VPN Travel Router)](https://www.youtube.com/watch?v=jlHWnKVpygw)
 - [OpenWrt documentation - OpenVPN client using LuCI](https://openwrt.org/docs/guide-user/services/vpn/openvpn/client-luci)

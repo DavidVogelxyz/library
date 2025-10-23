@@ -1,6 +1,8 @@
-# Installing Proxmox
+Installing Proxmox
+==================
 
-## Storage solutions
+Storage solutions
+-----------------
 
 ### Web UI
 
@@ -28,7 +30,8 @@ lvresize -l +100%FREE /dev/pve/root
 resize2fs /dev/mapper/pve-root
 ```
 
-## Repositories
+Repositories
+------------
 
 Edit the following:
 
@@ -92,19 +95,22 @@ nala upgrade
 nala install cryptsetup
 ```
 
-## Check out `sshd`
+Check out `sshd`
+----------------
 
 ```
 nvim /etc/ssh/sshd_config`
 ```
 
-## PCIe (GPU) passthrough
+PCIe (GPU) passthrough
+----------------------
 
 ### How to set up GPU passthrough
 
 Check out my guide on [GPU passthrough with Proxmox](/proxmox/proxmox-gpu-passthrough.md).
 
-## Backups
+Backups
+-------
 
 ```
 cryptsetup open /dev/sda1 cryptstorage
@@ -118,15 +124,19 @@ mount /dev/mapper/cryptstorage /mnt
 sha256sum /var/lib/vz/template/iso/virtio-win-0.1.229.iso
 ```
 
-## VLAN Aware
+VLAN Aware
+----------
 
-## Upload ISOs
+Upload ISOs
+-----------
 
 ### Upload VirtIO drivers ISO before uploading Windows ISOs
 
-## Link Aggregation (LAG) with Proxmox
+Link Aggregation (LAG) with Proxmox
+-----------------------------------
 
-## References
+References
+----------
 
 - [YouTube - NetworkChuck - Virtual Machines Pt. 2 (Proxmox install w/ Kali Linux)](https://www.youtube.com/watch?v=_u8qTN3cCnQ)
     - Original video that showed how to install Proxmox using the GUI

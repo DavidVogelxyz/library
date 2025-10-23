@@ -1,19 +1,23 @@
-# Configuring Tor
+Configuring Tor
+===============
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Installing and configuring Tor](#installing-and-configuring-tor)
     - [Adding a hidden service](#adding-a-hidden-service)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 Tor is an acronym for "The Onion Router", and is a network that allows users to anonymize traffic over the internet. For the purposes of a Bitcoin node, it also allows the user to make the node "publicly available", without having to set up the proper networking. This section of the guide will describe how to install and configure Tor for the Bitcoin node.
 
-## Installing and configuring Tor
+Installing and configuring Tor
+------------------------------
 
 Now, install `tor`:
 
@@ -92,7 +96,8 @@ sudo cat /var/lib/tor/hidden_service_<SERVICE_NAME>/hostname
 
 Now, it is possible to access that service remotely using Tor.
 
-## References
+References
+----------
 
 - [Raspibolt - Privacy](https://raspibolt.org/guide/raspberry-pi/privacy.html)
     - Reference for initial setup of Tor for anonymization and hidden services.

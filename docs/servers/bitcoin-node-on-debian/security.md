@@ -1,8 +1,10 @@
-# Security
+Security
+========
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Configuring UFW](#configuring-ufw)
     - [General firewall rules](#general-firewall-rules)
@@ -11,7 +13,8 @@
 - [Other security settings](#other-security-settings)
 - [References](#references)
 
-## Configuring UFW
+Configuring UFW
+---------------
 
 Depending on the network's setup, it may also make sense to include a software firewall, such as `ufw`. For a publicly accessible server, it is highly advisable to configure `ufw` such that the available ports are limited as much as possible.
 
@@ -95,7 +98,8 @@ To check and confirm the firewall rules, use the following command:
 sudo ufw status
 ```
 
-## Other security settings
+Other security settings
+-----------------------
 
 Next, install `fail2ban`, a package designed to temporarily ban users who fail to login too many times in a short period of time. No configuration is needed besides installing the package.
 
@@ -142,7 +146,8 @@ To the end of the file, append the same line as with the other PAM file:
 session required    pam_limits.so
 ```
 
-## References
+References
+----------
 
 - [Raspibolt - Security](https://raspibolt.org/guide/raspberry-pi/security.html)
     - Reference for securing the server using `ufw` and `fail2ban`.

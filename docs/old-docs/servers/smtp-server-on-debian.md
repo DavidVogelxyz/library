@@ -1,12 +1,15 @@
-# SMTP server, running on Debian
+SMTP server, running on Debian
+==============================
 
 NB: This guide has been adapted from a [YouTube video](https://www.youtube.com/watch?v=3dIVesHEAzc) by Luke Smith.
 
-## Introduction
+Introduction
+------------
 
 This guide is to assist a user with creating a simple webpage and SMTP server for a new domain, an example of which can be seen at [davidvogel.xyz](https://davidvogel.xyz). To assist further, this guide will utilize an [mail server install script](https://github.com/lukesmithxyz/emailwiz) by @lukesmithxyz. The script makes the server setup near instant and painless.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [First steps](#first-steps)
@@ -22,7 +25,8 @@ This guide is to assist a user with creating a simple webpage and SMTP server fo
 - [Using the new mail server](#using-the-new-mail-server)
 - [References](#references)
 
-## First steps
+First steps
+-----------
 
 Before getting started, make sure to have a domain purchased and ready to go. This is easily done by going to the website of a registrar, such as [NameCheap](https://namecheap.com), and purchasing a domain there. For the remainder of the guide, the example domain will be `example.com`.
 
@@ -32,7 +36,8 @@ In addition, when provisioning a Debian server with a CSP, be sure to label (nam
 
 **Note: in a setting where the SMTP server is paired with an separate OpenVPN server, the OpenVPN server will also need port 25 open, so that mail can be sent from a client like Thunderbird, from a user on the VPN, to the SMTP server.**
 
-## Configuring DNS records
+Configuring DNS records
+-----------------------
 
 As the cloud server is provisioning, go ahead and update the DNS records for the domain. Delete all records besides the nameserver (NS) and start of authority (SOA) records. On a registar such as NameCheap, those records are maintained on a separate page of the site, so go ahead and delete as many of the pre-existing DNS records as possible.
 
@@ -61,7 +66,8 @@ MX          @       mail.$DOMAIN.       10
 
 **Note: the period after the domain is *intentional*. Most registrars will expect the period following the domain.**
 
-## Initial configuration
+Initial configuration
+---------------------
 
 Before signing in to the newly created server, it is also a good idea to configure reverse DNS (rDNS) records with the CSP. Find the relevant section of the CSP's server page, and make sure to add a rDNS (PTR) record for both the IPv4 and IPv6 addresses.
 
@@ -69,7 +75,8 @@ If the DNS records have already propagated, then it is possible to SSH using the
 
 Once logged in, follow this guide on [configuring a server running Debian](/servers/configuring-debian-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
 
-## Configuring UFW
+Configuring UFW
+---------------
 
 Depending on the network's setup, it may also make sense to include a software firewall, such as `ufw`. For a publicly accessible server, it is highly advisable to configure `ufw` such that the available ports are limited as much as possible.
 
@@ -213,7 +220,8 @@ To check and confirm the firewall rules, use the following command:
 sudo ufw status
 ```
 
-## Configuring nginx
+Configuring nginx
+-----------------
 
 Note: for this next section, references to `$HOSTNAME` represent the domain of the new server, without the TLD (eg. example; not example.com). In contrast, `$DOMAIN` represents the domain of the new server, *including* the TLD (eg. example.com).
 
@@ -299,7 +307,8 @@ Add the following content to the new file "/var/www/$HOSTNAME/index.html":
 
 Go to any web browser, and navigate to the new domain. The message "Thank you for visiting `$DOMAIN`!" should appear.
 
-## Obtaining SSL certificates for the new domain
+Obtaining SSL certificates for the new domain
+---------------------------------------------
 
 With the webpage set up, it is now time to obtain SSL certificates for the webpage. Since this will be a public website, generate SSL certificates signed by "Let's Encrypt".
 
@@ -326,7 +335,8 @@ To add SSL for all names, just press "Enter".
 
 Now, refresh the webpage, and the browser should be redirected to the HTTPS version of the site.
 
-## Setting up the mail server
+Setting up the mail server
+--------------------------
 
 The easiest way to install the mail server is to grab an install script written by @lukesmithxyz and deploy it.
 
@@ -356,7 +366,8 @@ When the script completes successfully, there should be some output regarding re
 
 Also, note that the SPF record may contain a reference to the localhost IPv4 record, rather than the server's public IPv4 address. Make sure to correct this if necessary.
 
-## Using the new mail server
+Using the new mail server
+-------------------------
 
 With the mail server up and running, the first thing to do is to create a new mail user. Do this with the following command:
 
@@ -376,7 +387,8 @@ Now that the mailbox has been accessed, attempt to send an e-mail to another mai
 
 Congrats on setting up a new e-mail server and webpage!
 
-## References
+References
+----------
 
 - [YouTube - Luke Smith - Setting up a Website and Email Server in One Sitting (Internet Landchad)](https://www.youtube.com/watch?v=3dIVesHEAzc)
 - [GitHub - lukesmithxyz - emailwiz](https://github.com/lukesmithxyz/emailwiz)

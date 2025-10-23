@@ -1,8 +1,10 @@
-# Templates - Docker - Grafana
+Templates - Docker - Grafana
+============================
 
 [Back](../README.md)
 
-## Commands
+Commands
+--------
 
 ### One-line command
 
@@ -25,7 +27,8 @@ docker run -d \
     grafana/grafana:latest
 ```
 
-## Docker Compose
+Docker Compose
+--------------
 
 Create a new directory, `grafana`, and a new file within named `docker-compose.yaml`:
 

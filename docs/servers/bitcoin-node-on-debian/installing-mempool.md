@@ -1,8 +1,10 @@
-# Installing Mempool.space (Timechain explorer)
+Installing Mempool.space (Timechain explorer)
+=============================================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Installing Mempool](#installing-mempool)
@@ -13,11 +15,13 @@
 - [Adding a hidden service for Mempool](#adding-a-hidden-service-for-mempool)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 [Mempool.space](https://mempool.space) is a Bitcoin timechain explorer and visualizer. While the link directs to a publicly hosted version of the site, it is possible to set up a self-hosted version on the Bitcoin node that references the node, preventing any forms of data leak.
 
-## Installing Mempool
+Installing Mempool
+------------------
 
 To install Mempool, perform the following steps.
 
@@ -87,7 +91,8 @@ git checkout v3.0.0
 
 Log out of the `mempool` user, and back to the main admin user.
 
-## Configuring Mempool
+Configuring Mempool
+-------------------
 
 As the main admin user, install the MariaDB database package:
 
@@ -466,7 +471,8 @@ sudo journalctl -fu mempool
 
 Now, the site should be available at `https://<HOSTNAME.TLD>:4081`. In this case, `<HOSTNAME.TLD>` can also be the IP address of the node.
 
-## Adding a hidden service for Mempool
+Adding a hidden service for Mempool
+-----------------------------------
 
 As is described in the section on [adding a hidden service](#adding-a-hidden-service), follow these steps to create a hidden service for Mempool:
 
@@ -499,7 +505,8 @@ sudo cat /var/lib/tor/hidden_service_mempool/hostname
 
 Now, it is possible to access Mempool remotely using Tor.
 
-## References
+References
+----------
 
 - [Raspibolt - Mempool timechain explorer](https://raspibolt.org/guide/bonus/bitcoin/mempool.html)
     - Reference for initial setup of the Mempool timechain explorer.

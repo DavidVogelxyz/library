@@ -1,12 +1,15 @@
-# Backing up installation images
+Backing up installation images
+==============================
 
-## Introduction
+Introduction
+------------
 
 Knowing how to back up data is extremely useful. While there are many solutions for backing up files, backing up computers (as a whole) is generally thought to be a much more difficult task. However, most Linux distributions come with coreutils and built-in commands that make it extremely easy to back up entire systems for redeployment.
 
 This guide shares some of those methods.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Using dd](#using-dd)
     - [Using sparse conversion with dd](#using-sparse-conversion-with-dd)
@@ -14,7 +17,8 @@ This guide shares some of those methods.
 - [Notes from "old ways"](#notes-from-"old-ways")
 - [References](#references)
 
-## Using dd
+Using dd
+--------
 
 `dd` is a coreutil of GNU, accessible by nearly every Linux installation, that allows the user to copy inputs to outputs. By making use of `dd`, it is possible to create a bit-for-bit copy of any drive, which makes it perfect as a backup utility. Often, this backup will be saved as a file ending in ".img" or ".iso".
 
@@ -56,7 +60,8 @@ In addition, as is described in [this ServerFault post](https://serverfault.com/
 dd if=/dev/$sdx of=file.img iflag=direct oflag=direct bs=256k conv=sparse status=progress
 ```
 
-## Using gzip and zcat
+Using gzip and zcat
+-------------------
 
 `gzip` is a data compression program that allows the user to copy inputs to outputs, similar to `dd`. However, the key difference is that `gzip` is able to create smaller output files than `dd`, which can be incredibly useful when making backups of system installtions. This is especially true when the system being backed up has paritions containing large amounts of unwritten storage space.
 
@@ -94,7 +99,8 @@ One benefit of piping the output of `zcat` into `dd` is that it allows for the u
 zcat file.img.gz | dd of=/dev/$sdx status=progress
 ```
 
-## Notes from "old ways"
+Notes from "old ways"
+---------------------
 
 Originally, I learned to write these images by using `cat`, like so:
 
@@ -110,7 +116,8 @@ dd if=/dev/$sdx | gzip -v9c > file.img.gz
 
 However, `gzip` can be run directly on files. It is not necessary to run `cat` or `dd` on the device in order to pipe it into `gzip`. This is identical to Luke Smith's rant about "[don't `cat` into `grep`](https://www.youtube.com/watch?v=82NBMvx6vFY)"
 
-## References
+References
+----------
 
 - [ServerFault - What is fastest way to copy a sparse file? What method results in the smallest file?](https://serverfault.com/questions/665335/what-is-fastest-way-to-copy-a-sparse-file-what-method-results-in-the-smallest-f)
 - [YouTube - Luke Smith - Only Linux Brainlets CAT into GREP!!!](https://www.youtube.com/watch?v=82NBMvx6vFY)

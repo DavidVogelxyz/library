@@ -1,8 +1,10 @@
-# Installing Fulcrum (Bitcoin transaction indexer)
+Installing Fulcrum (Bitcoin transaction indexer)
+================================================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Installing Fulcrum](#installing-fulcrum)
@@ -13,11 +15,13 @@
     - [Editing the banner for Fulcrum](#editing-the-banner-for-fulcrum)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 Fulcrum is a Bitcoin transaction indexer. A transaction indexer is required for most Bitcoin wallet software, as well as the [Mempool timechain explorer](installing-mempool.md). This section of the guide will describe the process for configuring and installing the Fulcrum indexer.
 
-## Installing Fulcrum
+Installing Fulcrum
+------------------
 
 To install Fulcrum, a Bitcoin transaction indexer, perform the following steps.
 
@@ -120,7 +124,8 @@ Confirm that the binary has been installed correctly by running the following co
 Fulcrum --version
 ```
 
-## Configuring zram-swap
+Configuring zram-swap
+---------------------
 
 First, install the `libssl-dev` package:
 
@@ -202,7 +207,8 @@ As a final confirmation, run `systemctl status` on the `zram-swap` service:
 systemctl status zram-swap
 ```
 
-## Configuring Fulcrum
+Configuring Fulcrum
+-------------------
 
 Now that Fulcrum is installed, create a new user to manage the Fulcrum service:
 
@@ -341,7 +347,8 @@ sudo journalctl -fu fulcrum
 
 In the case that Fulcrum *is* stopped or rebooted, or the node itself is rebooted, data may become corrupted. If this happens, delete the "/data/fulcrum/fulcrum_db" directory and run `mkdir /data/fulcrum/fulcrum_db` to restore an empty directory, and begin the process again.
 
-## Re-configuring Fulcrum after the initial sync
+Re-configuring Fulcrum after the initial sync
+---------------------------------------------
 
 Once Fulcrum completes its initial syncing and compacting, `zram-swap` can be reconfigured. Open the `/etc/default/zram-swap` file in a text editor:
 
@@ -374,7 +381,8 @@ To confirm that `zram-swap` has been modified correctly, use `cat` on the follow
 sudo cat /proc/swaps
 ```
 
-## Adding a hidden service for Fulcrum
+Adding a hidden service for Fulcrum
+-----------------------------------
 
 As is described in the section on [adding a hidden service](#adding-a-hidden-service), follow these steps to create a hidden service for Fulcrum:
 
@@ -418,7 +426,8 @@ sudo cat /var/lib/tor/hidden_service_fulcrum_ssl/hostname
 
 Now, it is possible to access Fulcrum remotely using Tor.
 
-## Editing the banner for Fulcrum
+Editing the banner for Fulcrum
+------------------------------
 
 When using a wallet software such as [Sparrow Wallet](https://github.com/sparrowwallet/sparrow), a banner will display when connecting the wallet to the indexer. Using a webpage such as [this one](https://patorjk.com/software/taag/#p=display&f=Slant&t=Fulcrum), it is possible to create custom ASCII art to be displayed when the connection is tested.
 
@@ -464,7 +473,8 @@ systemctl restart fulcrum
 
 When connecting to Fulcrum using wallet software, the banner should display!
 
-## References
+References
+----------
 
 - [Raspibolt - Fulcrum server](https://raspibolt.org/guide/bonus/bitcoin/fulcrum.html)
     - Reference for initial setup of the Fulcrum indexer.

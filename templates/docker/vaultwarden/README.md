@@ -1,8 +1,10 @@
-# Templates - Docker - Vaultwarden
+Templates - Docker - Vaultwarden
+================================
 
 [Back](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Pre-configuration](#pre-configuration)
 - [Commands](#commands)
@@ -10,7 +12,8 @@
     - [Multi-line command](#multi-line-command)
 - [Docker Compose](#docker-compose)
 
-## Pre-configuration
+Pre-configuration
+-----------------
 
 Create a Docker volume to store Vaultwarden data:
 
@@ -18,11 +21,13 @@ Create a Docker volume to store Vaultwarden data:
 docker volume create vaultwarden_data
 ```
 
-## Introduction
+Introduction
+------------
 
 🚨 **The user must create `vaultwarden-docker.crt` and `vaultwarden-docker.key` and place them at the specified paths!** 🚨
 
-## Commands
+Commands
+--------
 
 ### One-line command
 
@@ -47,7 +52,8 @@ docker run -d \
     vaultwarden/server:latest
 ```
 
-## Docker Compose
+Docker Compose
+--------------
 
 Create a new directory, `vaultwarden`, and a new file within named `docker-compose.yaml`:
 

@@ -1,10 +1,13 @@
-# GRE tunnels between Linux machines
+GRE tunnels between Linux machines
+==================================
 
-## Introduction
+Introduction
+------------
 
 GRE (Generic Routing Encapsulation) is a proprietary protocol developed by Cisco for encapsulating and routing traffic. There are better ways to tunnel and send traffic over the internet; however, here is a simple guide for anyone who wants to work with this protocol.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Setting up a GRE tunnel using Linux computers](#setting-up-a-gre-tunnel-using-linux-computers)
@@ -13,7 +16,8 @@ GRE (Generic Routing Encapsulation) is a proprietary protocol developed by Cisco
     - [Wrapping up](#wrapping-up)
 - [References](#references)
 
-## Setting up a GRE tunnel using Linux computers
+Setting up a GRE tunnel using Linux computers
+---------------------------------------------
 
 First, confirm that the GRE kernel module is loaded:
 
@@ -81,7 +85,8 @@ sudo ip addr add 10.10.$numtun.2/24 dev gre$numtun
 
 As before, if opening multiple tunnels, this IP range scheme can be helpful. If necessary, change the second octet (the second "10") to a different number, so as to avoid conflicts with local networks.
 
-## Wrapping up
+Wrapping up
+-----------
 
 Now, both computers should be able to reach each other by pinging the other's IP address on the tunnel interface.
 
@@ -99,6 +104,7 @@ ping 10.10.$numtun.2
 
 That's how to easily set up GRE tunnels between two Linux machines!
 
-## References
+References
+----------
 
 - [Xmodulo - How to create a GRE tunnel on Linux](https://www.xmodulo.com/create-gre-tunnel-linux.html)

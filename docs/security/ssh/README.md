@@ -1,14 +1,17 @@
-# SSH
+SSH
+===
 
 [Back to "Docs and guides"](../../README.md)
 
-## Introduction
+Introduction
+------------
 
 SSH (Secure Shell) is an essential tool for any user connecting to other machines.
 
 This guide will go through some of the basics for working with SSH. In addition, it will also review some more "advanced concepts", such as working with a `.ssh/config` file and using an `ssh-agent` to store unlocked private keys.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Terms and Definitions](#terms-and-definitions)
@@ -20,7 +23,8 @@ This guide will go through some of the basics for working with SSH. In addition,
 - [Working with the "known_hosts" file](known-hosts.md)
 - [Working with the "authorized_keys" file](authorized-keys.md)
 
-## Terms and Definitions
+Terms and Definitions
+---------------------
 
 - **Keypair**: A term to refer to a public key and its corresponding private key.
 

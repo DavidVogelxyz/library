@@ -1,14 +1,17 @@
-# Renaming Files in Bulk
+Renaming Files in Bulk
+======================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Bulk renaming files](#bulk-renaming-files)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 Vim makes it easy to rename multiple files in the same directory.
 
@@ -16,7 +19,8 @@ While Vim doesn't have a mechanism for doing this within the editor, Vim *does* 
 
 This guide explains how to bulk rename files, with assistance from Vim.
 
-## Bulk renaming files
+Bulk renaming files
+-------------------
 
 First, pipe the output of `ls` into Vim.
 
@@ -55,7 +59,8 @@ When the list of commands is complete, the user can run the following Vim comman
 
 The `:w` command will send the buffer as input to `bash`, running each command.
 
-## References
+References
+----------
 
 - [Vim - Bulk rename files with Vim](https://vim.fandom.com/wiki/Bulk_rename_files_with_Vim)
     - Reference for using Vim to bulk rename files

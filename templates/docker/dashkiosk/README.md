@@ -1,8 +1,10 @@
-# Templates - Docker - Dashkiosk
+Templates - Docker - Dashkiosk
+==============================
 
 [Back](../README.md)
 
-## Commands
+Commands
+--------
 
 ### One-line command
 
@@ -25,7 +27,8 @@ docker run -d \
     vincentbernat/dashkiosk:latest
 ```
 
-## Docker Compose
+Docker Compose
+--------------
 
 Create a new directory, `dashkiosk`, and a new file within named `docker-compose.yaml`:
 

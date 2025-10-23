@@ -1,12 +1,15 @@
-# Searching Through a File with Case Independence
+Searching Through a File with Case Independence
+===============================================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 
-## Introduction
+Introduction
+------------
 
 To search a file with a case-independent search, add `\c` to the search query.
 

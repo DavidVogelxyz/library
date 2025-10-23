@@ -1,8 +1,10 @@
-# DNS server using dnsmasq, running on Alpine Linux
+DNS server using dnsmasq, running on Alpine Linux
+=================================================
 
 NB: This guide has been tested using an Alpine Linux container on Proxmox, using the default Alpine image that Proxmox pulls.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Initial configuration](#initial-configuration)
 - [Configuring UFW](#configuring-ufw)
@@ -12,11 +14,13 @@ NB: This guide has been tested using an Alpine Linux container on Proxmox, using
 - [Installing dnsmasq](#installing-dnsmasq)
 - [References](#references)
 
-## Initial configuration
+Initial configuration
+---------------------
 
 Follow this guide on [configuring a server running Alpine Linux](/servers/configuring-alpine-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
 
-## Configuring UFW
+Configuring UFW
+---------------
 
 Depending on the network's setup, it may also make sense to include a software firewall, such as `ufw`. For a publicly accessible server, it is highly advisable to configure `ufw` such that the available ports are limited as much as possible.
 
@@ -88,7 +92,8 @@ To check and confirm the firewall rules, use the following command:
 sudo ufw status
 ```
 
-## Installing dnsmasq
+Installing dnsmasq
+------------------
 
 Now, update the package repositories, and install `dnsmasq` and `dnsmasq-openrc` to the Alpine server.
 
@@ -144,6 +149,7 @@ rc-update add dnsmasq
 
 To confirm the server is working, add the IP address of the DNS server to the DNS server list of a second computer. If using a Linux machine, do this by editing "/etc/resolv.conf" and adding `nameserver $IP_ADDRESS` to the top of the list of nameservers. If the server is working, pinging a domain that has an entry in the DNS server's "/etc/hosts" file should result in resolution of the domain name, and a successful ping.
 
-## References
+References
+----------
 
 - [How to Geek - How to Run Your Own DNS Server on Your Local Network](https://www.howtogeek.com/devops/how-to-run-your-own-dns-server-on-your-local-network/)

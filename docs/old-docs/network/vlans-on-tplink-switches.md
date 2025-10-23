@@ -1,12 +1,15 @@
-# Configuring VLANs on TP-Link switches, connected to a pfSense router
+Configuring VLANs on TP-Link switches, connected to a pfSense router
+====================================================================
 
 NB: This guide is for use with TP-Link TL-SG1xxE managed switches. This guide is confirmed to work both with the 8 port (TL-SG108E) and the 5 port (TL-SG105E) TP-Link switches.
 
-## Introduction
+Introduction
+------------
 
 This guide was written because the documentation found [here](https://www.tp-link.com/us/support/faq/788/) failed to work without specific additional steps. In this write-up, those extra steps are outlined.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Configuring pfSense](#configuring-pfsense)
@@ -19,7 +22,8 @@ This guide was written because the documentation found [here](https://www.tp-lin
     - [PVID settings](#pvid-settings)
 - [References](#references)
 
-## Configuring pfSense
+Configuring pfSense
+-------------------
 
 The first step is to create the VLANs, assign them to the correct interfaces, and confirm that all other necessary configuations have been set.
 
@@ -51,7 +55,8 @@ Without this step, devices that successfully connect to the VLAN and get an IP a
 
 With the VLAN configured correctly, the next step is to set up the switch so that it knows how to route the VLAN traffic.
 
-## Configuring the switch
+Configuring the switch
+----------------------
 
 For the most part, the [guide found on TP-Link's website](https://www.tp-link.com/us/support/faq/788/) is useful. However, there are some slight configuration changes that must be made, or the switch will not route traffic correctly. The full setup can be found below.
 
@@ -96,7 +101,8 @@ When completed, the PVID table should show the a list of ports where:
 
 Now, when a device is plugged into the corresponding switch port, it should be assigned an IP address within that VLAN.
 
-## References
+References
+----------
 
 - [TP-Link's official FAQ for creating VLANs on these switches](https://www.tp-link.com/us/support/faq/788/)
 - [Nguvu.org guide on installing and configuring pfSense](https://nguvu.org/pfsense/pfsense-baseline-setup/)

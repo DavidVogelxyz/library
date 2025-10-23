@@ -1,8 +1,10 @@
-# Installing Bitcoin Core
+Installing Bitcoin Core
+=======================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Bitcoin Core](#bitcoin-core)
@@ -11,11 +13,13 @@
     - [Re-configuring Bitcoin Core after the initial sync](#re-configuring-bitcoin-core-after-the-initial-sync)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 Bitcoin Core is a client software that allows the server to download and host a complete (or pruned) instance of the Bitcoin timechain. This section of the guide will describe how to configure and install Bitcoin Core.
 
-## Bitcoin Core
+Bitcoin Core
+------------
 
 The first step to installing Bitcoin Core is to download the installation files.
 
@@ -88,7 +92,8 @@ Confirm that the binary has been installed correctly by running the following co
 bitcoin-cli --version
 ```
 
-## Configuring Bitcoin Core
+Configuring Bitcoin Core
+------------------------
 
 Now that Bitcoin Core is installed, create a new user to manage the Bitcoin service:
 
@@ -313,7 +318,8 @@ ls ~/.bitcoin/.cookie
 
 With `bitcoind` now running as intended, let the process run for a few days (potentially, up to about a week) in order to complete the initial sync.
 
-## Checking on Bitcoin Core during the intial sync
+Checking on Bitcoin Core during the intial sync
+-----------------------------------------------
 
 While waiting, there are a few ways to get information about the Initial Blockchain Download (IBD). One way is to use the following command:
 
@@ -339,7 +345,8 @@ bitcoin-cli getblockchaininfo | grep blocks
 
 This command will only output the line from `bitcoin-cli getblockchaininfo` that indicates the current block header. This is a quick way for someone who knows the current block height to get an idea of how far away their node is from syncing.
 
-## Re-configuring Bitcoin Core after the initial sync
+Re-configuring Bitcoin Core after the initial sync
+--------------------------------------------------
 
 Once Bitcoin Core has completed its initial sync, be sure to edit the `bitcoin.conf` file to make the following adjustments.
 
@@ -366,7 +373,8 @@ systemctl restart bitcoind
 
 Congrats on syncing Bitcoin Core! The next step is to install a transaction indexer to make use of other Bitcoin services, such as wallet software and timechain explorers.
 
-## References
+References
+----------
 
 - [Raspibolt - Bitcoin Client](https://raspibolt.org/guide/bitcoin/bitcoin-client.html)
     - Reference for initial setup of the Bitcoin Core client.

@@ -1,10 +1,13 @@
-# Configuring a server running Debian
+Configuring a server running Debian
+===================================
 
-## Introduction
+Introduction
+------------
 
 This guide will assist with perform basic server tasks on Debian, such as creating a new user, securing the SSH connection and adding some configuration files for quality-of-life adjustments.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Updating packages](#updating-packages)
@@ -15,7 +18,8 @@ This guide will assist with perform basic server tasks on Debian, such as creati
     - [Adding configuration files to root user](#adding-configuration-files-to-root-user)
 - [Checking user access logs](#checking-user-access-logs)
 
-## Updating packages
+Updating packages
+-----------------
 
 To begin, log in to the server. Next, update the package repositories and install some immediate essentials:
 
@@ -23,7 +27,8 @@ To begin, log in to the server. Next, update the package repositories and instal
 apt update && apt install -y nala vim
 ```
 
-## Creating a new user
+Creating a new user
+-------------------
 
 If the root user was used to log into the server, the next step is to create a new user to administer and manager the server. It is highly advisable that the root user is not used for this purpose.
 
@@ -43,7 +48,8 @@ passwd $USERNAME
 
 Now, log out, and log back in using the new user account using SSH. Once logged in as the new user, it's time to secure the SSH connection.
 
-## Securing SSH
+Securing SSH
+------------
 
 A crucial step in the setup process is to properly configure SSH login. There are two main components to this:
 
@@ -116,7 +122,8 @@ sudo passwd root
 
 It is also worth checking the "/etc/hostname" and "/etc/hosts" files at this point. Confirm that the hostname is correct for the server, and confirm that it is found in "/etc/hosts" under a loopback address. If any adjustments were made to the "/etc/hostname" file, it is advisable to restart the server after and then to log back in.
 
-## Adding configuration files
+Adding configuration files
+--------------------------
 
 First, update packages repositiories again, upgrade installed packages, and install some additional packages:
 
@@ -170,7 +177,8 @@ ln -s ../../.dotfiles/.config/shell/aliasrc-debian ~/.config/shell/aliasrc && so
 echo -e "\\nsource ~/.config/shell/aliasrc" >> ~/.bashrc
 ```
 
-## Checking user access logs
+Checking user access logs
+-------------------------
 
 While the configurations have all been pushed, and the server should be largely secured (sans `ufw`), it is also useful to know how to verify that no unintended logins have occurred while performing the initial configuration.
 

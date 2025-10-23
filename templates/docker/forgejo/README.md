@@ -1,8 +1,10 @@
-# Templates - Docker - Forgejo
+Templates - Docker - Forgejo
+============================
 
 [Back](../README.md)
 
-## Docker Compose
+Docker Compose
+--------------
 
 Create a new directory, `forgejo`, and a new file within named `docker-compose.yaml`:
 

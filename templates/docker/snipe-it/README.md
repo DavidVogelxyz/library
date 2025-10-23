@@ -1,12 +1,15 @@
-# Templates - Docker - Snipe-IT
+Templates - Docker - Snipe-IT
+=============================
 
 [Back](../README.md)
 
-## Introduction
+Introduction
+------------
 
 🚨 **Change the passwords from the defaults!** 🚨
 
-## Docker Compose
+Docker Compose
+--------------
 
 Create a new directory, `snipe-it`, and a new file within named `docker-compose.yaml`:
 

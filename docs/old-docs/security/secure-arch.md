@@ -1,6 +1,8 @@
-# Security hardening on Arch Linux
+Security hardening on Arch Linux
+================================
 
-## Getting Started
+Getting Started
+---------------
 
 Pull an aliasrc file from GitHub, etc. Example: [aliasrc](https://github.com/DavidVogelxyz/dotfiles/blob/main/.config/shell/aliasrc-arch-server)
 
@@ -12,9 +14,11 @@ Create the following directories:
 mkdir -pv ~/.config/shell ~/.cache/shell
 ```
 
-## Packages for all computers
+Packages for all computers
+--------------------------
 
-## Packages for servers
+Packages for servers
+--------------------
 
 ```
 ufw
@@ -30,13 +34,15 @@ fail2ban
 neofetch
 ```
 
-## Packages for specific servers
+Packages for specific servers
+-----------------------------
 
 ```
 nginx
 ```
 
-## Configure UFW
+Configure UFW
+-------------
 
 ```
 sudo ufw default deny incoming
@@ -60,7 +66,8 @@ sudo ufw status
 systemctl enable ufw
 ```
 
-## Configure sshd
+Configure sshd
+--------------
 
 ```
 sudo nvim /etc/ssh/sshd_config
@@ -82,7 +89,8 @@ ssh-copy-id
 systemctl restart sshd
 ```
 
-## Security check
+Security check
+--------------
 
 ```
 last
@@ -90,7 +98,8 @@ last
 sudo lastb
 ```
 
-## Update hostname (if applicable)
+Update hostname (if applicable)
+-------------------------------
 
 ```
 hostnamectl
@@ -100,7 +109,8 @@ sudo hostnamectl set-hostname $HOST
 hostnamectl
 ```
 
-## Update timedate (if applicable)
+Update timedate (if applicable)
+-------------------------------
 
 ```
 `timedatectl`

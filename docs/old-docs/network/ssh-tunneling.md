@@ -1,15 +1,18 @@
-# SSH tunneling
+SSH tunneling
+=============
 
 NB: this guide makes frequent references to the IP address `127.0.0.1`. Obviously, this is a reference to the hostname `localhost`. Either can be used in place of the other; however, using the IP address itself avoids both the "host file lookup", as well as the potential for trying the IPv6 entry for `localhost`.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Local SSH tunnel](#local-ssh-tunnel)
 - [Remote SSH tunnel](#remote-ssh-tunnel)
 - [SSH proxy tunnel](#ssh-proxy-tunnel)
 - [References](#references)
 
-## Local SSH tunnel
+Local SSH tunnel
+----------------
 
 In a local SSH tunnel, it is best to think about how the SSH tunnel begins at the local machine, and reaches out across the internet to the remote machine.
 
@@ -46,7 +49,8 @@ Explanation:
 
 When running this command, the `ssh` command will appear to hang, so long as the connection is active. Cancelling out of the command breaks the tunnel, and would result in the webpage no longer being accessible to the local user.
 
-## Remote SSH tunnel
+Remote SSH tunnel
+-----------------
 
 In a remote (reverse) SSH tunnel, it is best to think about how the SSH tunnel begins at the remote machine, at the specified port, and reaches out across the internet back to the local machine.
 
@@ -96,7 +100,8 @@ Explanation:
 
 When running this command, the `ssh` command will appear to hang, so long as the connection is active. Cancelling out of the command breaks the tunnel, and would result in the webpage no longer being accessible to the local user.
 
-## SSH proxy tunnel
+SSH proxy tunnel
+----------------
 
 An SSH proxy tunnel is any sort of an SSH connection where a *third* machine is involved in the data transit, rather than just two.
 
@@ -138,7 +143,8 @@ Explanation:
 
 When running this command, the `ssh` command will appear to hang, so long as the connection is active. Cancelling out of the command breaks the tunnel, and would result in the webpage no longer being accessible to the local user.
 
-## References
+References
+----------
 
 - [YouTube - Tony Teaches Tech - How to SSH Tunnel (simple example)](https://www.youtube.com/watch?v=x1yQF1789cE)
     - Reference for "creating local SSH tunnel"

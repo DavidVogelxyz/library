@@ -1,8 +1,10 @@
-# Nextcloud cloud storage, running on Alpine Linux
+Nextcloud cloud storage, running on Alpine Linux
+================================================
 
 NB: This guide has been tested using VMs hosted on Vultr and Linode.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Initial configuration](#initial-configuration)
 - [Configuring UFW](#configuring-ufw)
@@ -19,11 +21,13 @@ NB: This guide has been tested using VMs hosted on Vultr and Linode.
 - [Enabling video communication](#enabling-video-communication)
 - [References](#references)
 
-## Initial configuration
+Initial configuration
+---------------------
 
 Follow this guide on [configuring a server running Alpine Linux](/servers/configuring-alpine-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
 
-## Configuring UFW
+Configuring UFW
+---------------
 
 Depending on the network's setup, it may also make sense to include a software firewall, such as `ufw`. For a publicly accessible server, it is highly advisable to configure `ufw` such that the available ports are limited as much as possible.
 
@@ -107,7 +111,8 @@ To check and confirm the firewall rules, use the following command:
 sudo ufw status
 ```
 
-## Installing Nextcloud
+Installing Nextcloud
+--------------------
 
 Now, update the package repositories, and install all other relevant packages for Nextcloud, including:
 
@@ -468,7 +473,8 @@ Use the following command to exit PostgreSQL:
 \q
 ```
 
-## Enabling video communication
+Enabling video communication
+----------------------------
 
 NB: This section still needs to be completed and tested in a live environment.
 
@@ -490,6 +496,7 @@ service nginx reload
 
 Install Spreed WebRTC server -- follow up with the Alpine Linux wiki for Nextcloud
 
-## References
+References
+----------
 
 - [Alpine Linux wiki - Nextcloud](https://wiki.alpinelinux.org/wiki/Nextcloud)

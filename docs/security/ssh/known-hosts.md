@@ -1,8 +1,10 @@
-# Working with the "known_hosts" file
+Working with the "known_hosts" file
+===================================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Hashing the "known_hosts" file](#hashing-the-known_hosts-file)
@@ -10,13 +12,15 @@
 - [Removing entries from a "known_hosts" file](#removing-entries-from-a-known_hosts-file)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 This section of the guide was written to specifically address the `.ssh/known_hosts` file and "hasing".
 
 Some systems will hash the `.ssh/known_hosts` file by default, and others do not. Knowing how to work with a hashed `known_hosts` file is a useful skill.
 
-## Hashing the "known_hosts" file
+Hashing the "known_hosts" file
+------------------------------
 
 If a user has a `.ssh/known_hosts` file that isn't hashed, and they want the file hashes, they can direct `ssh-keygen` to do so with the following command:
 
@@ -50,7 +54,8 @@ Host *
 
 For more information, refer to the section on the ["ssh_config" file](ssh-config.md#general-configuration).
 
-## Searching a "known_hosts" file
+Searching a "known_hosts" file
+------------------------------
 
 To search the `.ssh/known_hosts` file, run the following command:
 
@@ -66,7 +71,8 @@ To search the file and return hosts in their hashed format, run the following co
 ssh-keygen -H -F <HOSTNAME>
 ```
 
-## Removing entries from a "known_hosts" file
+Removing entries from a "known_hosts" file
+------------------------------------------
 
 To remove entries from the `.ssh/known_hosts` file, run the following command:
 
@@ -76,7 +82,8 @@ ssh-keygen -R <HOSTNAME>
 
 As with the `ssh-keygen -F` command, `ssh-keygen -R` works for both hashed and "non-hashed" `known_hosts` file. But, as is also true for `ssh-keygen -F`, `ssh-keygen -R` is absolutely necessary for a hashed `known_hosts` file.
 
-## References
+References
+----------
 
 - [StackExchange - SSH: benefits of using hashed known hosts](https://security.stackexchange.com/questions/56268/ssh-benefits-of-using-hashed-known-hosts)
     - Reference on the benefits of hashing the `known_hosts` file

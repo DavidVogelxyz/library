@@ -1,18 +1,22 @@
-# Configuring nginx
+Configuring nginx
+=================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Installing and configuring "nginx"](#installing-and-configuring-nginx)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 `nginx` is a web server and reverse proxy, allowing the user to direct traffic flows to the node and host web pages, etc. This section of the guide will describe how to install and configure `nginx`.
 
-## Installing and configuring "nginx"
+Installing and configuring "nginx"
+----------------------------------
 
 Install `nginx` by running the following command:
 
@@ -74,7 +78,8 @@ If the test fails in reference to `unknown directive "stream"`, install the foll
 nala install -y libnginx-mod-stream
 ```
 
-## References
+References
+----------
 
 - [Raspibolt - Security](https://raspibolt.org/guide/raspberry-pi/security.html)
     - Reference for initial setup of `nginx` reverse proxy.

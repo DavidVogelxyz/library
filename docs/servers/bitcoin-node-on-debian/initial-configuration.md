@@ -1,8 +1,10 @@
-# Initial configuration
+Initial configuration
+=====================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [First steps](#first-steps)
 - [Preventing laptop lid close from suspending processes](#preventing-laptop-lid-close-from-suspending-processes)
@@ -11,7 +13,8 @@
 - [Finalizing initial configuration](#finalizing-initial-configuration)
 - [References](#references)
 
-## First steps
+First steps
+-----------
 
 The first step to creating a Bitcoin node would be to install Debian onto the computer that will be used as the node. To assist with this setup process, please refer to [this guide](/install-os/install-debian.md) that details how to install Debian. Also, please note that [this "debian-setup" script](https://github.com/DavidVogelxyz/debian-setup) will help to speed up the process.
 
@@ -19,7 +22,8 @@ Once logged in, follow this guide on [configuring a server running Debian](/serv
 
 Note: since it's likely that the "install Debian" guide was used to set up the node, then a user should have already been created.
 
-## Preventing laptop lid close from suspending processes
+Preventing laptop lid close from suspending processes
+-----------------------------------------------------
 
 Next, if using a laptop as a node, open the `/etc/systemd/logind.conf` file with a text editor, such as `vim`:
 
@@ -35,7 +39,8 @@ HandleLidSwitch=ignore
 
 Save the file, and restart the node. Now, the laptop lid can be closed without the computer suspending.
 
-## Configuring zsh
+Configuring zsh
+---------------
 
 Next, install the following packages to configure `zsh`:
 
@@ -129,7 +134,8 @@ sed -i "s/'~\/.config\/lf\/scope/'~\/.config\/lf\/scope-debian/g" ~/.config/lf/l
 
 `lf` can be invoked with the `lfub` command; alternatively, use the keymap "Ctrl+O" when using the command line.
 
-## Finalizing initial configuration
+Finalizing initial configuration
+--------------------------------
 
 Create a new directory "/data". This directory will contain symlinks to all configuration directories for all the services that will be installed on the node.
 
@@ -137,7 +143,8 @@ Create a new directory "/data". This directory will contain symlinks to all conf
 sudo mkdir /data && sudo chown <USERNAME>: /data
 ```
 
-## References
+References
+----------
 
 - [Raspibolt - System Configuration](https://raspibolt.org/guide/raspberry-pi/system-configuration.html)
     - Reference for creating a `/data` directory.

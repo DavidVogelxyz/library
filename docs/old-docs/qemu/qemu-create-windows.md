@@ -1,12 +1,15 @@
-# Tips for creating optimized Windows VMs on QEMU
+Tips for creating optimized Windows VMs on QEMU
+===============================================
 
-## General rules
+General rules
+-------------
 
 When booting QEMU for the first time, make sure that `virt-manager` is connected to the QEMU hypervisor. Right click and connect if needed.
 
 Also, change preferences to `allow XML editing`, and confirm via `Connection Details` that the virtual network is `active`.
 
-## Windows 10 (2015) & Windows 11 (2021)
+Windows 10 (2015) & Windows 11 (2021)
+-------------------------------------
 
 When creating a new VM in QEMU, be sure to check "customize configuration before install." Everything else can be clicked through, as there will be a chance to make changes during the "customization" step.
 
@@ -135,8 +138,11 @@ On some occasions when creating Windows VMs, I have noticed an issue where the m
 
 The fix was relatively simple, though easily overlooked. In the hardware configuration for the VM, there will be an item under "Mouse", named "Tablet". Remove this "Tablet" item, and the mouse will work as intended.
 
-## Windows XP (2001)
+Windows XP (2001)
+-----------------
 
-## Windows 7 (2009)
+Windows 7 (2009)
+----------------
 
-## Windows Vista (2007)
+Windows Vista (2007)
+--------------------

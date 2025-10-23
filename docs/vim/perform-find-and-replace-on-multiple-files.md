@@ -1,8 +1,10 @@
-# Performing "Find and Replace" on Multiple Files
+Performing "Find and Replace" on Multiple Files
+===============================================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [The concept](#the-concept)
@@ -10,7 +12,8 @@
 - [Performing "find and replace", starting outside of Vim](#performing-find-and-replace-starting-outside-of-vim)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 In Vim, it's possible to globally search a file for a pattern and replace it with a different pattern, using a command such as the following:
 
@@ -30,7 +33,8 @@ However, this begs the question: is it possible to do something similar in order
 
 The answer is yes.
 
-## The concept
+The concept
+-----------
 
 First, the "quickfix" list needs to be populated with a command like `grep`, `ripgrep`, `vimgrep`, etc.
 
@@ -38,7 +42,8 @@ Next, run a command that allows for editing multiple files, such as `cdo`, `cfdo
 
 Last, save the changes using `cfdo` or `bufdo`.
 
-## Performing "find and replace", starting inside of Vim
+Performing "find and replace", starting inside of Vim
+-----------------------------------------------------
 
 First, populate the "quickfix" list by running `grep`:
 
@@ -83,7 +88,8 @@ Finally, save any unsaved changes by running `cfdo`, "which will write every fil
 :cfdo update
 ```
 
-## Performing "find and replace", starting outside of Vim
+Performing "find and replace", starting outside of Vim
+------------------------------------------------------
 
 First, populate the "quickfix" list by running `grep`:
 
@@ -114,7 +120,8 @@ Finally, save by running `bufdo`:
 :bufdo wq!
 ```
 
-## References
+References
+----------
 
 - [StackOverflow - Vim - Find and replace all instances of specific string in multiple files in vim](https://stackoverflow.com/questions/70003193/find-and-replace-all-instances-of-specific-string-in-multiple-files-in-vim/70004227#70004227)
     - Reference for `cdo` and `cfdo` commands

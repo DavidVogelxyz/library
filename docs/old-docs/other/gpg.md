@@ -1,8 +1,10 @@
-# GPG
+GPG
+===
 
 NB: What some people refer to as "private keys", `gpg` refers to as "secret keys". They are one and the same.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Creating a GPG key](#creating-a-gpg-key)
 - [Listing keys](#listing-keys)
@@ -11,7 +13,8 @@ NB: What some people refer to as "private keys", `gpg` refers to as "secret keys
 - [Changing the passphrase to a GPG key](#changing-the-passphrase-to-a-gpg-key)
 - [References](#references)
 
-## Creating a GPG key
+Creating a GPG key
+------------------
 
 Create a GPG key with:
 
@@ -19,7 +22,8 @@ Create a GPG key with:
 gpg --full-generate-key
 ```
 
-## Listing keys
+Listing keys
+------------
 
 List all public keys with:
 
@@ -58,7 +62,8 @@ Explanations:
 - A long key ID is the last 16 characters of the fingerprint.
 - An '0x' key ID prefixes the key with '0x' to denote that the key ID is a hex value.
 
-## How to encrypt a file
+How to encrypt a file
+---------------------
 
 Encrypt a file with the following:
 
@@ -85,7 +90,8 @@ Notes:
 
 - "--output" enables the user to output the decrypted file to a specific filename, rather than to STDOUT.
 
-## Exporting keys
+Exporting keys
+--------------
 
 NB: If no $KEY_ID is specified, then all keys will be exported. This is true for both public and secret keys.
 
@@ -113,7 +119,8 @@ Delete a key:
 gpg --delete-key $KEY_ID
 ```
 
-## Changing the passphrase to a GPG key
+Changing the passphrase to a GPG key
+------------------------------------
 
 To change the passphrase to a GPG private key, use the following command:
 
@@ -135,7 +142,8 @@ There are a few additional things to note about the use of this command:
 - The key must be stored in the keyring
     - It is not possible to use this command to change the passphrase on a key that's been exported using `gpg --export-secret-keys $KEY_ID`
 
-## References
+References
+----------
 
 - [Medium - GPG Quickstart Guide](https://medium.com/@acparas/gpg-quickstart-guide-d01f005ca99)
     - Original reference for how to create GPG keys and how to use them properly

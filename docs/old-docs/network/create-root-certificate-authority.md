@@ -1,6 +1,8 @@
-# Creating and configuring a root certificate authority
+Creating and configuring a root certificate authority
+=====================================================
 
-## Introduction
+Introduction
+------------
 
 A certificate authority (CA) is an entity that signs digital certificates, such as SSL certificates. Often, when creating public servers and services, a package such as `certbot` is used to generate certificates signed by Let's Encrypt, a non-profit CA run by the Electronic Frontier Foundation (EFF).
 
@@ -10,7 +12,8 @@ By using a root CA, those warnings can be bypassed. The root CA can issue a root
 
 This guide provides instructions for creating certificates signed by a self-generated root CA.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Creating a root CA](#creating-a-root-ca)
@@ -20,7 +23,8 @@ This guide provides instructions for creating certificates signed by a self-gene
 - [Reading a certificate file](#reading-a-certificate-file)
 - [References](#references)
 
-## Creating a root CA
+Creating a root CA
+------------------
 
 First, create the private key that will be used by the root CA.
 
@@ -34,7 +38,8 @@ Next, create a root CA certificate, and sign it with the private key created by 
 openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 36500 -out rootCA.crt
 ```
 
-## Creating certificates
+Creating certificates
+---------------------
 
 There are a few different types of certificates that can be created with a root CA, including single server certificates and wildcard certificates.
 
@@ -149,7 +154,8 @@ An additional note on wildcard certificates: when a wildcard certificate is crea
 
 In order to get a wildcard certificate working for `additional.subdomain.example.com`, as well as another FQDN (like `another.subdomain.example.com`), the wildcard certificate would need to include `*.subdomain.example.com`. This is achieved through the use of subject alternative names (SANs).
 
-## Reading a certificate file
+Reading a certificate file
+--------------------------
 
 To print the contents of a certificate (ex. `<FILE.CRT>`), use the following command:
 
@@ -157,7 +163,8 @@ To print the contents of a certificate (ex. `<FILE.CRT>`), use the following com
 openssl x509 -text -noout -in <FILE.CRT>
 ```
 
-## References
+References
+----------
 
 - [Baeldung - Creating a Self-Signed Certificate with OpenSSL](https://www.baeldung.com/openssl-self-signed-cert)
 - [GitHub - fntlnz - Self-Signed Certificate with Custom CA](https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309)

@@ -1,8 +1,10 @@
-# Bitcoin node, running on Debian
+Bitcoin node, running on Debian
+===============================
 
 [Back to "Docs and guides"](../../README.md)
 
-## Introduction
+Introduction
+------------
 
 The purpose and scope of this guide is to assist in the creation and configuration of a Bitcoin node.
 
@@ -10,7 +12,8 @@ A Bitcoin node is a server that providers to its users the ability to check tran
 
 This guide has been written to simplify the installation of a Bitcoin node running Debian. In addition, this guide assumes installation on a dedicated computer; specifically, a laptop. As of the creation of this guide (2024 May 21), this entire installation requires 820GB of storage space, with Bitcoin Core requiring at minimum 50GB annually. This average only considers Bitcoin Core, not the size requirement of the transaction indexer, as is based on the assumption that the Bitcoin network appends 50,000 blocks a year, of a size of 1MB each. These days, this is a under-estimation. However, the calculation justifies the suggestion that a Bitcoin node should be created with *at minimum* 2TB of storage space.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Initial configuration](initial-configuration.md)
@@ -22,7 +25,8 @@ This guide has been written to simplify the installation of a Bitcoin node runni
 - [Installing Mempool.space (Timechain explorer)](installing-mempool.md)
 - [References](#references)
 
-## References
+References
+----------
 
 - [Raspibolt documentation](https://raspibolt.org/)
     - The primary reference for many aspects of this guide.

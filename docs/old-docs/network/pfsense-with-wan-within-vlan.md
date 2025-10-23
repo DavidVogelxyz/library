@@ -1,6 +1,8 @@
-# Configuring pfSense with a "WAN within a VLAN"
+Configuring pfSense with a "WAN within a VLAN"
+==============================================
 
-## Introduction
+Introduction
+------------
 
 NB: Throughout this guide, the terms "router" and "gateway" will be used interchangeably.
 
@@ -8,14 +10,16 @@ Some internet service providers (ISPs) will provide a local gateway that receive
 
 To reiterate, this document is written from the perspective of a user working with a pfSense router. If using a different router, then the steps will be different; however, the underlying principles should be nearly identical.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#Introduction)
 - [Context](#Context)
 - [Identifying the issue](#Identifying-the-issue)
 - [Configuring a pfSense to work with a WAN using a VLAN](#Configuring-a-pfSense-to-work-with-a-WAN-using-a-VLAN)
 
-## Context
+Context
+-------
 
 Often, when an internet user becomes more experienced with networking, they may want to connect their own network hardware directly to an ISP, rather than using the hardware provided by the ISP. Sometimes, this is as easy as removing the WAN ethernet cable from the ISP's router and connecting it to personal hardware. Comcast is an example of an ISP that, in some cases, is configured to lease IPs to the end user using DHCP without a VLAN. In cases such as these, then the personal router should receive a DHCP lease and the WAN should be immediately accessible to the new gateway.
 
@@ -23,7 +27,8 @@ In other cases, the personal router will not receive a DHCP lease and the WAN wi
 
 However, there is a third possibility: the ISP is using VLANs in combination with DHCP. Therefore, a personal router *can* be connected to the WAN, and an IP *can* be provided via DHCP, but only if the gateway is VLAN-aware. In addition, the router needs also to be configured to communicate *with the correct VLAN* in order to receive a DHCP lease. This situation is the one that this guide intends to assist with resolving.
 
-## Identifying the issue
+Identifying the issue
+---------------------
 
 The simplest way to discern whether or not the ISP-provided router is using a VLAN is to connect to that gateway's web dashboard and answer the following questions:
 
@@ -42,7 +47,8 @@ The simplest way to discern whether or not the ISP-provided router is using a VL
 
 At this point, there should be confirmation that the original gateway is using a VLAN along with DHCP, and the VLAN ID should have been identified.
 
-## Configuring a pfSense to work with a WAN using a VLAN
+Configuring a pfSense to work with a WAN using a VLAN
+-----------------------------------------------------
 
 With the VLAN ID in hand, log in to the pfSense's web dashboard.
 

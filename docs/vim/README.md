@@ -1,8 +1,10 @@
-# Vim guide
+Vim guide
+=========
 
 [Back to "Docs and guides"](../README.md)
 
-## Introduction
+Introduction
+------------
 
 Vim is a versatile text editor with many features.
 
@@ -10,7 +12,8 @@ However, there are so many that, sometimes, it's difficult to remember all of th
 
 This guide is a shortlist for some less obvious tricks, and is written to work for both Vim and Neovim users.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Performing "Find and Replace" on Multiple Files](perform-find-and-replace-on-multiple-files.md)

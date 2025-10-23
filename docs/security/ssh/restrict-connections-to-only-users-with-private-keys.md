@@ -1,20 +1,24 @@
-# Restricting SSH Connections to Only Users with Registered Private Keys
+Restricting SSH Connections to Only Users with Registered Private Keys
+======================================================================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Securing the "sshd_config" file](#securing-the-sshd_config-file)
 - [Testing the configs](#testing-the-configs)
 
-## Introduction
+Introduction
+------------
 
 Note: this section of the guide assumes that the "target computer" is a Debian-based machine (Ubuntu included). This is because of the assumption that the target machine is running `systemd` as the init system. Other init systems will have slightly different commands.
 
 Once the pubkey has been added to a user's `.ssh/authorized_keys` file, it is good practice to confirm that the key is working as intended. Once that verification step has been performed, the user can lock down the system such that only users with a registered keypair can access the machine.
 
-## Securing the "sshd_config" file
+Securing the "sshd_config" file
+-------------------------------
 
 Now that it is confirmed that the keyfile works, the next step is to remove "access via SSH without providing a keyfile." Do the following:
 
@@ -36,7 +40,8 @@ Now that it is confirmed that the keyfile works, the next step is to remove "acc
 1. Save the file.
 1. Now, while still logged into the target computer, run the command `sudo systemctl restart sshd`.
 
-## Testing the configs
+Testing the configs
+-------------------
 
 At this point, the changes made to the `/etc/ssh/sshd_config` file should be active. A "best practice" would be to open a second terminal window and attempt to connect via SSH into both the root user and the "working user". If no private key was provided, these connections should fail.
 

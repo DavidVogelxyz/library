@@ -1,8 +1,10 @@
-# Creating SSH Keys
+Creating SSH Keys
+=================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Creating a SSH key](#creating-a-ssh-key)
@@ -10,7 +12,8 @@
     - [RSA](#rsa)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 While not mandatory, securing SSH connections with SSH keypairs is heavily suggested.
 
@@ -25,7 +28,8 @@ Another best practice is to secure private keys with passphrases:
     - Anyone with that insecure private key can access any system that has the corresponding pubkey in the `authorized_keys` file.
     - In addition, there are ways to achieve both the security of a passphrase, with the convenience of a key that doesn't require a passphrase for every sign in.
 
-## Creating a SSH key
+Creating a SSH key
+------------------
 
 The `ssh-keygen` command allows a user to create a new public/private keypair.
 
@@ -69,7 +73,8 @@ ssh-keygen -t rsa -b 4096
 
 The two switches in this command set the encryption algorithm (`-t`) and the bits of encryption (`-b`).
 
-## References
+References
+----------
 
 - [Arch Wiki - SSH keys - comments](https://wiki.archlinux.org/title/SSH_keys#Generating_an_SSH_key_pair)
     - The Arch Wiki page on comments for SSH keys

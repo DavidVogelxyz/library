@@ -1,13 +1,16 @@
-# Operating on Lines Based on a Pattern
+Operating on Lines Based on a Pattern
+=====================================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 To operate on a line, based on a pattern, run the `:g` command.
 
@@ -28,7 +31,8 @@ To explain in more detail:
 - `:g!` is analogous to `grep -v`
     - `grep -v` in**V**erts a match
 
-## References
+References
+----------
 
 - [SuperUser - Vim - How to delete all lines that do not contain a certain word?](https://superuser.com/questions/265085/how-to-delete-all-lines-that-do-not-contain-a-certain-word-in-vim)
     - Reference for deleting lines that do not match a pattern

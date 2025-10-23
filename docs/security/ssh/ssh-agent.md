@@ -1,8 +1,10 @@
-# Utilizing the "SSH-Agent" to Store Unlocked Private Keys
+Utilizing the "SSH-Agent" to Store Unlocked Private Keys
+========================================================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Starting the "ssh-agent"](#starting-the-ssh-agent)
@@ -12,11 +14,13 @@
 - [Starting the "ssh-agent" on a non-DWM system](#starting-the-ssh-agent-on-a-non-dwm-system)
 - [References](#references)
 
-## Introduction
+Introduction
+------------
 
 `ssh-agent` is an extremely powerful utility, especially in combination with a configured `.ssh/config` file. `ssh-agent` enables the user to enter the passphrase to a private key only once per session -- once they key has been unlocked, it is stored in the `ssh-agent` for the remainder of the session, allowing the user to reconnect without having to enter the passphrase again.
 
-## Starting the "ssh-agent"
+Starting the "ssh-agent"
+------------------------
 
 Depending on the system, there are a few different ways to start the `ssh-agent` process.
 
@@ -34,7 +38,8 @@ exec ssh-agent zsh
 
 However, this user would be advised not to put this command in their `.zshrc` file, because the `.zshrc` file is sourced every time a new `zsh` shell is opened. This could very easily create a situation where there are multiple instances of `ssh-agent` running at the same time.
 
-## Adding identities
+Adding identities
+-----------------
 
 Once the `ssh-agent` is running, adding keys is fairly simple.
 
@@ -48,7 +53,8 @@ At this point, the user will be prompted to enter the passphrase for the key. Ho
 
 When the `.ssh/config` file is configured with `AddKeysToAgent=yes`, any connection made that utilizes a private key will automically add the key to the `ssh-agent`.
 
-## Listing stored identities
+Listing stored identities
+-------------------------
 
 To list out the identities stored in the `ssh-agent` in a "shorthand" format, run the following command:
 
@@ -64,7 +70,8 @@ ssh-add -L
 
 It's worth noting that, in both the case of `-l` and `-L`, the key's comment shows up next to the pubkey. When the user has multiple keys for multiple target machines, having keys with same `<USER>@<HOSTNAME>` comment doesn't help to discern which identities are loaded into the `ssh-agent`. Consider changing the key's comment with `ssh-keygen -c -f <PATH_TO_PRIVATE_KEYFILE>` in order to better identify keys. For more information on setting and changing comments, refer to the section on [creating SSH keys](create-ssh-keys.md#creating-a-ssh-key).
 
-## Removing identities
+Removing identities
+-------------------
 
 To remove an identity from the `ssh-agent`, run the following command:
 
@@ -78,11 +85,13 @@ To remove all identities from the `ssh-agent`, run the following command:
 ssh-add -D
 ```
 
-## Starting the "ssh-agent" on a non-DWM system
+Starting the "ssh-agent" on a non-DWM system
+--------------------------------------------
 
 Please refer to the template file found [here](/templates/ssh-agent/README.md).
 
-## References
+References
+----------
 
 - [Arch Wiki - SSH keys - SSH agents](https://wiki.archlinux.org/title/SSH_keys#SSH_agents)
     - The Arch Wiki page on `ssh-agent`

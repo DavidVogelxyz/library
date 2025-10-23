@@ -1,12 +1,15 @@
-# Creating Temporary Files in Vim
+Creating Temporary Files in Vim
+===============================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 
-## Introduction
+Introduction
+------------
 
 The obvious answer is to "just open Vim" by running:
 

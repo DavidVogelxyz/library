@@ -1,8 +1,10 @@
-# OpenRC related templates
+OpenRC related templates
+========================
 
 [Back](../README.md)
 
-## Default OpenRC service file
+Default OpenRC service file
+---------------------------
 
 🚨 **Remember to set the file as executable before starting the service!** 🚨
 

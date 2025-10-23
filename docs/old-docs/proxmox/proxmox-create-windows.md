@@ -1,4 +1,5 @@
-# Tips for setting up a Windows VM in Proxmox
+Tips for setting up a Windows VM in Proxmox
+===========================================
 
 The one tip that's worth mentioning is a small hiccup that can occur when installing Windows and using the VirtIO drivers.
 

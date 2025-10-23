@@ -1,8 +1,10 @@
-# Tips for PCIe (GPU) passthrough on Proxmox
+Tips for PCIe (GPU) passthrough on Proxmox
+==========================================
 
 Part of a guide on setting up a [Proxmox server](install-proxmox.md).
 
-## How to set up GPU passthrough
+How to set up GPU passthrough
+-----------------------------
 
 ### BIOS side
 
@@ -84,7 +86,8 @@ Run `lspci -k` to check which drivers control which devices. The GPU (and its su
 lspci -k
 ```
 
-## Extras
+Extras
+------
 
 ### A different way to load `IDs` and `modules`
 
@@ -116,7 +119,8 @@ softdep drm pre: vfio-pci
 update-initramfs -u -k all
 ```
 
-## References
+References
+----------
 
 - [YouTube - Techno Tim - Before I do anything on Proxmox, I do this first...](https://www.youtube.com/watch?v=GoZaMgEgrHw)
     - Reference for GPU passthrough on Proxmox

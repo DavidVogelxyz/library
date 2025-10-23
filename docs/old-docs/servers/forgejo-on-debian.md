@@ -1,6 +1,8 @@
-# Forgejo (Git) server, running on Debian
+Forgejo (Git) server, running on Debian
+=======================================
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Install dependencies](#install-dependencies)
 - [Configure nginx](#configure-nginx)
@@ -8,7 +10,8 @@
 - [Setting up Forgejo GUI](#setting-up-forgejo-gui)
 - [References](#references)
 
-## Install dependencies
+Install dependencies
+--------------------
 
 Install dependencies:
 
@@ -16,7 +19,8 @@ Install dependencies:
 nala install git git-lfs
 ```
 
-## Configure nginx
+Configure nginx
+---------------
 
 Install nginx:
 
@@ -79,7 +83,8 @@ include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
 ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 ```
 
-## Configure Forgejo
+Configure Forgejo
+-----------------
 
 Create binary directory and change directory into it:
 
@@ -230,7 +235,8 @@ systemctl start forgejo
 systemctl status forgejo
 ```
 
-## Setting up Forgejo GUI
+Setting up Forgejo GUI
+----------------------
 
 Now, go to the website and do the install. Only things to change right now are:
 
@@ -282,7 +288,8 @@ PULL    = 3000
 GC      = 600
 ```
 
-## References
+References
+----------
 
 - [Forgejo - Installation from binary](https://forgejo.org/docs/latest/admin/installation-binary/)
     - Forgejo docs on installing Forgejo from binary

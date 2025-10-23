@@ -1,6 +1,8 @@
-# Resizing volumes using LVM (Logical Volume Management)
+Resizing volumes using LVM (Logical Volume Management)
+======================================================
 
-## Introduction
+Introduction
+------------
 
 LVM is a great tool for creating resizable partitions in Linux. LVM allows a user to increase the storage capacity of a drive, and then extend the volumes to incorporate the additional storage space. However, doing this can be a bit confusing without a walkthrough.
 
@@ -10,7 +12,8 @@ Now, imagine upgrading the SSD from a 200GB storage drive to a 1TB drive, and th
 
 This is where this guide comes in.
 
-## Table of contents
+Table of contents
+-----------------
 
 There are multiple steps to resizing all volumes correctly. They are as follows:
 
@@ -20,7 +23,8 @@ There are multiple steps to resizing all volumes correctly. They are as follows:
 - [Perform a 'file system check'](#perform-a-'file-system-check')
 - [Resize the file system](#resize-the-file-system)
 
-## Resize the volume group
+Resize the volume group
+-----------------------
 
 Resize the partition (volume group) using a live USB environment, as the partition being resized up ***must be*** unmounted.
 
@@ -32,7 +36,8 @@ Use the following command before and after resizing the volume group (partition)
 vgdisplay
 ```
 
-## Resize the physical volume
+Resize the physical volume
+--------------------------
 
 Once the partition (volume group) has been resized, leave the live USB environment and boot back into the machine, using the new 1TB storage drive.
 
@@ -50,7 +55,8 @@ pvresize /dev/$ROOT_PHYSICAL_VOLUME
 pvdisplay
 ```
 
-## Resize the logical volume
+Resize the logical volume
+-------------------------
 
 With the VG and the PV resized, it is now possible to increase the sizes of the logical volumes (LVs).
 
@@ -72,7 +78,8 @@ lvresize -l +100%FREE /dev/ubuntu-vg/root
 lvdisplay
 ```
 
-## Perform a 'file system check'
+Perform a 'file system check'
+-----------------------------
 
 While the VG, PV, and LVs have all been resized, it is possible to see with the following command that the file system still hasn't been extended to encompass all the new space.
 
@@ -86,7 +93,8 @@ First, perform a file system check with the following command:
 e2fsck -f /dev/ubuntu-vg/root
 ```
 
-## Resize the file system
+Resize the file system
+----------------------
 
 Then, resize the file system for the root file system using the following command:
 

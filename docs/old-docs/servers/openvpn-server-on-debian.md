@@ -1,14 +1,17 @@
-# OpenVPN server, running on Debian
+OpenVPN server, running on Debian
+=================================
 
 NB: This guide has been adapted from a [YouTube video](https://www.youtube.com/watch?v=Lk_v6Q0YsNo) by @MentalOutlaw.
 
-## Introduction
+Introduction
+------------
 
 This guide assists in the creation of new OpenVPN servers. OpenVPN is a free and open-source (FOSS) VPN server software that makes setting up a custom VPN extremely easy. To assist further, this guide will utilize an [OpenVPN install script](https://github.com/angristan/openvpn-install) by @Angristan. The script not only makes the server setup near instant and painless, but also streamlines the process of adding new user credentials and revoking any compromised credentials.
 
 As is explained in other parts of the guide, these instructions can be deployed on anything from a cloud-hosted server to a virtual machine (VM) to a single-board computer like a Raspberry Pi.
 
-## Table of Contents
+Table of Contents
+-----------------
 
 - [Introduction](#introduction)
 - [Setting up a cloud server](#setting-up-a-cloud-server)
@@ -20,7 +23,8 @@ As is explained in other parts of the guide, these instructions can be deployed 
 - [Setting up the OpenVPN server](#setting-up-the-openvpn-server)
 - [References](#references)
 
-## Setting up a cloud server
+Setting up a cloud server
+-------------------------
 
 The first step in setting up an OpenVPN server is to create the virtual environment onto which OpenVPN will be installed. This virtual environment can take many forms, such as a cloud server, a Proxmox VM, or a standalone device such as a Raspberry Pi.
 
@@ -32,11 +36,13 @@ The following are suggestions for how to set up each of those options:
 
 Once the virtual environment has been provisioned and initialized, the next step is to configure the server.
 
-## Initial configuration
+Initial configuration
+---------------------
 
 Follow this guide on [configuring a server running Debian](/servers/configuring-debian-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
 
-## Configuring UFW
+Configuring UFW
+---------------
 
 Depending on the network's setup, it may also make sense to include a software firewall, such as `ufw`. For a publicly accessible server, it is highly advisable to configure `ufw` such that the available ports are limited as much as possible.
 
@@ -110,7 +116,8 @@ To check and confirm the firewall rules, use the following command:
 sudo ufw status
 ```
 
-## Setting up the OpenVPN server
+Setting up the OpenVPN server
+-----------------------------
 
 The easiest way to install an OpenVPN server is to grab an install script written by @Angristan and deploy it.
 
@@ -140,7 +147,8 @@ The client files should be dumped into the user's home folder, so the only comma
 
 With this configuration file, the user should be able to import the configuration file into their OpenVPN client and connect to the server!
 
-## References
+References
+----------
 
 - [GitHub - Angristan - openvpn-install](https://github.com/angristan/openvpn-install)
 - [YouTube - MentalOutlaw - How to Create Your Own VPN (and why)](https://www.youtube.com/watch?v=Lk_v6Q0YsNo)

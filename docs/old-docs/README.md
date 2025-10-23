@@ -1,13 +1,13 @@
-# library
+Library - old docs
+==================
 
 [Back to "Docs and guides"](../README.md)
 
 My guides for different installs and customizations, etc.
 
-## List of guides
+List of guides
+--------------
 
-- [Docker](docker/)
-    - [Installing Docker on Arch Linux](docker/install-docker-arch.md)
 - [Install operating systems](install-os/)
     - [Installing Arch / Artix Linux](install-os/install-arch.md)
     - [Installing Debian / Ubuntu](install-os/install-debian.md)

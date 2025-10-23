@@ -1,19 +1,23 @@
-# Working with the "authorized_keys" file
+Working with the "authorized_keys" file
+=======================================
 
 [Back to the home page](README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Best practices](#best-practices)
 
-## Introduction
+Introduction
+------------
 
 Especially on systems with many keys added to the `.ssh/authorized_keys` file, having good "hygiene" is important and useful.
 
 This section will highlight some tips for managing the `.ssh/authorized_keys` file.
 
-## Best practices
+Best practices
+--------------
 
 The main point to address is that the `.ssh/authorized_keys` file, like any other Bash file, can have lines commented out with `#`.
 

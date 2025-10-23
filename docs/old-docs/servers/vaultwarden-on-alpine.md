@@ -1,11 +1,13 @@
-# Vaultwarden password manager, running on Alpine Linux
+Vaultwarden password manager, running on Alpine Linux
+=====================================================
 
 NB:
 
 - This guide has been tested using an Alpine Linux container on Proxmox, using the default Alpine image that Proxmox pulls. In addition, this guide has also been tested using VMs hosted on Vultr and Linode.
 - This guide makes frequent references to the IP address `127.0.0.1`. Obviously, this is a reference to the hostname `localhost`. Either can be used in place of the other; however, using the IP address itself avoids both the "host file lookup", as well as the potential for trying the IPv6 entry for `localhost`.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Initial configuration](#initial-configuration)
 - [Configuring UFW](#configuring-ufw)
@@ -26,7 +28,8 @@ NB:
     - [Disabling new user registration](#disabling-new-user-registration)
 - [References](#references)
 
-## Initial configuration
+Initial configuration
+---------------------
 
 First, update the `apk` package list and install some packages that will be used throughout the Vaultwarden server setup process.
 
@@ -42,7 +45,8 @@ echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/reposito
 
 Next, follow this guide on [configuring a server running Alpine Linux](/servers/configuring-alpine-server.md) to set up a new user account and secure the SSH connection, as well as to add some configuration files. Only return to this guide once those steps have been completed.
 
-## Configuring UFW
+Configuring UFW
+---------------
 
 Depending on the network's setup, it may also make sense to include a software firewall, such as `ufw`. For a publicly accessible server, it is highly advisable to configure `ufw` such that the available ports are limited as much as possible.
 
@@ -126,7 +130,8 @@ To check and confirm the firewall rules, use the following command:
 sudo ufw status
 ```
 
-## Installing Vaultwarden
+Installing Vaultwarden
+----------------------
 
 Now, update the package list with the additions from the "edge" repository, and install `vaultwarden` and `vaultwarden-web-vault`. The `vaultwarden-openrc` package is installed during the install of `vaultwarden`, so no need to include it. Also, install `nginx` and `openssl` at this time.
 
@@ -234,7 +239,8 @@ curl 127.0.0.1:8000/admin
 
 `127.0.0.1:8000` should return output for the web-vault login page, and the `127.0.0.1:8000/admin` page should return a page related to signing in to the admin panel.
 
-## Configuring SSL and HTTPS connections
+Configuring SSL and HTTPS connections
+-------------------------------------
 
 Now, it's time to set up some self-signed SSL certificates in order to enable HTTPS connections. Create the following directory and change directory into it.
 
@@ -258,7 +264,8 @@ The next command uses the private key and the CSR to generate a certificate file
 sudo openssl x509 -signkey $SERVER.key -in $SERVER.csr -req -days 36500 -out $SERVER.crt
 ```
 
-## Configuring nginx
+Configuring nginx
+-----------------
 
 Create a new configuration file in the "/etc/nginx/http.d" directory:
 
@@ -309,13 +316,15 @@ curl https://$HOSTNAME
 
 This should display the same output as curling "127.0.0.1:8000".
 
-## Final steps
+Final steps
+-----------
 
 With all of this configuration in place, accessing the server at https://$HOSTNAME should return the Vaultwarden login page. Also, accessing https://$HOSTNAME/admin should return the administration panel. Simply enter the password that was used to generate the admin token to explore the admin panel.
 
 Congrats on setting up a Vaultwarden instance using Alpine Linux!
 
-## Additional notes
+Additional notes
+----------------
 
 This section contains additional comments and troubleshooting steps that have been useful in administrating a Vaultwarden server.
 
@@ -397,7 +406,8 @@ export INVITATIONS_ALLOWED=false
 
 At this point, unless one of these two options are changed back to true (or, simply commented out), no new users can be added to the Vaultwarden server.
 
-## References
+References
+----------
 
 - [Vaultwarden wiki](https://github.com/dani-garcia/vaultwarden/wiki)
 - [YouTube - anthonywritescode - don't use localhost (intermediate) anthony explains #534](https://www.youtube.com/watch?v=98SYTvNw1kw)

@@ -1,10 +1,13 @@
-# Installing Arch / Artix Linux, fast edition
+Installing Arch / Artix Linux, fast edition
+===========================================
 
-## Introduction
+Introduction
+------------
 
 This guide will work for both Arch and Artix Linux. Any differences between the two will be specified.
 
-## Table of Contents
+Table of Contents
+-----------------
 
 - [Introduction](#introduction)
 - [Enabling wireless internet on Artix Linux](#enabling-wireless-internet-on-artix-linux)
@@ -40,7 +43,8 @@ This guide will work for both Arch and Artix Linux. Any differences between the 
     - [Update GRUB](#update-grub)
 - [References](#references)
 
-## Enabling wireless internet on Artix Linux
+Enabling wireless internet on Artix Linux
+-----------------------------------------
 
 One difference worth noting is how to enable wireless internet.
 
@@ -63,7 +67,8 @@ connmanctl> quit
 
 An additional item worth noting: if the computer that is receiving the Artix Linux install isn't connected via Ethernet, and requires `connmanctl`, it will also need `connmanctl` when first booted. Be sure to install `connmanctl` during the [Installing the operating system](#installing-the-operating-system) section of the guide, to avoid any connection issues after install.
 
-## Partitioning the storage drive
+Partitioning the storage drive
+------------------------------
 
 Identify whether the computer is UEFI-compatible or not using the following commands.
 
@@ -125,7 +130,8 @@ The following commands are useful in the order that they appear.
 
 Use `lsblk` to confirm the changes made with `fdisk`.
 
-## Encrypting the root partition
+Encrypting the root partition
+-----------------------------
 
 This step may be referred to in other parts of the guide as full disk encryption (FDE).
 
@@ -147,7 +153,8 @@ Use `lsblk` to confirm the changes made with `cryptsetup`. Also, use `ls /dev/ma
 ls /dev/mapper
 ```
 
-## Creating file systems
+Creating file systems
+---------------------
 
 ### Swap partitions
 
@@ -212,7 +219,8 @@ If a swap partition was created, create a file system for it using the following
 mkswap /dev/mapper/vgartix-swap_1
 ```
 
-## Mounting file systems
+Mounting file systems
+---------------------
 
 First, mount the root partition to the `/mnt` directory. This partition should have the same path as the partition on which the ext4 file system was made.
 
@@ -232,7 +240,8 @@ After creating the directory, mount the boot partition to that directory:
 mount /dev/$sdx1 /mnt/boot
 ```
 
-## Installing the operating system
+Installing the operating system
+-------------------------------
 
 Edit the `pacman` mirror list with a text editor of choice (ex. `vim`) so mirrors closer to the computer's physical location are at the top of the list.
 
@@ -285,7 +294,8 @@ Run the `basestrap` command:
 basestrap -i /mnt base base-devel linux linux-firmware runit elogind-runit cryptsetup lvm2 lvm2-runit grub networkmanager networkmanager-runit neovim vim efibootmgr
 ```
 
-## Setting up the *chroot* environment
+Setting up the *chroot* environment
+-----------------------------------
 
 Append the output of the `lsblk -f` command to the `/mnt/etc/default/grub` file:
 
@@ -327,7 +337,8 @@ Change into the *chroot* environment:
 artix-chroot /mnt bash
 ```
 
-## Making some necessary adjustments
+Making some necessary adjustments
+---------------------------------
 
 ### Time zone
 
@@ -464,7 +475,8 @@ NB: For systems using `runit`, it is possible to set the computer up such that b
 --autologin $USER
 ```
 
-## Kernel initialization
+Kernel initialization
+---------------------
 
 On a system using FDE, it is a requirement to update the `/etc/mkinitcpio.conf` file, so the system knows to load the correct modules in order to unlock the encrypted root partition during bootup.
 
@@ -480,7 +492,8 @@ Push the updates to the intial RAM file system with the following command:
 mkinitcpio -p linux
 ```
 
-## Bootloader
+Bootloader
+----------
 
 On a system using FDE, it is a requirement to edit the `/etc/default/grub` using a text editor.
 
@@ -537,7 +550,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 Congrats on installing an Arch-based Linux system!
 
-## References
+References
+----------
 
 - [YouTube - Luke Smith - Install Artix or Arch Linux (Encrypted system)](https://www.youtube.com/watch?v=dI3bGeT31Bo)
     - [Alternative link to Luke's personal site](https://videos.lukesmith.xyz/w/n1cMQYYzwPoegM2oXfz2iC)

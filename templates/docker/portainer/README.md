@@ -1,8 +1,10 @@
-# Templates - Docker - Portainer
+Templates - Docker - Portainer
+==============================
 
 [Back](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Pre-configuration](#pre-configuration)
 - [Commands](#commands)
@@ -10,7 +12,8 @@
     - [Multi-line command](#multi-line-command)
 - [Docker Compose](#docker-compose)
 
-## Pre-configuration
+Pre-configuration
+-----------------
 
 Create a Docker volume to store Portainer data:
 
@@ -18,7 +21,8 @@ Create a Docker volume to store Portainer data:
 docker volume create portainer_data
 ```
 
-## Commands
+Commands
+--------
 
 ### One-line command
 
@@ -43,7 +47,8 @@ docker run -d \
     portainer/portainer-ce:latest
 ```
 
-## Docker Compose
+Docker Compose
+--------------
 
 Create a new directory, `portainer`, and a new file within named `docker-compose.yaml`:
 

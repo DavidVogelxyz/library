@@ -1,8 +1,10 @@
-# Templates - Docker - Homer
+Templates - Docker - Homer
+==========================
 
 [Back](../README.md)
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Pre-configuration](#pre-configuration)
 - [Commands](#commands)
@@ -10,7 +12,8 @@
     - [Multi-line command](#multi-line-command)
 - [Docker Compose](#docker-compose)
 
-## Pre-configuration
+Pre-configuration
+-----------------
 
 Create a Docker volume to store Homer data:
 
@@ -18,7 +21,8 @@ Create a Docker volume to store Homer data:
 docker volume create homer_data
 ```
 
-## Commands
+Commands
+--------
 
 ### One-line command
 
@@ -42,7 +46,8 @@ docker run -d \
     b4bz/homer:latest
 ```
 
-## Docker Compose
+Docker Compose
+--------------
 
 Create a new directory, `homer`, and a new file within named `docker-compose.yaml`:
 

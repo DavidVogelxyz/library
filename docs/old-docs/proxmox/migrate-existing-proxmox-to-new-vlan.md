@@ -1,8 +1,10 @@
-# How to migrate an existing Proxmox server to a new VLAN
+How to migrate an existing Proxmox server to a new VLAN
+=======================================================
 
 This guide will assist the reader in creating a new VLAN (on pfSense) and migrating an existing Proxmox server to the new subnet.
 
-## Table of contents
+Table of contents
+-----------------
 
 - [Introduction](#introduction)
 - [Creating a new VLAN on pfSense](#creating-a-new-vlan-on-pfsense)
@@ -10,11 +12,13 @@ This guide will assist the reader in creating a new VLAN (on pfSense) and migrat
 - [Configuring the switch](#configuring-the-switch)
 - [Testing the change](#testing-the-change)
 
-## Introduction
+Introduction
+------------
 
 In order to do this correctly, some steps should be taken in the proper order.
 
-## Creating a new VLAN on pfSense
+Creating a new VLAN on pfSense
+------------------------------
 
 First, create the new VLAN in the `Interfaces > VLAN` section.
 
@@ -30,7 +34,8 @@ As an example, consider a VLAN that contains two VM servers: one for server VMs,
 
 First, choose which VM server is staying, and which is migrating. Then, create a new VLAN for that VM server. Next, create the interface using that new VLAN. The DHCP server for the new VLAN should be nearly identical to the DHCP server settings of the old VLAN; the only difference would be the IP ranges. For the firewall rules, it's probably alright to just copy the entire list of firewall rules and migrate them. For the NAT rule, just copy the original VLAN's NAT rule and change the IP range.
 
-## Reconfiguring Proxmox to use the new VLAN
+Reconfiguring Proxmox to use the new VLAN
+-----------------------------------------
 
 Next, change the IP address on the Proxmox. It is important that this step is done before the switch, as changing the rules on the switch will knock out the connectivity.
 
@@ -42,10 +47,12 @@ It may also be a good idea to change the password to something "less secure", as
 
 At this point, shut down all VMs and power down the Proxmox.
 
-## Configuring the switch
+Configuring the switch
+----------------------
 
 When the [pfSense](#pfsense) and [Proxmox](#proxmox) settings are all ready to go, it is time to change the switch settings. Depending on what switch is being used, there may be multiple places where the VLAN tag needs to be changed.
 
 As an example, a household TP-Link switch may have two places. One is on the page where the user indicates the tagging and untagging, and the other is the PVID page, where the switch is told which port corresponds to which VLAN.
 
-## Testing the change
+Testing the change
+------------------

@@ -1,4 +1,5 @@
-# Service manager related templates
+Service manager related templates
+=================================
 
 [Back to "Templates"](../README.md)
 
