@@ -13,6 +13,7 @@ This guide will go through some of the basics for working with SSH. In addition,
 Table of contents
 -----------------
 
+Standard SSH configuration:
 - [Introduction](#introduction)
 - [Terms and Definitions](#terms-and-definitions)
 - [Creating SSH Keys](create-ssh-keys.md)
@@ -22,6 +23,9 @@ Table of contents
 - [Utilizing the "SSH-Agent" to Store Unlocked Private Keys](ssh-agent.md)
 - [Working with the "known_hosts" file](known-hosts.md)
 - [Working with the "authorized_keys" file](authorized-keys.md)
+
+SSH certificate authorities:
+- [SSH certificate authorities](ssh-ca/README.md)
 
 Terms and Definitions
 ---------------------
