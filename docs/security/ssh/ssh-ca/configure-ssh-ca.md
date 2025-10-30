@@ -52,13 +52,13 @@ Any host that will be attuned to the CA must have the following:
     - While not essential, there is no reason **NOT** to keep the pubkey with its private key.
 - The host certificate, also located in the `/etc/ssh` directory
     - The host certificate is essential for host verification by the user.
-- The `user-CA_cert.pub`, also located in the `/etc/ssh` directory
-    - The user CA certificate is essential for user authentication by the host.
+- The `user-CA_key.pub`, also located in the `/etc/ssh` directory
+    - The user CA pubkey is essential for user authentication by the host.
 
 In addition, the following lines should be present in the `/etc/ssh/sshd_config` file:
 
 ```
-TrustedUserCAKeys       <PATH_TO_USER-CA_CERT.PUB>
+TrustedUserCAKeys       <PATH_TO_USER-CA_PUBKEY.PUB>
 HostKey                 <PATH_TO_HOST_PRIVATE_KEY>
 HostCertificate         <PATH_TO_HOST_CERT>
 ```
