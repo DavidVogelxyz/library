@@ -10,6 +10,7 @@ Documentation from 2025:
 - [Bitcoin node, running on Debian](servers/bitcoin-node-on-debian/README.md)
 - [Compiling programs from source code](compiling-from-source/README.md)
 - [Git Good at Git](git-related/README.md)
+- [Programming syntax guides](programming/README.md)
 - [SSH guide](security/ssh/README.md)
 - [Vim guide](vim/README.md)
 
