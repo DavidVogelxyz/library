@@ -8,8 +8,8 @@ To walk a map in Python, write the following syntax:
 
 ```python
 arr = [
-    "123"
-    "456"
+    "123",
+    "456",
     "789"
 ]
 
