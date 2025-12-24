@@ -8,3 +8,4 @@ Table of contents
 
 - [Bash](bash/README.md)
 - [Python](python/README.md)
+- [Rust](rust/README.md)
