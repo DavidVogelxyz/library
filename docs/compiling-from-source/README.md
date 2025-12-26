@@ -20,3 +20,4 @@ How to compile from source:
 - [nvim](compile-nvim.md)
 - [tmux](compile-tmux.md)
 - [vim](compile-vim.md)
+- [xwallpaper](compile-xwallpaper.md)
