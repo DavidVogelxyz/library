@@ -1,6 +1,8 @@
 Walking a map in Bash
 =====================
 
+[Back to the "Bash syntax guide" home page](README.md)
+
 Simple walk
 -----------
 

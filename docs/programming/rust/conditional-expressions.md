@@ -1,6 +1,8 @@
 Conditional expressions
 =======================
 
+[Back to the "Rust syntax guide" home page](README.md)
+
 Rust allows for various types of conditional expressions.
 
 If/then statements

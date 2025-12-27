@@ -1,6 +1,8 @@
 Reading input in Python
 =======================
 
+[Back to the "Python syntax guide" home page](README.md)
+
 There are a few ways to read input in Python.
 
 Open, read, strip

@@ -1,6 +1,8 @@
 Iterating in Python
 ===================
 
+[Back to the "Python syntax guide" home page](README.md)
+
 For loop
 --------
 

@@ -1,6 +1,8 @@
 Trapping signals
 ================
 
+[Back to the "Bash syntax guide" home page](README.md)
+
 Bash allows for signal trapping in scripts, allowing the script to exit properly, even in the case of interruption or a pre-mature end to the process.
 
 Table of contents
