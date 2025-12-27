@@ -1,6 +1,8 @@
 Python syntax guide
 ===================
 
+[Back to the "programming syntax guide" home page](../README.md)
+
 This guide provides helpful hints regarding Python syntax.
 
 Table of contents

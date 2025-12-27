@@ -1,6 +1,8 @@
 Iterating in Rust
 =================
 
+[Back to the "Rust syntax guide" home page](README.md)
+
 For loop
 --------
 

@@ -1,6 +1,8 @@
 Reading input in Bash
 =====================
 
+[Back to the "Bash syntax guide" home page](README.md)
+
 There are a few ways to read input in Bash.
 
 Table of contents

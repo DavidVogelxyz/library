@@ -1,6 +1,8 @@
 Iterating in Bash
 =================
 
+[Back to the "Bash syntax guide" home page](README.md)
+
 C-style for loop
 ----------------
 

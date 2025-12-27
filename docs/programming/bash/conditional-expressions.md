@@ -1,6 +1,8 @@
 Conditional expressions
 =======================
 
+[Back to the "Bash syntax guide" home page](README.md)
+
 Bash allows for various types of conditional expressions.
 
 If/then statements

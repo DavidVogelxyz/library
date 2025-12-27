@@ -1,6 +1,8 @@
 Programming syntax guides
 =========================
 
+[Back to "Docs and guides"](../README.md)
+
 These guides contain helpful syntax guidelines for programming in various languages.
 
 Table of contents

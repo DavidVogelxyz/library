@@ -1,6 +1,8 @@
 Walking a map in Python
 =======================
 
+[Back to the "Python syntax guide" home page](README.md)
+
 Simple walk
 -----------
 

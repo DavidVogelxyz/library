@@ -1,6 +1,8 @@
 Parameter expansion
 ===================
 
+[Back to the "Bash syntax guide" home page](README.md)
+
 Parameter expansion in Bash allows a programmer to access information about a variable that is often retrieved in other languages by using various methods.
 
 Length

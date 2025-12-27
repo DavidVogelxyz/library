@@ -1,6 +1,8 @@
 Conditional expressions
 =======================
 
+[Back to the "Python syntax guide" home page](README.md)
+
 Python allows for various types of conditional expressions.
 
 If/then statements

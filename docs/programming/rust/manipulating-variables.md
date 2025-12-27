@@ -1,6 +1,8 @@
 Manipulating variables in Rust
 ==============================
 
+[Back to the "Rust syntax guide" home page](README.md)
+
 Length
 ------
 
