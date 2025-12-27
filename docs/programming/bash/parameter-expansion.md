@@ -68,25 +68,7 @@ When assigning `left`, Bash interprets `%%` as "read from right to left (backwar
 
 Similarly, when assigning `right`, Bash interprets `##` as "read from left to right (fowards) until the last instance of the pattern" `*-`. Then, Bash assigns `right` as "everything that is **NOT** that pattern" (in this case, `30`).
 
-### Splitting with read
-
-Split with `read`:
-
-```bash
-string="20-30"
-
-IFS="-" read -r left right <<< "$string"
-
-echo "left = $left"
-echo "right = $right"
-```
-
-Prints:
-
-```
-left = 20
-right = 30
-```
+It is also possible to [split with the read command](reading-input.md#using-read-to-split-a-string); though, Bash will operate faster if splitting is done with parameter expansion. Using `read` to split is only advisable when parameter expansion is too cumbersome. An example of a cumbersome string could be `20,30,40,50,60` -- this string would be easier to split using `read`; though, it would run slower.
 
 Removing a substring from a string
 ----------------------------------
