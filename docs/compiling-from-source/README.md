@@ -16,6 +16,7 @@ Table of contents
 How to compile from source:
 - [cmake](compile-cmake.md)
 - [libevent](compile-libevent.md)
+- [lf](compile-lf.md)
 - [ncurses](compile-ncurses.md)
 - [nvim](compile-nvim.md)
 - [tmux](compile-tmux.md)
