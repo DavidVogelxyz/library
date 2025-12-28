@@ -15,3 +15,4 @@ Table of contents
 - [Walking a map](walking-a-map.md)
 - [Trapping signals](trapping-signals.md)
 - [Getopts](getopts.md)
+- [Printf](printf.md)
