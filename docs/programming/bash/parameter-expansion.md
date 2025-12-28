@@ -5,6 +5,22 @@ Parameter expansion
 
 Parameter expansion in Bash allows a programmer to access information about a variable that is often retrieved in other languages by using various methods.
 
+Table of contents
+-----------------
+
+- [Length](#length)
+    - [Length of a string](#length-of-a-string)
+    - [Length of an array](#length-of-an-array)
+- [Splitting](#splitting)
+    - [Splitting with parameter expansion](#splitting-with-parameter-expansion)
+- [Removing a substring from a string](#removing-a-substring-from-a-string)
+    - [Keeping a substring](#keeping-a-substring)
+    - [Removing a substring](#removing-a-substring)
+- [Absolute value](#absolute-value)
+- [Single quotes vs double quotes](#single-quotes-vs-double-quotes)
+- [Uppercase and lowercase](#uppercase-and-lowercase)
+- [References](#references)
+
 Length
 ------
 
@@ -136,3 +152,59 @@ Prints:
 1
 2
 ```
+
+Single quotes vs double quotes
+------------------------------
+
+Often, it is practical to make use of double quotes when quoting variables, in order to ensure that parameters are properly expanded.
+
+However, there are some instances where it is imperative that the parameter is **NOT** expanded. In these cases, use single quotes.
+
+An example of this may be a script that executes the following command:
+
+```bash
+ssh <TARGET> 'kill -9 $(pidof sleep)'
+```
+
+This command will `ssh` into `<TARGET>` in order to run `kill -9 $(pidof sleep)`. If double quotes are used in this command, then `$(pidof sleep)` will expand on the host system, and that expansion will be run on the target machine. That is likely **NOT** the intention of the person running the script, as the expansion will not result in the PID of the `sleep` process running on `<TARGET>`.
+
+However, if single quotes are used, then the command `kill -9 $(pidof sleep)` will be expanded on the target machine, and will correctly expand to the PID of the `sleep` process on the target machine.
+
+Uppercase and lowercase
+-----------------------
+
+To convert a string to uppercase, write the following syntax:
+
+```bash
+string="hello"
+
+echo "string = ${string@U}"
+```
+
+Prints:
+
+```
+HELLO
+```
+
+To convert a string to lowercase, write the following syntax:
+
+```bash
+string="HELLO"
+
+echo "string = ${string@L}"
+```
+
+Prints:
+
+```
+hello
+```
+
+References
+----------
+
+- [GNU - Bash reference manual - Shell Parameter Expansion](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion-1)
+    - Information on "parameter expansion" in Bash
+- [YouTube - YouSuckAtProgramming - Episode 21 - Escaping and Wrangling quotes in Bash](https://www.youtube.com/watch?v=5DD7YrOgmq4):
+    - Dave Eddy's video on "quotes, in Bash"
