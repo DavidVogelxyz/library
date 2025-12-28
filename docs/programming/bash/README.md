@@ -14,3 +14,4 @@ Table of contents
 - [Iterating](iterating.md)
 - [Walking a map](walking-a-map.md)
 - [Trapping signals](trapping-signals.md)
+- [Getopts](getopts.md)
