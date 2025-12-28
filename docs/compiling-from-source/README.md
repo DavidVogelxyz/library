@@ -20,6 +20,7 @@ How to compile from source:
 - [ncurses](compile-ncurses.md)
 - [nvim](compile-nvim.md)
 - [tmux](compile-tmux.md)
+- [ueberzugpp](compile-ueberzugpp.md)
 - [vim](compile-vim.md)
 - [xcape](compile-xcape.md)
 - [xwallpaper](compile-xwallpaper.md)
