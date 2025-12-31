@@ -13,9 +13,11 @@ Table of contents
     - [Length of an array](#length-of-an-array)
 - [Splitting](#splitting)
     - [Splitting with parameter expansion](#splitting-with-parameter-expansion)
-- [Removing a substring from a string](#removing-a-substring-from-a-string)
-    - [Keeping a substring](#keeping-a-substring)
-    - [Removing a substring](#removing-a-substring)
+- [Pattern matching](#pattern-matching)
+    - [Replacing a character with a different character](#replacing-a-character-with-a-different-character)
+    - [Keeping only a certain character](#keeping-only-a-certain-character)
+    - [Removing a certain character](#removing-a-certain-character)
+- [Setting a default value for a parameter](#setting-a-default-value-for-a-parameter)
 - [Absolute value](#absolute-value)
 - [Single quotes vs double quotes](#single-quotes-vs-double-quotes)
 - [Uppercase and lowercase](#uppercase-and-lowercase)
@@ -88,12 +90,32 @@ Similarly, when assigning `right`, Bash interprets `##` as "read from left to ri
 
 It is also possible to [split with the read command](reading-input.md#using-read-to-split-a-string); though, Bash will operate faster if splitting is done with parameter expansion. Using `read` to split is only advisable when parameter expansion is too cumbersome. An example of a cumbersome string could be `20,30,40,50,60` -- this string would be easier to split using `read`; though, it would run slower.
 
-Removing a substring from a string
-----------------------------------
+Pattern matching
+----------------
 
-### Keeping a substring
+### Replacing a character with a different character
 
-To keep a substring from a string by removing anything that doesn't match the pattern, write the following syntax:
+To replace a character in a string with a different character, write the following syntax:
+
+```bash
+string="hello"
+remove="e"
+replace="a"
+
+new="${string//$remove/$replace}"
+
+echo "new string = $new"
+```
+
+Prints:
+
+```
+new string = hallo
+```
+
+### Keeping only a certain character
+
+To keep all instances of a certain character in a string, and remove the remainder, write the following syntax:
 
 ```bash
 string="hello"
@@ -112,9 +134,9 @@ new string = ll
 
 As demonstrated, this can be useful when attempting to count the number of occurrences of a specific character.
 
-### Removing a substring
+### Removing a certain character
 
-To remove a substring from a string by removing all matches of a pattern, write the following syntax:
+To remove a certain character from a string, and retain the remainder of the string, write the following syntax:
 
 ```bash
 string="hello"
@@ -129,6 +151,51 @@ Prints:
 
 ```
 new string = heo
+```
+
+Setting a default value for a parameter
+---------------------------------------
+
+To set a default value for a parameter, write the following syntax:
+
+```bash
+echo "${string:-hello}"
+
+string="goodbye"
+echo "${string:-hello}"
+```
+
+Prints:
+
+```
+hello
+goodbye
+```
+
+When `echo` is called the first time, `string` is not set, and the parameter expands to `hello`.
+
+Then, `string` is defined as `"goodbye"`. When `echo` is called the second time, it prints the value of `string`, which is `goodbye`.
+
+### Nesting default values for parameter
+
+It's possible to nest this expansion, as in the following example:
+
+```bash
+echo "${string_one:-${string_two:-hello}}"
+
+string_two="goodbye"
+echo "${string_one:-${string_two:-hello}}"
+
+string_one="HELLO"
+echo "${string_one:-${string_two:-hello}}"
+```
+
+Prints:
+
+```
+hello
+goodbye
+HELLO
 ```
 
 Absolute value
