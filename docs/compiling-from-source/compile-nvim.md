@@ -56,16 +56,10 @@ Checkout the version that should be installed:
 git checkout stable
 ```
 
-Configure to install for the user, instead of system-wide:
+Compile `neovim` for the user, instead of system-wide:
 
 ```bash
 make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=${HOME}/.local
-```
-
-Compile `neovim`:
-
-```bash
-make
 ```
 
 Install `neovim` for the user:
