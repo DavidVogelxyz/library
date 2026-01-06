@@ -184,6 +184,13 @@ a b
 
 What is noteworthy about the "here string" (`<<<`) is that the command (in this case, `grep`) must complete before `read` begins to process the command's `STDOUT`. In a case where the command will complete quickly, or does not output much to memory, this isn't a big deal. But, for larger files or slower commands, this can be inadvisable.
 
+As a note, implementing `read` with a "here string" is similar to "assigning the output of a command to a variable" -- both will wait for the command to return before processing the output. While variable assignment doesn't require the use of the `read` command, it is included here as an example of another method for which "the command must complete":
+
+```bash
+output="$(grep "a" file.txt)"
+echo "$output"
+```
+
 #### Using process substitution to read the streamed output of a command
 
 Sometimes, it is more efficient to stream the output of a command. In these cases, use process substitution:
