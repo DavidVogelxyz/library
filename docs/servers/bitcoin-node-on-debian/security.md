@@ -20,19 +20,19 @@ Depending on the network's setup, it may also make sense to include a software f
 
 Add a default firewall rule to deny incoming connections:
 
-```
+```bash
 sudo ufw default deny incoming
 ```
 
 Add a default firewall rule to allow outgoing connections:
 
-```
+```bash
 sudo ufw default allow outgoing
 ```
 
 Set logging to off:
 
-```
+```bash
 sudo ufw logging off
 ```
 
@@ -42,19 +42,19 @@ For generalized firewall rules, see [general firewall rules](#general-firewall-r
 
 Add a firewall rule to allow SSH connections:
 
-```
+```bash
 sudo ufw allow ssh
 ```
 
 Add a firewall rule to allow HTTP connections:
 
-```
+```bash
 sudo ufw allow http
 ```
 
 Add a firewall rule to allow HTTPS connections:
 
-```
+```bash
 sudo ufw allow https
 ```
 
@@ -62,19 +62,19 @@ sudo ufw allow https
 
 Add a firewall rule to allow SSH connections from only specific IP addresses:
 
-```
+```bash
 sudo ufw allow from <IP_ADDRESS> proto tcp to any port 22
 ```
 
 Add a firewall rule to allow HTTP connections from only specific IP addresses:
 
-```
+```bash
 sudo ufw allow from <IP_ADDRESS> proto tcp to any port 80
 ```
 
 Add a firewall rule to allow HTTPS connections from only specific IP addresses:
 
-```
+```bash
 sudo ufw allow from <IP_ADDRESS> proto tcp to any port 443
 ```
 
@@ -82,19 +82,19 @@ sudo ufw allow from <IP_ADDRESS> proto tcp to any port 443
 
 Enable `ufw`:
 
-```
+```bash
 sudo ufw enable
 ```
 
 Enable `ufw` to run on startup:
 
-```
+```bash
 systemctl enable ufw
 ```
 
 To check and confirm the firewall rules, use the following command:
 
-```
+```bash
 sudo ufw status
 ```
 
@@ -103,13 +103,13 @@ Other security settings
 
 Next, install `fail2ban`, a package designed to temporarily ban users who fail to login too many times in a short period of time. No configuration is needed besides installing the package.
 
-```
+```bash
 nala install -y fail2ban
 ```
 
 Open the `/etc/security/limits.d/90-limits.conf` file:
 
-```
+```bash
 sudo vim /etc/security/limits.d/90-limits.conf
 ```
 
@@ -124,7 +124,7 @@ root hard nofile 128000
 
 Next, open the `/etc/pam.d/common-session` file:
 
-```
+```bash
 sudo vim /etc/pam.d/common-session
 ```
 
@@ -136,7 +136,7 @@ session required    pam_limits.so
 
 Open the very similarly named `/etc/pam.d/common-session-noninteractive` file:
 
-```
+```bash
 sudo vim /etc/pam.d/common-session-noninteractive
 ```
 

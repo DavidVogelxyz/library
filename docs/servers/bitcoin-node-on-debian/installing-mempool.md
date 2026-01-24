@@ -29,43 +29,43 @@ First, install `nodejs`.
 
 Note: the best way to go about this on Debian is **not** to use the `nodejs` package found in the Debian package repositories. Instead, use the following curl command to download and prepare a version of `nodejs` provided by the Node.js maintainers.
 
-```
+```bash
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 ```
 
 Now, install `nodejs`:
 
-```
+```bash
 nala install -y nodejs
 ```
 
 To confirm that `nodejs` installed correctly, check the node's `node` version:
 
-```
+```bash
 node -v
 ```
 
 It is also a good idea to check the node's `npm` version at this time:
 
-```
+```bash
 npm --version
 ```
 
 Now, add a `ufw` firewall rule to allow connections to Mempool:
 
-```
+```bash
 sudo ufw allow 4081/tcp comment 'allow Mempool SSL'
 ```
 
 Confirm the rule was entered correctly with the following:
 
-```
+```bash
 sudo ufw status
 ```
 
 Next, create a new user to manage the Mempool service:
 
-```
+```bash
 sudo useradd -G bitcoin -s /bin/bash -m mempool
 ```
 
@@ -73,19 +73,19 @@ Note that the `-G` option directs the `mempool` user to be added to the `bitcoin
 
 Switch users to the `mempool` user:
 
-```
+```bash
 su - mempool
 ```
 
 Clone the Mempool project into the `mempool` user's home directory, then change directory into it:
 
-```
+```bash
 git clone https://github.com/mempool/mempool && cd mempool
 ```
 
 Using the [Mempool's GitHub page](https://github.com/mempool/mempool) as a reference, direct the `git checkout` command to checkout the latest release version (as of writing, `v3.0.0`):
 
-```
+```bash
 git checkout v3.0.0
 ```
 
@@ -96,31 +96,31 @@ Configuring Mempool
 
 As the main admin user, install the MariaDB database package:
 
-```
+```bash
 nala update && nala install -y mariadb-server mariadb-client
 ```
 
 Use the following command to generate a randomized 25 character password; this password will be used to secure the SQL database (later referred to as `<PASSWORD_GENERATED_MOMENTS_AGO>`):
 
-```
+```bash
 tr -dc A-Za-z0-9 </dev/urandom | head -c 25; echo
 ```
 
 Secure the new `mysql` installation by following the prompts:
 
-```
+```bash
 sudo mysql_secure_installation
 ```
 
 Now, enter the shell for the SQL database:
 
-```
+```bash
 sudo mysql
 ```
 
 Run the following commands:
 
-```
+```sql
 CREATE DATABASE mempool;
 GRANT ALL PRIVILEGES ON mempool.* TO 'mempool'@'127.0.0.1' IDENTIFIED BY "<PASSWORD_GENERATED_MOMENTS_AGO>";
 FLUSH PRIVILEGES;
@@ -129,7 +129,7 @@ exit;
 
 Switch users to the `mempool` user:
 
-```
+```bash
 su - mempool
 ```
 
@@ -137,19 +137,19 @@ su - mempool
 
 Change directory into `~/mempool/backend`, then install and build the backend:
 
-```
+```bash
 cd ~/mempool/backend && npm install --prod && npm run build
 ```
 
 Create the configuration file in this directory by opening `mempool-config.json` in a text editor:
 
-```
+```bash
 vim mempool-config.json
 ```
 
 Add the following content to the file:
 
-```
+```json
 {
     "MEMPOOL": {
         "NETWORK": "mainnet",
@@ -208,7 +208,7 @@ Note: remember to change `<ADMIN_USERNAME>` and `<BITCOIN_RPC_PASSWORD>` to the 
 
 With the file configured properly, start the backend and confirm that it's running as intended:
 
-```
+```bash
 npm run start
 ```
 
@@ -225,7 +225,7 @@ Exit the `npm` process.
 
 While still logged in as the `mempool` user, change directory into `~/mempool/frontend`, then install and build the frontend:
 
-```
+```bash
 cd ~/mempool/frontend && npm install --prod && npm run build
 ```
 
@@ -233,7 +233,7 @@ Log out of the `mempool` user, and back to the main admin user.
 
 Move the frontend output into the webroot directory, then change the owner to the `www-data` user:
 
-```
+```bash
 sudo rsync -av --delete /home/mempool/mempool/frontend/dist/mempool/ /var/www/mempool/ && sudo chown -R www-data: /var/www/mempool
 ```
 
@@ -241,19 +241,19 @@ sudo rsync -av --delete /home/mempool/mempool/frontend/dist/mempool/ /var/www/me
 
 Earlier, the file `mempool-config.json` was created, and it contains sensitive credentials to the Bitcoin Core RPC process. To limit who can see and interact with those credentials, change the permissions on the file so that only its owner (the `mempool` user) can read or write that file:
 
-```
+```bash
 sudo chmod 600 /home/mempool/mempool/backend/mempool-config.json
 ```
 
 Next, open the `/etc/nginx/sites-available/mempool-ssl.conf` file in a text editor:
 
-```
+```bash
 sudo vim /etc/nginx/sites-available/mempool-ssl.conf
 ```
 
 Add the following content to the file:
 
-```
+```nginx
 proxy_read_timeout 300;
 proxy_connect_timeout 300;
 proxy_send_timeout 300;
@@ -344,31 +344,31 @@ server {
 
 Next, create a symlink from the `sites-available` directory to the `sites-enabled` directory:
 
-```
+```bash
 sudo ln -sf /etc/nginx/sites-available/mempool-ssl.conf /etc/nginx/sites-enabled/
 ```
 
 Now, copy the Mempool nginx configuration file into the `/etc/nginx/snippets` directory:
 
-```
+```bash
 sudo rsync -av /home/mempool/mempool/nginx-mempool.conf /etc/nginx/snippets
 ```
 
 Back up the current `nginx` configuration file by moving it to a different path:
 
-```
+```bash
 sudo mv -v /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 ```
 
 Open the `/etc/nginx/nginx.conf` in a text editor to create a new file:
 
-```
+```bash
 sudo vim /etc/nginx/nginx.conf
 ```
 
 Add the following contents to the file:
 
-```
+```nginx
 user www-data;
 worker_processes auto;
 pid /run/nginx.pid;
@@ -409,20 +409,20 @@ stream {
 
 Test the `nginx` configuration file with the following command:
 
-```
+```bash
 sudo nginx -t
 ```
 
 Now, use `systemctl reload` to update the `nginx` configuration:
 
-```
+```bash
 systemctl reload nginx
 ```
 
 Now, create a Mempool service file, so that the Mempool process can run automatically when the node reboots:
 
 
-```
+```bash
 sudo vim /etc/systemd/system/mempool.service
 ```
 
@@ -459,13 +459,13 @@ Note: `<HOSTNAME>` should be the hostname of the node.
 
 Enable the new Mempool service to start when the system boots, and start the service:
 
-```
+```bash
 systemctl enable mempool && systemctl start mempool
 ```
 
 Check the Mempool service logs to see it working:
 
-```
+```bash
 sudo journalctl -fu mempool
 ```
 
@@ -478,7 +478,7 @@ As is described in the section on [adding a hidden service](#adding-a-hidden-ser
 
 First, open the `/etc/tor/torrc` file in a text editor:
 
-```
+```bash
 sudo vim /etc/tor/torrc
 ```
 
@@ -493,13 +493,13 @@ HiddenServicePort 443 127.0.0.1:4081
 
 Exit the file, and reload the `tor` configurations with the following command:
 
-```
+```bash
 systemctl reload tor
 ```
 
 Use `cat` to output the file contents in the corresponding directory to obtain the onion link to the service:
 
-```
+```bash
 sudo cat /var/lib/tor/hidden_service_mempool/hostname
 ```
 

@@ -20,25 +20,25 @@ Installing and configuring "nginx"
 
 Install `nginx` by running the following command:
 
-```
+```bash
 nala install -y nginx
 ```
 
 Configure an SSL certificate for the server:
 
-```
+```bash
 sudo openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/CN=localhost" -days 365000
 ```
 
 Open the `/etc/nginx/nginx.conf` file with a text editor:
 
-```
+```bash
 sudo vim /etc/nginx/nginx.conf
 ```
 
 Overwrite its contents with the following:
 
-```
+```nginx
 user www-data;
 worker_processes 1;
 pid /run/nginx.pid;
@@ -62,19 +62,19 @@ stream {
 
 Create the following directory:
 
-```
+```bash
 sudo mkdir /etc/nginx/streams-enabled
 ```
 
 Test the `nginx` configuration file with the following command:
 
-```
+```bash
 sudo nginx -t
 ```
 
 If the test fails in reference to `unknown directive "stream"`, install the following package and test again:
 
-```
+```bash
 nala install -y libnginx-mod-stream
 ```
 

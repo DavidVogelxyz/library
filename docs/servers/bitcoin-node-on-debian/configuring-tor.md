@@ -21,13 +21,13 @@ Installing and configuring Tor
 
 Now, install `tor`:
 
-```
+```bash
 nala install -y tor
 ```
 
 Open the `/etc/tor/torrc` file with a text editor:
 
-```
+```bash
 sudo vim /etc/tor/torrc
 ```
 
@@ -46,13 +46,13 @@ CookieAuthFileGroupReadable 1
 
 Exit the file, and reload the `tor` configurations with the following command:
 
-```
+```bash
 systemctl reload tor
 ```
 
 Confirm that `tor` is running with the following:
 
-```
+```bash
 sudo ss -tulpn | grep tor | grep LISTEN
 ```
 
@@ -69,7 +69,7 @@ However, the Tor network is slower than other network traffic.
 
 First, open the `/etc/tor/torrc` file with a text editor:
 
-```
+```bash
 sudo vim /etc/tor/torrc
 ```
 
@@ -84,13 +84,13 @@ HiddenServicePort <PORT_OF_SERVICE> 127.0.0.1:<PORT_OF_SERVICE>
 
 Exit the file, and reload the `tor` configurations with the following command:
 
-```
+```bash
 systemctl reload tor
 ```
 
 Use `cat` to output the file contents in the corresponding directory to obtain the onion link to the service:
 
-```
+```bash
 sudo cat /var/lib/tor/hidden_service_<SERVICE_NAME>/hostname
 ```
 

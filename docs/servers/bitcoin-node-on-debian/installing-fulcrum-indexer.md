@@ -27,19 +27,19 @@ To install Fulcrum, a Bitcoin transaction indexer, perform the following steps.
 
 First, add an entry to `ufw` to allow TCP connections to Fulcrum:
 
-```
+```bash
 sudo ufw allow 50001/tcp comment "allow Fulcrum TCP"
 ```
 
 Also, add an entry to `ufw` to allow SSL connections to Fulcrum:
 
-```
+```bash
 sudo ufw allow 50002/tcp comment "allow Fulcrum SSL"
 ```
 
 Next, edit the `bitcoin.conf` file:
 
-```
+```bash
 sudo vim ~/.bitcoin/bitcoin.conf
 ```
 
@@ -51,13 +51,13 @@ zmqpubhashblock=tcp://127.0.0.1:8433
 
 With that configuration added, restart the `bitcoind` service:
 
-```
+```bash
 systemctl restart bitcoind
 ```
 
 Now, it's time to install Fulcrum. Change directory to the `/tmp` directory, so the files don't clutter the system:
 
-```
+```bash
 cd /tmp
 ```
 
@@ -72,55 +72,55 @@ ARCHITECTURE="x86_64"
 
 First, download the package archive:
 
-```
+```bash
 curl -LJO https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-$ARCHITECTURE-linux.tar.gz
 ```
 
 Next, download the list of hashes for the binary archives:
 
-```
+```bash
 curl -LJO https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-shasums.txt
 ```
 
 Finally, download the GPG signatures for those hashes:
 
-```
+```bash
 curl -LJO https://github.com/cculianu/Fulcrum/releases/download/v$VERSION/Fulcrum-$VERSION-shasums.txt.asc
 ```
 
 Now, run a SHA256 checksum verification on the Fulcrum archive with the following:
 
-```
+```bash
 sha256sum --check --ignore-missing Fulcrum-$VERSION-shasums.txt
 ```
 
 Next, grab the public keys (pubkeys) of the Fulcrum developer to verify the validity of the signatues:
 
-```
+```bash
 curl https://raw.githubusercontent.com/Electron-Cash/keys-n-hashes/master/pubkeys/calinkey.txt | gpg --import
 ```
 
 Now that the pubkeys have been added to the GPG keyring, verify the `Fulcrum-$VERSION-shasums.txt.asc` file:
 
-```
+```bash
 gpg --verify Fulcrum-$VERSION-shasums.txt.asc
 ```
 
 With the signatures verified, it is now time to extract the compressed Fulcrum archive:
 
-```
+```bash
 tar -xvf Fulcrum-$VERSION-$ARCHITECTURE-linux.tar.gz
 ```
 
 Install the extracted files into `/usr/local/bin` directory:
 
-```
+```bash
 sudo install -m 0755 -o root -g root -t /usr/local/bin Fulcrum-$VERSION-$ARCHITECTURE-linux/Fulcrum Fulcrum-$VERSION-$ARCHITECTURE-linux/FulcrumAdmin
 ```
 
 Confirm that the binary has been installed correctly by running the following command:
 
-```
+```bash
 Fulcrum --version
 ```
 
@@ -129,25 +129,25 @@ Configuring zram-swap
 
 First, install the `libssl-dev` package:
 
-```
+```bash
 nala update && nala install -y libssl-dev
 ```
 
 Next, clone the git repo for `zram-swap`:
 
-```
+```bash
 cd ~/.local/src && git clone https://github.com/foundObjects/zram-swap
 ```
 
 Enter the `zram-swap` directory and install the package:
 
-```
+```bash
 cd zram-swap && sudo ./install.sh
 ```
 
 With `zram-swap` installed, edit `/etc/default/zram-swap`:
 
-```
+```bash
 sudo vim /etc/default/zram-swap
 ```
 
@@ -162,7 +162,7 @@ Note: the fixed size of the ZRAM should be congruent with the RAM on the compute
 
 To confirm that `zram-swap` is working as intended, first use `cat` on the following path:
 
-```
+```bash
 sudo cat /proc/swaps
 ```
 
@@ -170,7 +170,7 @@ This should show memory usage *before* `zram-swap` is enabled. Take note of the 
 
 Next, edit the `/etc/sysctl.conf` file:
 
-```
+```bash
 sudo vim /etc/sysctl.conf
 ```
 
@@ -185,25 +185,25 @@ vm.dirty_ratio=50
 
 After adding those lines to the config file, reload `sysctl` with the following command:
 
-```
+```bash
 sudo sysctl --system
 ```
 
 Now, restart the `zram-swap` service:
 
-```
+```bash
 systemctl restart zram-swap
 ```
 
 Use `cat` on "/proc/swaps" again; `/dev/zram0` should now be listed, with a higher priority than other entries:
 
-```
+```bash
 sudo cat /proc/swaps
 ```
 
 As a final confirmation, run `systemctl status` on the `zram-swap` service:
 
-```
+```bash
 systemctl status zram-swap
 ```
 
@@ -212,7 +212,7 @@ Configuring Fulcrum
 
 Now that Fulcrum is installed, create a new user to manage the Fulcrum service:
 
-```
+```bash
 sudo useradd -G bitcoin -s /bin/bash -m fulcrum
 ```
 
@@ -220,31 +220,31 @@ Note that the `-G` option directs the `fulcrum` user to be added to the `bitcoin
 
 Next, create a `/data/fulcrum` and `/data/fulcrum/fulcrum_db` directory in `/data`:
 
-```
+```bash
 mkdir -pv /data/fulcrum/fulcrum_db
 ```
 
 Change the ownership of that new directory so that the `fulcrum` user owns the directory and its contents:
 
-```
+```bash
 sudo chown -R fulcrum: /data/fulcrum
 ```
 
 Switch users to the `fulcrum` user:
 
-```
+```bash
 su - fulcrum
 ```
 
 Now, create a symbolic link so that all Fulcrum configuration files are accessible from the `/data/fulcrum` directory:
 
-```
+```bash
 ln -s /data/fulcrum ~/.fulcrum
 ```
 
 Change directory into the new `~/.fulcrum` directory, and create a new SSL key for the Fulcrum service:
 
-```
+```bash
 cd ~/.fulcrum && openssl req -newkey rsa:4096 -new -nodes -x509 -days 36500 -keyout fulcrum.key -out fulcrum.crt
 ```
 
@@ -287,7 +287,7 @@ Log out of the `fulcrum` user, and back to the main admin user.
 
 Now, create a Fulcrum service file, so that the Fulcrum process can run automatically when the node reboots:
 
-```
+```bash
 sudo vim /etc/systemd/system/fulcrum.service
 ```
 
@@ -321,25 +321,25 @@ Again, `<HOSTNAME>` should be the hostname of the node.
 
 Enable this new service with the following command:
 
-```
+```bash
 systemctl enable fulcrum
 ```
 
 Now, start the service with the following command:
 
-```
+```bash
 systemctl start fulcrum
 ```
 
 Check its status with the `systemctl status` command:
 
-```
+```bash
 systemctl status fulcrum
 ```
 
 To see the output of the Fulcrum service, run the following:
 
-```
+```bash
 sudo journalctl -fu fulcrum
 ```
 
@@ -352,7 +352,7 @@ Re-configuring Fulcrum after the initial sync
 
 Once Fulcrum completes its initial syncing and compacting, `zram-swap` can be reconfigured. Open the `/etc/default/zram-swap` file in a text editor:
 
-```
+```bash
 sudo vim /etc/default/zram-swap
 ```
 
@@ -365,19 +365,19 @@ _zram_fraction="1/2"
 
 After adding those lines to the config file, reload `sysctl` with the following command:
 
-```
+```bash
 sudo sysctl --system
 ```
 
 Now, restart the `zram-swap` service:
 
-```
+```bash
 systemctl restart zram-swap
 ```
 
 To confirm that `zram-swap` has been modified correctly, use `cat` on the following path:
 
-```
+```bash
 sudo cat /proc/swaps
 ```
 
@@ -388,7 +388,7 @@ As is described in the section on [adding a hidden service](#adding-a-hidden-ser
 
 First, open the `/etc/tor/torrc` file in a text editor:
 
-```
+```bash
 sudo vim /etc/tor/torrc
 ```
 
@@ -408,19 +408,19 @@ HiddenServicePort 50002 127.0.0.1:50002
 
 Exit the file, and reload the `tor` configurations with the following command:
 
-```
+```bash
 systemctl reload tor
 ```
 
 Use `cat` to output the file contents in the corresponding directory to obtain the onion link to the service:
 
-```
+```bash
 sudo cat /var/lib/tor/hidden_service_fulcrum_tcp/hostname
 ```
 
 Or:
 
-```
+```bash
 sudo cat /var/lib/tor/hidden_service_fulcrum_ssl/hostname
 ```
 
@@ -429,11 +429,12 @@ Now, it is possible to access Fulcrum remotely using Tor.
 Editing the banner for Fulcrum
 ------------------------------
 
-When using a wallet software such as [Sparrow Wallet](https://github.com/sparrowwallet/sparrow), a banner will display when connecting the wallet to the indexer. Using a webpage such as [this one](https://patorjk.com/software/taag/#p=display&f=Slant&t=Fulcrum), it is possible to create custom ASCII art to be displayed when the connection is tested.
+When using a wallet software such as [Sparrow Wallet](https://github.com/sparrowwallet/sparrow), a banner will display when connecting the wallet to the indexer. Using a webpage such as [this one](https://patorjk.com/software/taag/), it is possible to create custom ASCII art to be displayed when the connection is tested:
+- Suggested ASCII art fonts for the banner include "Slant", "Big", and "ANSI Shadow".
 
 To do this, create a `/data/fulcrum/banner.txt` file:
 
-```
+```bash
 sudo vim /data/fulcrum/banner.txt
 ```
 
@@ -446,15 +447,28 @@ bitcoind version: $DAEMON_VERSION
 fulcrum version: $SERVER_VERSION
 ```
 
-To make sure the banner displays properly, change the owner of the file to the `fulcrum` user.
+Therefore, a "complete" Fulcrum banner may look as such:
 
 ```
+    ______      __
+   / ____/_  __/ /___________  ______ ___
+  / /_  / / / / / ___/ ___/ / / / __ `__ \
+ / __/ / /_/ / / /__/ /  / /_/ / / / / / /
+/_/    \__,_/_/\___/_/   \__,_/_/ /_/ /_/
+
+bitcoind version: $DAEMON_VERSION
+fulcrum version: $SERVER_VERSION
+```
+
+To make sure the banner displays properly, change the owner of the file to the `fulcrum` user.
+
+```bash
 sudo chown -R fulcrum: /data/fulcrum/banner.txt
 ```
 
 Next, open the `/data/fulcrum/fulcrum.conf` file.
 
-```
+```bash
 sudo vim /data/fulcrum/fulcrum.conf
 ```
 
@@ -467,7 +481,7 @@ banner = /data/fulcrum/banner.txt
 
 Now, restart the Fulcrum service:
 
-```
+```bash
 systemctl restart fulcrum
 ```
 
