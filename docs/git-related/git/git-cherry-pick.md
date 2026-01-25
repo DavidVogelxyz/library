@@ -8,6 +8,7 @@ Table of contents
 
 - [Introduction](#introduction)
 - [Using "git-cherry-pick" to apply a commit from one branch to another branch](#using-git-cherry-pick-to-apply-a-commit-from-one-branch-to-another-branch)
+- [Using "git-cherry-pick" to apply a range of commits](#using-git-cherry-pick-to-apply-a-range-of-commits)
 - [Troubleshooting conflicts with "git-cherry-pick"](#troubleshooting-conflicts-with-git-cherry-pick)
 - [References](#references)
 
@@ -35,6 +36,27 @@ This will take the commit referenced by `<HASH_OF_COMMIT>` and apply it to the c
 
 As described in the section on ["git-reflog"](git-reflog.md), `git reflog` can be utilized with both `git merge` and `git checkout` to recover lost history. In some situations, it will make more sense to run `git merge` or `git checkout` in order to reorient the tip of a branch. In other cases, `git cherry-pick` will give the user more flexibility by allowing them to choose which commits are applied, and in what order.
 
+Using "git-cherry-pick" to apply a range of commits
+---------------------------------------------------
+
+To apply a range of commits (from `HASH_OF_COMMIT_A` to `HASH_OF_COMMIT_B`, ***including*** `A`), run the following command:
+
+```bash
+git cherry-pick <HASH_OF_COMMIT_A>^..<HASH_OF_COMMIT_B>
+```
+
+Note the syntax joining the range is `^..` when including `HASH_OF_COMMIT_A`.
+
+To apply a range of commits ***excluding*** `HASH_OF_COMMIT_A`, run the following command:
+
+```bash
+git cherry-pick <HASH_OF_COMMIT_A>..<HASH_OF_COMMIT_B>
+```
+
+Note that the syntax joining the range is `..` when excluding `HASH_OF_COMMIT_A`.
+
+As with other Git commands, `HASH_OF_COMMIT` can be a branch name -- it ***does not*** have to be the hash itself.
+
 Troubleshooting conflicts with "git-cherry-pick"
 ------------------------------------------------
 
@@ -59,3 +81,5 @@ References
 
 - [thePrimeagen - Everything You'll Need to Know About Git - HEAD](https://theprimeagen.github.io/fem-git/lessons/branches-merges-and-more/head)
     - Information on how `git cherry-pick` works
+- [StackOverflow - How to cherry-pick multiple commits](https://stackoverflow.com/questions/1670970/how-to-cherry-pick-multiple-commits/3933416#3933416)
+    - Information on running `git cherry-pick` to apply a range of commits
