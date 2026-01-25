@@ -25,3 +25,17 @@ depend() {
     need localmount
 }
 ```
+
+Whatever `command` is set to (in this case, `/usr/sbin/$RC_SVCNAME`), that file should exist at that path. So, in the example above, `/usr/sbin/newservice` should be an executable script that performs some function.
+
+Once the service file (`/etc/init.d/newservice`) and the script (`/usr/sbin/newservice`) have been created, and have both been made executable, the service can be started with the following command:
+
+```bash
+service newservice start
+```
+
+To add the service to the default runlevel, run the following command:
+
+```bash
+rc-update add newservice
+```
