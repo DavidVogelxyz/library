@@ -1,5 +1,5 @@
-Compiling neovim from source, for a local user
-==============================================
+Compiling neovim from source
+============================
 
 Date written: 2025 June 16, Monday
 
@@ -35,8 +35,8 @@ If `cmake` isn't installed, cannot be installed, and isn't available as a module
 
 Once `cmake` is confirmed to be available on the system, continue.
 
-How to compile
---------------
+Preparing neovim
+----------------
 
 Clone the `neovim` repo:
 
@@ -55,6 +55,24 @@ Checkout the version that should be installed:
 ```bash
 git checkout stable
 ```
+
+Compiling neovim system-wide
+----------------------------
+
+Compile `neovim` for the system:
+
+```bash
+make CMAKE_BUILD_TYPE=RelWithDebInfo
+```
+
+Install `neovim` system-wide:
+
+```bash
+sudo make install
+```
+
+Compiling neovim for a local user
+---------------------------------
 
 Compile `neovim` for the user, instead of system-wide:
 
