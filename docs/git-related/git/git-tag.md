@@ -56,7 +56,7 @@ git tag -d <TAG>
 Syncing tags with a remote
 --------------------------
 
-Tags, by default, do not sync with a `remote` when running `git push`, and don't syn with the local version when running `git pull`.
+Tags, by default, do not sync with a `remote` when running `git push`, and don't sync with the local version when running `git pull`.
 
 This is similar to a branch, in that only the active branch is "pushed" or "pulled". Because a tag doesn't belong to any branch, and can be considered its own immutable branch, running `git push` or `git pull` will not bring along tag information, even if the tagged commit is part of the branch being "pushed" or "pulled".
 
