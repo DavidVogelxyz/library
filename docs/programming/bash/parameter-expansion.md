@@ -21,6 +21,7 @@ Table of contents
 - [Absolute value](#absolute-value)
 - [Single quotes vs double quotes](#single-quotes-vs-double-quotes)
 - [Uppercase and lowercase](#uppercase-and-lowercase)
+- [Working with positions in a string](#working-with-positions-in-a-string)
 - [References](#references)
 
 Length
@@ -266,6 +267,25 @@ Prints:
 
 ```
 hello
+```
+
+Working with positions in a string
+----------------------------------
+
+To print individual characters of a string, one at a time, please refer to the [iterating in Bash](iterating.md) guide -- specifically, [iterating over characters in a string](iterating.md#iterating-over-characters-in-a-string).
+
+To replace a specific position in a string, write the following syntax:
+
+```bash
+string="12345"
+
+echo "${string:0:1}0${string:2:1}0${string:4}"
+```
+
+Prints:
+
+```
+10305
 ```
 
 References
