@@ -3,6 +3,14 @@ Iterating in Bash
 
 [Back to the "Bash syntax guide" home page](README.md)
 
+Table of contents
+-----------------
+
+- [C-style for loop](#c-style-for-loop)
+- [Iterating over characters in a string](#iterating-over-characters-in-a-string)
+- [Incrementing by any number besides 1](#incrementing-by-any-number-besides-1)
+- [Indexing into an array by adding to an index](#indexing-into-an-array-by-adding-to-an-index)
+
 C-style for loop
 ----------------
 
